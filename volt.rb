@@ -1,0 +1,2 @@
+module Volt
+end
