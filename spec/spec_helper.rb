@@ -9,3 +9,4 @@ require './volt.rb'
 include Volt
 
 require './lib/vector.rb'
+require './lib/body.rb'

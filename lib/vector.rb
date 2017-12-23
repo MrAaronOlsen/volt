@@ -7,13 +7,20 @@ module Volt
       @y = y.to_f
     end
 
+    def zero!
+      self.tap { scale(0) }
+    end
+
+    def copy
+      Vector.new(@x, @y)
+    end
+
     def +(vect)
       Vector.new(@x + vect.x, @y + vect.y)
     end
 
     def add(vect)
-      @x += vect.x
-      @y += vect.y
+      self.tap { @x += vect.x ; @y += vect.y }
     end
 
     def -(vect)
@@ -21,38 +28,39 @@ module Volt
     end
 
     def sub(vect)
-      @x -= vect.x
-      @y -= vect.y
+      self.tap { @x -= vect.x; @y -= vect.y }
     end
 
     def *(value)
       Vector.new(@x * value, @y * value)
     end
 
-    def scale!(value)
-      @x *= value
-      @y *= value
+    def scale(value)
+      self.tap { @x *= value; @y *= value }
     end
 
     def magnitude
       Math.sqrt(@x * @x + @y * @y)
     end
 
-    def normalize!
+    def normalize
       m = magnitude
       unless m.zero? then @x/=m; @y/=m end
     end
 
     def dot(vect)
-      @x * vect.x + @y * vect.y
+      ( @x * vect.x ) + ( @y * vect.y )
     end
 
     def cross(vect)
-      @x * vect.y - @y * vect.x;
+      ( @x * vect.y ) - ( @y * vect.x )
     end
 
-    def zero
-      @x, @y = 0.0, 0.0
+    def ==(vect)
+      @x == vect.x && @y == vect.y
     end
   end
+
+  Vect = Vector
+  V = Vector
 end

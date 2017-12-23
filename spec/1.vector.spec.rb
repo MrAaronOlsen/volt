@@ -1,6 +1,6 @@
 RSpec.describe Vector do
 
-  describe 'Constructor' do
+  describe 'Initialization' do
     it 'defaults x and y to 0.0' do
       vect = Vector.new
 
@@ -44,6 +44,13 @@ RSpec.describe Vector do
         expect(vect3.y).to eq(8.0)
       end
 
+      it 'can do compound math' do
+        vect3 = (@vect1 + @vect2) * 10
+
+        expect(vect3.x).to eq(70)
+        expect(vect3.y).to eq(120)
+      end
+
       it 'can calculate the dot product' do
         dot = @vect1.dot(@vect2)
 
@@ -83,21 +90,29 @@ RSpec.describe Vector do
       end
 
       it 'can scale by a value' do
-        @vect1.scale!(2)
+        @vect1.scale(2)
 
         expect(@vect1.x).to eq(6.0)
         expect(@vect1.y).to eq(8.0)
       end
 
+      it 'can do compound math' do
+        vect2 = Vector.new(4, 8)
+        @vect1.add(vect2).scale(10)
+
+        expect(@vect1.x).to eq(70)
+        expect(@vect1.y).to eq(120)
+      end
+
       it 'can normalize itself' do
-        @vect1.normalize!
+        @vect1.normalize
 
         expect(@vect1.x).to eq(0.6)
         expect(@vect1.y).to eq(0.8)
       end
 
       it 'can zero itself' do
-        @vect1.zero
+        @vect1.zero!
 
         expect(@vect1.x).to eq(0.0)
         expect(@vect1.y).to eq(0.0)
