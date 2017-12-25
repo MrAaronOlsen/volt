@@ -35,6 +35,10 @@ module Volt
       Vector.new(@x * value, @y * value)
     end
 
+    def /(value)
+      Vector.new(@x / value, @y / value)
+    end
+
     def scale(value)
       self.tap { @x *= value; @y *= value }
     end

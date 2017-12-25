@@ -1,10 +1,21 @@
 module Volt
   class World
+    attr_accessor :bodies
+
+    def initialize
+      @bodies = []
+    end
 
     def update(dt)
       return if dt <= 0.0
 
-      puts(dt)
+      bodies.each do |body|
+        body.update(dt)
+      end
+    end
+
+    def add_body(body)
+      @bodies << body
     end
   end
 end
