@@ -2,6 +2,8 @@ module Volt
   class Body
     attr_reader :i_mass, :forces
     attr_reader :pos, :vel, :acc, :mass, :damp
+    attr_reader :cog, :transform
+    attr_reader :shapes
 
     def initialize
       block_given? ? (yield self) : self.config
@@ -12,6 +14,7 @@ module Volt
       @mass, @damp = mass.to_f, damp.to_f
 
       set_i_mass(mass)
+      @forces = Vect.new
     end
 
     def add_force(force)
@@ -24,14 +27,22 @@ module Volt
     def update(dt)
       return if @mass <= 0
 
-      @pos.add_scaled!(@vel, dt)
+      @pos.add_scaled(@vel, dt)
 
-      arc = (@acc + @forces) * @i_mass
+      arc = @acc.copy
+      arc.add_scaled(@forces, @i_mass)
 
-      @vel.add_scaled!(arc, dt)
-      @vel.scale!( 0.99**dt )
+      @vel.add_scaled(arc, dt)
+      @vel.scale( @damp**dt )
 
       @forces.zero!
+    end
+
+    def set_cog
+    end
+
+    def add_shape(shape)
+      @shapes << shape
     end
 
     private

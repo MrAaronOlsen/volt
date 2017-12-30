@@ -7,6 +7,17 @@ module Volt
       @y = y.to_f
     end
 
+    # Handy constructors
+    class << self
+
+      # Makes a unit vector based on the given angle (in degrees)
+      def byAngle(degree)
+        theta = radian(degree)
+
+        Vector.new(Math.cos(theta), Math.sin(theta))
+      end
+    end
+
     def zero!
       self.tap { scale(0) }
     end
@@ -21,6 +32,10 @@ module Volt
 
     def add(vect)
       self.tap { @x += vect.x ; @y += vect.y }
+    end
+
+    def add_scaled(vect, value)
+      self.tap { @x += vect.x * value; @y += vect.y * value }
     end
 
     def -(vect)
@@ -63,6 +78,26 @@ module Volt
     def ==(vect)
       @x == vect.x && @y == vect.y
     end
+
+    # rotation
+
+    def rotate(degree) #rotate self by some degree
+      theta = radian(degree)
+  		x = @x
+
+      @x = x*Math.cos(theta) - @y*Math.sin(theta)
+  	  @y = x*Math.sin(theta) + @y*Math.cos(theta)
+  	end
+
+    def print
+      puts "X: #{@x}, Y:#{@y}"
+    end
+  end
+
+  # Volt level helpers
+
+  def radian(degree) #convert a degree to a radian
+     degree*(Math::PI/180)
   end
 
   Vect = Vector

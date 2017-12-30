@@ -10,7 +10,7 @@ module Volt
       start if @start_time.nil?
 
       @end_time = Time.now
-      dt = (@end_time - @start_time) * 0.1
+      dt = (@end_time - @start_time) * 1000
       @start_time = @end_time
 
       return dt
