@@ -1,15 +1,16 @@
 require_relative 'example.rb'
 
 class BoxWorld
+	attr_reader :box_body
 
 	def initialize
 		@world = World.new
 		@box_body = BoxBody.new
+		@box_body.add_force(V.new(100, 0))
 		@box = Box.new(100, 100)
 		@box.set_body(@box_body)
 
 		@world.add_body(@box_body)
-		@box_body.add_force(Vect.new(1000, 0))
 	end
 
 	def update(dt)
@@ -17,8 +18,9 @@ class BoxWorld
 	end
 
 	def draw
-		Draw.circle(@box_body.pos, 100, 0xff_0000ff)
-		# Draw.rect(@box.verts, 0xff_00ff00)
+		Draw.rect(@box.get_world_verts, 0xff_00ff00)
+		Draw.circle(@box.get_world_centroid, 10, 0xff_0000ff)
+		Draw.circle(@box_body.pos, 10, 0xff_ff0000)
 	end
 end
 
@@ -28,8 +30,8 @@ class BoxBody < Body
 			b.config(
 				pos: V.new(0, 600),
 				vel: V.new(0, 0),
-				damp: 0.999,
-				mass: 10
+				damp: 0.99,
+				mass: 1
 			)
 		end
 	end
@@ -49,7 +51,7 @@ class Window < Gosu::Window
  	end
 
 	def update
-    @world.update(@time.get_dt)
+    @world.update(0.16)
   end
 
 	def draw
@@ -58,6 +60,10 @@ class Window < Gosu::Window
 
 	def button_down(id)
     close if id == Gosu::KbEscape
+		@world.box_body.add_force(Vect.new(100, 0)) if id == Gosu::KbRight
+		@world.box_body.add_force(Vect.new(-100, 0)) if id == Gosu::KbLeft
+		@world.box_body.add_force(Vect.new(0, -100)) if id == Gosu::KbUp
+		@world.box_body.add_force(Vect.new(0, 100)) if id == Gosu::KbDown
   end
 end
 

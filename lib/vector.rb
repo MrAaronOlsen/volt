@@ -79,6 +79,13 @@ module Volt
       @x == vect.x && @y == vect.y
     end
 
+    # matrix related
+    def transform(translate)
+      vect = translate.transform_vert(self)
+      @x = vect.x
+      @y = vect.y
+    end
+
     # rotation
 
     def rotate(degree) #rotate self by some degree

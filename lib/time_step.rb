@@ -2,15 +2,13 @@ module Volt
   class TimeStep
     attr_reader :start_time, :end_time
 
-    def start
+    def initialize
       @start_time = Time.now
     end
 
     def get_dt
-      start if @start_time.nil?
-
       @end_time = Time.now
-      dt = (@end_time - @start_time) * 1000
+      dt = (@end_time - @start_time)
       @start_time = @end_time
 
       return dt

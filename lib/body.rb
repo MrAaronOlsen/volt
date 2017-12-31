@@ -1,7 +1,7 @@
 module Volt
   class Body
     attr_reader :i_mass, :forces
-    attr_reader :pos, :vel, :acc, :mass, :damp
+    attr_accessor :pos, :vel, :acc, :mass, :damp
     attr_reader :cog, :transform
     attr_reader :shapes
 
@@ -14,6 +14,7 @@ module Volt
       @mass, @damp = mass.to_f, damp.to_f
 
       set_i_mass(mass)
+      @shapes = []
       @forces = Vect.new
     end
 
@@ -36,9 +37,6 @@ module Volt
       @vel.scale( @damp**dt )
 
       @forces.zero!
-    end
-
-    def set_cog
     end
 
     def add_shape(shape)

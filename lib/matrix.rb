@@ -12,6 +12,10 @@ module Volt
     end
 
     class << self
+      def new_identity
+        Mat23.new(1.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+      end
+
       def new_translate(vect)
         Mat23.new(1, 0, vect.x, 0, 1, vect.y)
       end
@@ -24,13 +28,8 @@ module Volt
       )
     end
 
-    def mult_vect(vect)
-      Vect.new(@a*vect.x + @c*vect.y + @tx, @b*vect.x + @d*vect.y + @ty)
-    end
-
-    def set_identity
-      @a, @b, @c, @d = 1.0, 0.0, 0.0, 1.0
-      @tx, @ty = 0, 0
+    def transform_vert(vert)
+      Vect.new(@a*vert.x + @c*vert.y + @tx, @b*vert.x + @d*vert.y + @ty)
     end
   end
 
