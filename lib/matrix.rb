@@ -19,14 +19,19 @@ module Volt
       def new_translate(vect)
         Mat23.new(1, 0, vect.x, 0, 1, vect.y)
       end
+
+      def new_rotate(degrees)
+      	rot = V.from_angle(degrees);
+      	Mat23.new(rot.x, -rot.y, 0.0, rot.y,  rot.x, 0.0)
+      end
+
+      def new_transform(degrees, vect)
+        rot = V.from_angle(degrees);
+        Mat23.new(rot.x, -rot.y, vect.x, rot.y, rot.x, vect.y)
+      end
     end
 
-    def mult_mat23(mat23)
-      Mat23.new(
-        @a*mat23.a + @c*mat23.b, @a*mat23.c + @c*mat23.d, @a*mat23.tx + @c*mat23.ty + @tx,
-        @b*mat23.a + @d*mat23.b, @b*mat23.c + @d*mat23.d, @b*mat23.tx + @d*mat23.ty + @ty
-      )
-    end
+# Math
 
     def transform_vert(vert)
       Vect.new(@a*vert.x + @c*vert.y + @tx, @b*vert.x + @d*vert.y + @ty)

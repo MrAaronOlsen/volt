@@ -1,11 +1,10 @@
 module Volt
   class Shape
-    attr_accessor :centroid, :verts, :body
+    attr_accessor :centroid, :verts, :mass, :body
 
     def initialize
       @verts = []
       @centroid = Vect.new
-      @translate = Mat23.new_identity
     end
 
     def set_body(body)
@@ -13,21 +12,19 @@ module Volt
       body.add_shape(self)
     end
 
-    def get_world_verts
-      @translate = Mat23.new_translate(@body.pos)
-
+    def world_verts
       @verts.map do |vert|
-        @translate.transform_vert(vert)
+        @body.transform.transform_vert(vert)
       end
     end
 
-    def get_world_centroid
-      world_verts = get_world_verts
+    def world_centroid
+      verts = world_verts
       sum = 0.0
       v_sum = Vect.new
 
-      world_verts.each_with_index do |vert, i|
-      	vert2 = world_verts[(i+1) % world_verts.count]
+      verts.each_with_index do |vert, i|
+      	vert2 = verts[(i+1) % verts.count]
       	cross = vert.cross(vert2)
 
       	sum += cross
@@ -40,22 +37,25 @@ module Volt
 
   class Box < Shape
 
-    def initialize(width, height)
+    def initialize(width, height, offset, mass)
       super()
 
-      @verts << Vect.new
-      @verts << Vect.new(width, 0)
-      @verts << Vect.new(width, height)
-      @verts << Vect.new(0, height)
+      @verts << Vect.new(offset.x, offset.y)
+      @verts << Vect.new(width + offset.x, offset.y)
+      @verts << Vect.new(width + offset.x, height + offset.y)
+      @verts << Vect.new(offset.x, height + offset.y)
+
+      @mass = mass
     end
   end
 
   class Poly < Shape
 
-    def initialize(*verts)
+    def initialize(*verts, mass)
       super()
 
       @verts = verts
+      @mass = mass
     end
   end
 end

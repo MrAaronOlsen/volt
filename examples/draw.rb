@@ -23,7 +23,7 @@ class Draw
 				points[3].x, points[3].y, color, z)
     end
 
-    def circle(center, radius, color, z = 1)
+    def circle_full(center, radius, color, z = 1)
       axis1 = Vector.new(radius, 0)
 			axis2 = Vector.new(radius, 0)
 
@@ -36,6 +36,24 @@ class Draw
 				y2 = axis2.y + center.y
 
 				Gosu.draw_triangle( center.x, center.y, color, x1, y1, color, x2, y2, color, z )
+
+				axis1.rotate(6)
+			end
+    end
+
+    def circle_empty(center, radius, color, z = 1)
+      axis1 = Vector.new(radius, 0)
+			axis2 = Vector.new(radius, 0)
+
+			60.times do
+				axis2.rotate(6)
+
+				x1 = axis1.x + center.x
+				y1 = axis1.y + center.y
+				x2 = axis2.x + center.x
+				y2 = axis2.y + center.y
+
+				Draw.line( V.new(x1, y1), V.new(x2, y2), color, z )
 
 				axis1.rotate(6)
 			end

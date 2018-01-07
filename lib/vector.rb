@@ -11,7 +11,7 @@ module Volt
     class << self
 
       # Makes a unit vector based on the given angle (in degrees)
-      def byAngle(degree)
+      def from_angle(degree)
         theta = radian(degree)
 
         Vector.new(Math.cos(theta), Math.sin(theta))
