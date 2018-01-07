@@ -3,7 +3,7 @@ module Volt
 
     # position
     attr_accessor :pos
-    attr_reader :cog, :transform
+    attr_reader :transform
     # linear
     attr_reader :vel, :acc
     # angular
@@ -37,11 +37,10 @@ module Volt
     def add_shape(shape)
       @shapes << shape
 
-      set_cog
       set_transform
     end
 
-    def set_cog
+    def cog
       bot = 0
 
       top = @shapes.reduce(V.new) do |top, shape|
@@ -49,7 +48,7 @@ module Volt
         top + shape.world_centroid * shape.mass
       end
 
-      @cog = top / bot
+      top / bot
     end
 
     def set_transform
@@ -78,15 +77,15 @@ module Volt
       @torque = 0.0
     end
 
+    def add_force_at(force, point)
+      @forces.add(force)
+      r = point - @transform.transform_vert(cog)
+
+      @torque += r.cross(force)
+    end
+
     def add_force(force)
       @forces.add(force)
-    end
-
-    def add_torque(torque)
-      @torque += torque
-    end
-
-    def add_impulse(impulse)
     end
 
     private
