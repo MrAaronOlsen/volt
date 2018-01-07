@@ -28,14 +28,10 @@ end
 class BoxBody < Body
 	def initialize
 		super do |b|
-			b.config(
-				pos: V.new(600, 600),
-				vel: V.new(0, 0),
-				damp: 0.98,
-				mass: 1,
-				angle: 70.0,
-				inertia: 10
-			)
+			b.pos = V.new(600, 600)
+			b.damp = 0.98
+			b.mass = 10
+			b.moment = 10
 		end
 	end
 end
@@ -54,7 +50,7 @@ class Window < Gosu::Window
  	end
 
 	def update
-    @world.update(0.016)
+    @world.update(1.0/60.0)
   end
 
 	def draw
