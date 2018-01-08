@@ -34,10 +34,6 @@ module Volt
       self.tap { @x += vect.x ; @y += vect.y }
     end
 
-    def add_scaled(vect, value)
-      self.tap { @x += vect.x * value; @y += vect.y * value }
-    end
-
     def -(vect)
       Vector.new(@x - vect.x, @y - vect.y)
     end

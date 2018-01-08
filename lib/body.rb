@@ -13,19 +13,8 @@ module Volt
       set_transform
     end
 
-    def cog
-      bot = 0
-
-      top = @shapes.reduce(V.new) do |top, shape|
-        bot += shape.mass
-        top + shape.world_centroid * shape.mass
-      end
-
-      top / bot
-    end
-
     def set_transform
-      @transform = Mat23.new_transform(@pos, @angle)
+      @transform = Mat.new_transform(@pos, @angle)
     end
 
 # Life cycle functions
@@ -33,28 +22,38 @@ module Volt
     def update(dt)
       return if @mass <= 0
 
-      @vel = (@vel * @damp) + ((@forces * @i_mass) * dt)
-      @a_velocity = (@a_velocity * @damp) + ((@torque * @i_moment) * dt)
+      @vel = (@vel * @damp) + (@forces * @i_mass) * dt
+      @a_vel = (@a_vel * @damp) + (@torque * @i_moment) * dt
 
       @forces.zero!
       @torque = 0.0
 
-      @pos.add_scaled(@vel, dt)
-      @angle += (@a_velocity * dt)
+      @pos += @vel * dt
+      @angle += @a_vel * dt
 
       set_transform
-    end
-
-    def add_force_at(force, point)
-      @forces.add(force)
-
-      r = point - @transform.transform_vert(cog)
-      @torque += r.cross(force)
     end
 
     def add_force(force)
       @forces.add(force)
     end
 
+    def add_force_at(force, vert)
+      @forces.add(force)
+
+      r = point - @transform.of_vert(cog)
+      @torque += r.cross(force)
+    end
+
+    def add_impulse(impulse)
+      @vel = @vel + (impulse * @i_mass)
+    end
+
+    def add_impulse_at(impulse, point)
+      @vel = @vel + (impulse * @i_mass)
+
+      r = point - @transform.of_vert(cog)
+      @a_vel += r.cross(impulse) * @i_moment
+    end
   end
 end

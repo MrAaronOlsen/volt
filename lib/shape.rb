@@ -14,7 +14,7 @@ module Volt
 
     def world_verts
       @verts.map do |vert|
-        @body.transform.transform_vert(vert)
+        @body.transform.of_vert(vert)
       end
     end
 

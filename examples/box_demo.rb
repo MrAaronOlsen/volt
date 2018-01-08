@@ -17,11 +17,13 @@ class BoxWorld
 	end
 
 	def draw
+		point = @box_body.transform.of_vert((@box.verts[0] - @box.verts[1])/2)
+
 		Draw.rect(@box.world_verts, 0xff_999999)
 		Draw.circle_full(@box.world_centroid, 5, 0xff_0000ff)
 		Draw.circle_empty(@box_body.pos, 10, 0xff_ff0000)
 		Draw.circle_empty(@box_body.cog, 15, 0xff_ffff00)
-		Draw.circle_full(@box.world_verts[0], 5, 0xff_00ffff)
+		Draw.circle_full(point, 5, 0xff_00ffff)
 	end
 end
 
@@ -31,7 +33,7 @@ class BoxBody < Body
 			b.pos = V.new(600, 600)
 			b.damp = 0.98
 			b.mass = 10
-			b.moment = 10
+			b.moment = 3000
 		end
 	end
 end
@@ -59,17 +61,18 @@ class Window < Gosu::Window
 
 	def button_down(id)
 		box = @world.box
+		point = @world.box_body.transform.of_vert((box.verts[0] - box.verts[1])/2)
     close if id == Gosu::KbEscape
 
-		@world.box_body.add_force(Vect.new(10000, 0)) if id == Gosu::KbD
-		@world.box_body.add_force(Vect.new(-10000, 0)) if id == Gosu::KbA
-		@world.box_body.add_force(Vect.new(0, -10000)) if id == Gosu::KbW
-		@world.box_body.add_force(Vect.new(0, 10000)) if id == Gosu::KbS
+		@world.box_body.add_impulse(Vect.new(3000, 0)) if id == Gosu::KbD
+		@world.box_body.add_impulse(Vect.new(-3000, 0)) if id == Gosu::KbA
+		@world.box_body.add_impulse(Vect.new(0, -3000)) if id == Gosu::KbW
+		@world.box_body.add_impulse(Vect.new(0, 3000)) if id == Gosu::KbS
 
-		@world.box_body.add_force_at(Vect.new(100, 0), box.world_verts[0]) if id == Gosu::KbRight
-		@world.box_body.add_force_at(Vect.new(-100, 0), box.world_verts[0]) if id == Gosu::KbLeft
-		@world.box_body.add_force_at(Vect.new(0, -100), box.world_verts[0]) if id == Gosu::KbUp
-		@world.box_body.add_force_at(Vect.new(0, 100), box.world_verts[0]) if id == Gosu::KbDown
+		@world.box_body.add_impulse_at(Vect.new(1000, 0), point) if id == Gosu::KbRight
+		@world.box_body.add_impulse_at(Vect.new(-1000, 0), point) if id == Gosu::KbLeft
+		@world.box_body.add_impulse_at(Vect.new(0, -1000), point) if id == Gosu::KbUp
+		@world.box_body.add_impulse_at(Vect.new(0, 1000), point) if id == Gosu::KbDown
   end
 end
 
