@@ -1,6 +1,7 @@
 module Volt
   class Shape
-    attr_accessor :centroid, :verts, :mass, :body
+    attr_reader :centroid, :verts
+    attr_reader :type, :mass, :body
 
     def initialize
       @verts = []
@@ -33,29 +34,11 @@ module Volt
 
       v_sum * 1.0/(3.0*sum)
     end
-  end
 
-  class Box < Shape
-
-    def initialize(width, height, offset, mass)
-      super()
-
-      @verts << Vect.new(offset.x, offset.y)
-      @verts << Vect.new(width + offset.x, offset.y)
-      @verts << Vect.new(width + offset.x, height + offset.y)
-      @verts << Vect.new(offset.x, height + offset.y)
-
-      @mass = mass
-    end
-  end
-
-  class Poly < Shape
-
-    def initialize(*verts, mass)
-      super()
-
-      @verts = verts
-      @mass = mass
+    def offset(offset)
+      @verts.each do |vert|
+        vert.sub(offset)
+      end
     end
   end
 end

@@ -54,7 +54,7 @@ module Volt
       self.tap { @x *= value; @y *= value }
     end
 
-    def magnitude
+    def mag
       Math.sqrt(@x * @x + @y * @y)
     end
 

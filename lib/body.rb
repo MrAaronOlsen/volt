@@ -17,6 +17,17 @@ module Volt
       @transform = Mat.new_transform(@pos, @angle)
     end
 
+    def recenter
+      offset = cog - @pos
+
+      @shapes.each do |shape|
+        shape.offset(offset)
+      end
+    end
+
+    def rotate(angle)
+      # not sure what to do here yet
+    end
 # Life cycle functions
 
     def update(dt)
@@ -54,6 +65,10 @@ module Volt
 
       r = point - @transform.of_vert(cog)
       @a_vel += r.cross(impulse) * @i_moment
+    end
+
+    def add_rotation(vel)
+      @a_vel += vel
     end
   end
 end

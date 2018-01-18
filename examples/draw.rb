@@ -8,7 +8,7 @@ class Draw
         b.x, b.y, color, z )
     end
 
-    def triangle(points, color, z = 1)
+    def tri(points, color, z = 1)
       Gosu.draw_triangle(
         points[0].x, points[0].y, color,
 			  points[1].x, points[1].y, color,
@@ -21,6 +21,19 @@ class Draw
         points[1].x, points[1].y, color,
 				points[2].x, points[2].y, color,
 				points[3].x, points[3].y, color, z)
+    end
+
+    def poly(points, center, color, z = 1)
+      points.push(points[0])
+
+      points.each_with_index do |point, i|
+        point2 = points[(i+1) % points.count]
+
+        Gosu.draw_triangle(
+          center.x, center.y, color,
+          point.x, point.y, color,
+          point2.x, point2.y, color, z)
+      end
     end
 
     def circle_full(center, radius, color, z = 1)
