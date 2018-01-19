@@ -8,6 +8,7 @@ class Ship
     make_parts
 
     @parts.each { |part| part.set_body(@body) }
+    @body.rotate(90)
     @body.recenter
   end
 
@@ -21,12 +22,17 @@ class Ship
   end
 
   def draw
-    @grey_parts.each { |part| draw_part(part, 0xff_888888) }
+    @grey_parts.each { |part| draw_part(part, 0xff_aaaaaa) }
     @blue_parts.each { |part| draw_part(part, 0xff_0000ff) }
     @red_parts.each { |part| draw_part(part, 0xff_ff0000) }
+
+    Draw.circle_empty(@body.cog, 10, 0xff_ff0000)
+    Draw.circle_full(@body.pos, 5, 0xff_ffffff)
   end
 
   def draw_part(part, color)
+    Draw.circle_full(part.world_centroid, 2, 0xff_ffffff, 2)
+
     Draw.tri(part.world_verts, color, 1) if part.type == "tri"
     Draw.rect(part.world_verts, color, 1) if part.type == "box"
     Draw.poly(part.world_verts, part.world_centroid, color, 1) if part.type == "poly"
@@ -41,11 +47,11 @@ class Ship
   end
 
   def go
-    @body.add_impulse(V.from_angle(@body.angle - 90) * 100)
+    @body.add_impulse(V.from_angle(@body.angle) * 100)
   end
 
   def stop
-    @body.add_force(V.from_angle(@body.angle - 90) * -100) if @body.vel.mag > 0
+    @body.add_force(V.from_angle(@body.angle) * -100) if @body.vel.mag > 0
   end
 
   def right

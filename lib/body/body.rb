@@ -1,5 +1,5 @@
 module Volt
-  class Body < BodyBuilder
+  class Body < BodyTraits
 
     def initialize
       super
@@ -14,20 +14,23 @@ module Volt
     end
 
     def set_transform
-      @transform = Mat.new_transform(@pos, @angle)
+      @trans = Mat.new_transform(@pos, @angle)
     end
 
     def recenter
-      offset = cog - @pos
-
-      @shapes.each do |shape|
-        shape.offset(offset)
-      end
+      transform(Mat.new_translate(@pos - cog))
     end
 
     def rotate(angle)
-      # not sure what to do here yet
+      transform(Mat.new_rotate(angle))
     end
+
+    def transform(matrix)
+      @shapes.each do |shape|
+        shape.transform(matrix)
+      end
+    end
+
 # Life cycle functions
 
     def update(dt)
@@ -52,7 +55,7 @@ module Volt
     def add_force_at(force, vert)
       @forces.add(force)
 
-      r = point - @transform.of_vert(cog)
+      r = point - @trans.transform_vert(cog)
       @torque += r.cross(force)
     end
 
@@ -63,7 +66,7 @@ module Volt
     def add_impulse_at(impulse, point)
       @vel = @vel + (impulse * @i_mass)
 
-      r = point - @transform.of_vert(cog)
+      r = point - @trans.transform_vert(cog)
       @a_vel += r.cross(impulse) * @i_moment
     end
 

@@ -76,14 +76,12 @@ module Volt
     end
 
     # matrix related
-    def transform(translate)
-      vect = translate.transform_vert(self)
-      @x = vect.x
-      @y = vect.y
+    def transform(matrix)
+      vect = matrix.transform_vert(self)
+      @x, @y = vect.x, vect.y
     end
 
     # rotation
-
     def rotate(degree) #rotate self by some degree
       theta = radian(degree)
   		x = @x

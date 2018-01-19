@@ -1,13 +1,12 @@
 module Volt
-  class BodyBuilder
+  class BodyTraits
     # position
     attr_accessor :pos
-    attr_reader :transform
+    attr_reader :trans
     # linear
-    attr_accessor :vel, :acc
+    attr_reader :vel, :acc
     # angular
-    attr_accessor :angle, :a_vel
-    attr_reader :moment, :i_moment
+    attr_reader :angle, :a_vel, :moment, :i_moment
     # forces
     attr_reader :torque, :forces
     # attributes
@@ -21,11 +20,7 @@ module Volt
 
       @shapes = []
       @forces = V.new
-      @transform = Mat.new_identity
-    end
-
-    def set_pos(x, y)
-      @pos = V.new(x, y)
+      @trans = Mat.new_identity
     end
 
     def mass=(mass)

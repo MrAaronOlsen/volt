@@ -15,29 +15,28 @@ module Volt
 
     def world_verts
       @verts.map do |vert|
-        @body.transform.of_vert(vert)
+        @body.trans.transform_vert(vert)
       end
     end
 
     def world_centroid
-      verts = world_verts
       sum = 0.0
       v_sum = Vect.new
 
-      verts.each_with_index do |vert, i|
+      @verts.each_with_index do |vert, i|
       	vert2 = verts[(i+1) % verts.count]
       	cross = vert.cross(vert2)
 
       	sum += cross
-      	v_sum = v_sum + ( (vert + vert2) * cross )
+      	v_sum += (vert + vert2) * cross
       end
 
-      v_sum * 1.0/(3.0*sum)
+      @body.trans.transform_vert(v_sum * 1.0/(3.0*sum))
     end
 
-    def offset(offset)
+    def transform(transform)
       @verts.each do |vert|
-        vert.sub(offset)
+        vert.transform(transform)
       end
     end
   end

@@ -20,8 +20,8 @@ module Volt
         Mat.new(1, 0, vect.x, 0, 1, vect.y)
       end
 
-      def new_rotate(degrees)
-      	rot = V.from_angle(degrees);
+      def new_rotate(angle)
+      	rot = V.from_angle(angle);
       	Mat.new(rot.x, -rot.y, 0.0, rot.y,  rot.x, 0.0)
       end
 
@@ -33,7 +33,7 @@ module Volt
 
 # Math
 
-    def of_vert(vert)
+    def transform_vert(vert)
       V.new(@a*vert.x + @c*vert.y + @tx, @b*vert.x + @d*vert.y + @ty)
     end
 
