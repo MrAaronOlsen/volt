@@ -20,6 +20,20 @@ module Volt
     end
 
     def world_centroid
+      @body.trans.transform_vert(@centroid)
+    end
+
+    def transform(transform)
+      @verts.each do |vert|
+        vert.transform(transform)
+      end
+
+      set_centroid
+    end
+
+  private
+  
+    def set_centroid
       sum = 0.0
       v_sum = Vect.new
 
@@ -31,13 +45,7 @@ module Volt
       	v_sum += (vert + vert2) * cross
       end
 
-      @body.trans.transform_vert(v_sum * 1.0/(3.0*sum))
-    end
-
-    def transform(transform)
-      @verts.each do |vert|
-        vert.transform(transform)
-      end
+      @centroid = v_sum * 1.0/(3.0*sum)
     end
   end
 end
