@@ -9,7 +9,7 @@ module Volt
     # forces
     attr_reader :damp, :forces, :torque
     # shapes
-    attr_reader :shapes, :cog
+    attr_reader :shapes, :cog, :hull
 
     def initialize()
       @pos, @trans = V.new, Mat.new_identity
@@ -39,13 +39,9 @@ module Volt
       @pos = pos
     end
 
-    def cog
-      @trans.transform_vert(@cog)
-    end
-
   # Transform Functions
 
-    def build
+    def init
       transform(Mat.new_identity)
     end
 
@@ -54,7 +50,7 @@ module Volt
     end
 
     def recenter
-      transform(Mat.new_translate(@pos - cog))
+      transform(Mat.new_translate(@pos - trans.transform_vert(cog)))
     end
 
     def rotate(angle)
@@ -63,9 +59,12 @@ module Volt
 
     def add_shape(shape)
       @shapes << shape
+    end
 
+    def build
       set_transform
       set_cog
+      set_hull
     end
 
     private
@@ -78,6 +77,10 @@ module Volt
       set_cog
     end
 
+    def set_transform
+      @trans = Mat.new_transform(@pos, @angle)
+    end
+
     def set_cog
       bot = 0
 
@@ -87,8 +90,8 @@ module Volt
       end / bot
     end
 
-    def set_transform
-      @trans = Mat.new_transform(@pos, @angle)
+    def set_hull
+      @hull = Hull.new(self)
     end
 
     def set_i_mass(mass)

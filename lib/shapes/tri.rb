@@ -2,12 +2,16 @@ module Volt
   class Shape
     class Tri < Shape
 
-      def initialize(mass, v1, v2, v3)
-        super()
+      def initialize
+        super(:tri)
 
+        yield self
+      end
+
+      def set_verts(v1, v2, v3)
         @verts << v1 << v2 << v3
-        @mass = mass
-        @type = "tri"
+
+        set_centroid
       end
     end
   end

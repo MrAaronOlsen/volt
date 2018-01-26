@@ -1,12 +1,12 @@
-require './lib/time_step.rb'
-require './lib/vector.rb'
-require './lib/matrix.rb'
-require './lib/shapes/shape.rb'
-require './lib/shapes/tri.rb'
-require './lib/shapes/box.rb'
-require './lib/shapes/poly.rb'
-require './lib/body/traits.rb'
-require './lib/body/body.rb'
-require './lib/world.rb'
+require 'gosu'
+require 'pry'
+
+Dir["./lib/core/*.rb"].each { |file| require file }
+Dir["./lib/collision/*.rb"].each { |file| require file }
+Dir["./lib/shapes/*.rb"].each { |file| require file }
+Dir["./lib/body/*.rb"].each { |file| require file }
+Dir["./lib/*.rb"].each { |file| require file }
+
+Dir["./canvas/*.rb"].each { |file| require file }
 
 include Volt

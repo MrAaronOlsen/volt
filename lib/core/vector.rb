@@ -97,6 +97,14 @@ module Volt
 
   # Volt level helpers
 
+  # Returns 1 if b is to the right of a in reference to o
+  def determinant(o, a, b)
+    d = (a.y - o.y) * (b.x - a.x) - (b.y - a.y) * (a.x - o.x)
+    return 0 if d.zero?
+
+    d <=> 0
+  end
+
   def radian(degree) #convert a degree to a radian
      degree*(Math::PI/180)
   end

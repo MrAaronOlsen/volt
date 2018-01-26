@@ -1,26 +1,34 @@
 module Volt
   class Shape
-    attr_reader :centroid, :verts
+    attr_reader :centroid, :verts, :radius
     attr_reader :type, :mass, :body
+    attr_reader :color, :fill, :z
 
-    def initialize
-      @verts = []
-      @centroid = Vect.new
+    def initialize(type)
+      @type = type
+      @color, @fill, @z = 0xFF_FFFFFF, true, 1
+      @centroid, @verts = Vect.new, []
     end
 
-    def set_body(body)
+    def body=(body)
       @body = body
       body.add_shape(self)
     end
 
-    def world_verts
-      @verts.map do |vert|
-        @body.trans.transform_vert(vert)
-      end
+    def mass=(mass)
+      @mass = mass
     end
 
-    def world_centroid
-      @body.trans.transform_vert(@centroid)
+    def wire_frame
+      @fill = false
+    end
+
+    def color=(color)
+      @color = color
+    end
+
+    def z=(z)
+      @z = z
     end
 
     def transform(transform)
@@ -32,7 +40,7 @@ module Volt
     end
 
   private
-  
+
     def set_centroid
       sum = 0.0
       v_sum = Vect.new

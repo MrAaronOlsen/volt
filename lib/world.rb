@@ -17,5 +17,9 @@ module Volt
     def add_body(body)
       @bodies << body
     end
+
+    def draw
+      @bodies.each { |body| body.draw }
+    end
   end
 end

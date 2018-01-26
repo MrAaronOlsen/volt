@@ -1,15 +1,15 @@
 module Volt
   class Shape
-    class Poly < Shape
+    class Line < Shape
 
       def initialize
-        super(:poly)
+        super(:line)
 
         yield self
       end
 
-      def set_verts(verts)
-        @verts = verts
+      def set_verts(v1, v2)
+        @verts << v1 << v2
       end
     end
   end

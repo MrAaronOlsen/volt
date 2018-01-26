@@ -1,15 +1,15 @@
 module Volt
   class Shape
-    class Poly < Shape
+    class Circle < Shape
 
       def initialize
-        super(:poly)
+        super(:circle)
 
         yield self
       end
 
-      def set_verts(verts)
-        @verts = verts
+      def radius=(radius)
+        @radius = radius
       end
     end
   end

@@ -4,7 +4,7 @@ module Volt
     def initialize
       super
 
-      yield self
+      yield self if block_given?
     end
 
 # Main Update
@@ -22,6 +22,10 @@ module Volt
       @angle += @a_vel * dt
 
       set_transform
+    end
+
+    def draw
+      @hull.draw
     end
 
 # Lifecycle Methods
