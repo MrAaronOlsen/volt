@@ -9,7 +9,9 @@ module Volt
     # forces
     attr_reader :damp, :forces, :torque
     # shapes
-    attr_reader :shapes, :cog, :hull
+    attr_reader :shapes, :cog
+    # colision shapes
+    attr_reader :hull, :bounding
 
     def initialize()
       @pos, @trans = V.new, Mat.new_identity
@@ -43,18 +45,22 @@ module Volt
 
     def init
       transform(Mat.new_identity)
+      build
     end
 
     def offset(vect)
       transform(Mat.new_translate(vect))
+      build
     end
 
     def recenter
       transform(Mat.new_translate(@pos - trans.transform_vert(cog)))
+      build
     end
 
     def rotate(angle)
       transform(Mat.new_rotate(angle))
+      build
     end
 
     def add_shape(shape)
@@ -65,6 +71,7 @@ module Volt
       set_transform
       set_cog
       set_hull
+      set_bounding
     end
 
     private
@@ -92,6 +99,10 @@ module Volt
 
     def set_hull
       @hull = Hull.new(self)
+    end
+
+    def set_bounding
+      @bounding = BroadPhase::Bounding.new(hull)
     end
 
     def set_i_mass(mass)

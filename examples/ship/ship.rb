@@ -1,14 +1,9 @@
 class Ship
   attr_reader :body, :parts
-  attr_reader :grey_parts, :blue_parts, :red_parts
 
   def initialize
     @body = new_ship
-    make_parts
-
-    @body.build
-    @body.rotate(90)
-    @body.recenter
+    build
   end
 
   def new_ship
@@ -20,12 +15,13 @@ class Ship
 		end
   end
 
-  def make_parts
-    @grey_parts = [nose, fusilage, l_wing, r_wing]
-    @blue_parts = [cockpit]
-    @red_parts = [l_wing_tip, r_wing_tip, l_engine, r_engine]
+  def build
+    @parts = [ nose, fusilage, l_wing,
+      r_wing, cockpit, l_wing_tip,
+      r_wing_tip, l_engine, r_engine ]
 
-    @parts = [@grey_parts, @blue_parts, @red_parts].flatten
+    @body.rotate(90)
+    @body.recenter
   end
 
   def go
@@ -51,7 +47,7 @@ class Ship
       poly.body = @body
       poly.mass = 3
       poly.set_verts([V.new(50, 0), V.new(60, 0), V.new(70, 20), V.new(40, 20)])
-      poly.color = Canvas::Color.red
+      poly.color = Canvas::Color.orange
     end
   end
 
@@ -69,7 +65,7 @@ class Ship
       rect.body = @body
       rect.mass = 4
       rect.set_verts(30, 60, V.new(40, 30))
-      rect.color = Canvas::Color.blue
+      rect.color = Canvas::Color.orange
     end
   end
 

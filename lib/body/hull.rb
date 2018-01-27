@@ -1,10 +1,11 @@
 module Volt
   class Hull
-    attr_reader :body, :verts
+    attr_reader :body, :verts, :count
 
     def initialize(body)
       @body = body
       @verts = wrap(all_verts)
+      @count = @verts.count
     end
 
     def all_verts

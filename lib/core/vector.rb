@@ -47,7 +47,7 @@ module Volt
     end
 
     def /(value)
-      Vector.new(@x / value, @y / value)
+      Vector.new(@x / value, @y / value) unless value.zero?
     end
 
     def scale(value)
@@ -56,6 +56,10 @@ module Volt
 
     def mag
       Math.sqrt(@x * @x + @y * @y)
+    end
+
+    def distance(vect)
+      (self - vect).mag
     end
 
     def normalize

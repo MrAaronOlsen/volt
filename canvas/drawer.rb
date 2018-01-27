@@ -19,16 +19,30 @@ module Canvas
     end
 
     def render_debug(body)
-      Draw.shape[:poly].call(
-        Sprite.new do |sprite|
-          sprite.verts = body.hull.verts
-          sprite.center = body.cog
-          sprite.trans = body.trans
-          sprite.fill = false
-          sprite.color = Color.yellow
-          sprite.z = 1
-        end
-      )
+      Draw.shape[:poly].call(hull_sprite(body))
+      Draw.shape[:circle].call(bounding_sprite(body))
+    end
+
+    def hull_sprite(body)
+      Sprite.new do |sprite|
+        sprite.verts = body.hull.verts
+        sprite.center = body.cog
+        sprite.trans = body.trans
+        sprite.fill = false
+        sprite.color = Color.yellow
+        sprite.z = 1
+      end
+    end
+
+    def bounding_sprite(body)      
+      Sprite.new do |sprite|
+        sprite.center = body.bounding.b_circle.center
+        sprite.radius = body.bounding.b_circle.radius
+        sprite.trans = body.trans
+        sprite.fill = false
+        sprite.color = Color.green
+        sprite.z = 1
+      end
     end
   end
 end
