@@ -14,7 +14,7 @@ module Volt
 
         points.each_with_index do |point_a, i|
           if @b_circle.nil? || !@b_circle.contains_point(point_a)
-            @b_circle = make_circle_one_point(points[0, i+1], point_a)
+            @b_circle = make_circle_one_point(points[0, i], point_a)
           end
         end
       end
@@ -27,7 +27,7 @@ module Volt
             if circle.radius.zero?
               circle = make_a_diameter(point_a, point_b)
             else
-              circle = make_circle_two_points(points[0, i+1], point_a, point_b)
+              circle = make_circle_two_points(points[0, i], point_a, point_b)
             end
           end
         end
