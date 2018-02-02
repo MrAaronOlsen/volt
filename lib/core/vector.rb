@@ -97,6 +97,10 @@ module Volt
     def print
       puts "X: #{@x}, Y:#{@y}"
     end
+
+    def to_s
+      "X: #{@x}, Y: #{@y}"
+    end
   end
 
   # Volt level helpers

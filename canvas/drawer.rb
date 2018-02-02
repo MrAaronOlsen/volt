@@ -34,10 +34,10 @@ module Canvas
       end
     end
 
-    def bounding_sprite(body)      
+    def bounding_sprite(body)
       Sprite.new do |sprite|
-        sprite.center = body.bounding.b_circle.center
-        sprite.radius = body.bounding.b_circle.radius
+        sprite.center = body.bounding.circle.center
+        sprite.radius = body.bounding.circle.radius
         sprite.trans = body.trans
         sprite.fill = false
         sprite.color = Color.green

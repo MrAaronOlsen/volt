@@ -1,14 +1,14 @@
 class Ship
   attr_reader :body, :parts
 
-  def initialize
-    @body = new_ship
+  def initialize(pos)
+    @body = new_ship(pos)
     build
   end
 
-  def new_ship
+  def new_ship(pos)
     Body.new do |b|
-			b.pos = V.new(600, 600)
+			b.pos = pos
 			b.damp = 0.98
 			b.mass = 10
 			b.moment = 3000
@@ -20,9 +20,8 @@ class Ship
       r_wing, cockpit, l_wing_tip,
       r_wing_tip, l_engine, r_engine ]
 
-    @body.init
-    # @body.rotate(90)
-    # @body.recenter
+    @body.rotate(90)
+    @body.recenter
   end
 
   def go

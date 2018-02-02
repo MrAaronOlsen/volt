@@ -3,10 +3,17 @@ class Space
 
   def initialize
     @world = World.new
-    @ship = Ship.new
-    @drawer = Canvas::Drawer.new
 
-    @world.add_body(@ship.body)
+    @ships = [
+      Ship.new(V.new(600, 600)),
+      Ship.new(V.new(100, 600)),
+      Ship.new(V.new(900, 200))
+    ]
+
+    @bodies = @ships.map { |ship| ship.body }
+
+    @world.add_bodies(@bodies)
+    @drawer = Canvas::Drawer.new
   end
 
   def update(dt)
@@ -15,13 +22,13 @@ class Space
   end
 
   def draw
-    @drawer.render([@ship.body])
+    @drawer.render(@world.bodies)
   end
 
   def move?
-    @ship.go if Gosu::button_down?(Gosu::KbUp)
-    @ship.stop if Gosu::button_down?(Gosu::KbDown)
-    @ship.left if Gosu::button_down?(Gosu::KbLeft)
-    @ship.right if Gosu::button_down?(Gosu::KbRight)
+    @ships[0].go if Gosu::button_down?(Gosu::KbUp)
+    @ships[0].stop if Gosu::button_down?(Gosu::KbDown)
+    @ships[0].left if Gosu::button_down?(Gosu::KbLeft)
+    @ships[0].right if Gosu::button_down?(Gosu::KbRight)
   end
 end

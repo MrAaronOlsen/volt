@@ -1,7 +1,7 @@
 module Volt
   class BroadPhase
     class Bounding
-      attr_reader :hull, :b_circle
+      attr_reader :hull, :circle
 
       def initialize(hull)
         @hull = hull
@@ -13,14 +13,14 @@ module Volt
         points = Array.new(verts)
 
         points.each_with_index do |point_a, i|
-          if @b_circle.nil? || !@b_circle.contains_point(point_a)
-            @b_circle = make_circle_one_point(points[0, i], point_a)
+          if @circle.nil? || !@circle.contains_point(point_a)
+            @circle = make_circle_one_point(points[0, i], point_a)
           end
         end
       end
 
       def make_circle_one_point(points, point_a)
-        circle = BCircle.new(point_a, 0)
+        circle = Circle.new(point_a, 0)
 
         points.each_with_index do |point_b, i|
           if !circle.contains_point(point_b)
@@ -73,7 +73,7 @@ module Volt
         center = (point_a + point_b) / 2
         radius = [center.distance(point_a), center.distance(point_b)].max
 
-        BCircle.new(center, radius)
+        Circle.new(center, radius)
       end
 
       def make_a_circumcircle(a, b, c)
@@ -99,11 +99,11 @@ module Volt
         center = V.new(ox + x, oy + y);
     		radius = [[center.distance(a), center.distance(b)].max, center.distance(c)].max
 
-        BCircle.new(center, radius);
+        Circle.new(center, radius);
       end
     end
 
-    class BCircle
+    class Circle
       attr_reader :center, :radius
       attr_reader :epsilon
 
