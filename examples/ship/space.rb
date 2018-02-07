@@ -1,23 +1,27 @@
 class Space
-  attr_reader :ship, :world, :drawer
+  attr_reader :ships, :player, :world, :drawer
 
   def initialize
     @world = World.new
 
+    @player = Ship.new(V.new(600, 600))
+
     @ships = [
-      Ship.new(V.new(600, 600)),
       Ship.new(V.new(100, 600)),
-      Ship.new(V.new(900, 200))
+      Ship.new(V.new(900, 200)),
+      @player
     ]
+
+    @player.body.scale(1.5, 1.5)
 
     @bodies = @ships.map { |ship| ship.body }
 
     @world.add_bodies(@bodies)
-    @drawer = Canvas::Drawer.new
+    @drawer = Canvas::Drawer.new(debug: true)
   end
 
   def update(dt)
-    move?
+    move_player?
     @world.update(dt)
   end
 
@@ -25,10 +29,14 @@ class Space
     @drawer.render(@world.bodies)
   end
 
-  def move?
-    @ships[0].go if Gosu::button_down?(Gosu::KbUp)
-    @ships[0].stop if Gosu::button_down?(Gosu::KbDown)
-    @ships[0].left if Gosu::button_down?(Gosu::KbLeft)
-    @ships[0].right if Gosu::button_down?(Gosu::KbRight)
+  def button_down?(id)
+    @drawer.flip_debug if id == Gosu::KbD
+  end
+
+  def move_player?
+    @player.go if Gosu.button_down?(Gosu::KbUp)
+    @player.stop if Gosu.button_down?(Gosu::KbDown)
+    @player.left if Gosu.button_down?(Gosu::KbLeft)
+    @player.right if Gosu.button_down?(Gosu::KbRight)
   end
 end

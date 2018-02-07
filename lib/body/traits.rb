@@ -63,6 +63,11 @@ module Volt
       build
     end
 
+    def scale(x, y)
+      transform(Mat.new_scale(x, y))
+      build
+    end
+
     def add_shape(shape)
       @shapes << shape
     end

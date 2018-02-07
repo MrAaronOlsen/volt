@@ -3,11 +3,15 @@ module Canvas
     attr_reader :debug
 
     def initialize(debug: false)
-      @debug = :debug
+      @debug = debug
     end
 
     def render(bodies)
       bodies.each { |body| render_body(body) }
+    end
+
+    def flip_debug
+      @debug ? (@debug = false) : (@debug = true)
     end
 
     def render_body(body)

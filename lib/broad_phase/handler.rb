@@ -1,43 +1,35 @@
 module Volt
   class BroadPhase
     class Handler
+      attr_reader :collisions
 
       def query(bodies)
-        i = 0
+        @collisions = []
 
-        until i == bodies.count
-          j = i + 1
-
-          while j < bodies.count
-            puts "Checking #{i} and #{j} out of #{bodies.count}"
-
-            if collide?(bodies[i], bodies[j])
-              puts "Collide!!!"
-            end
-            j += 1
-          end
-
-          i += 1
+        bodies.each_with_index do |body, i|
+          query_this(body, bodies[i+1..-1])
         end
       end
 
-      def collide?(body1, body2)
-        center1 = body1.trans.transform_vert(body1.bounding.circle.center)
-        radius1 = body1.bounding.circle.radius
-        center2 = body2.trans.transform_vert(body2.bounding.circle.center)
-        radius2 = body2.bounding.circle.radius
+      def query_this(body1, bodies)
+        bodies.each do |body2|
+          add_collision(body1, body2) if collide?(body1, body2)
+        end
+      end
 
-        puts "Center 1 = #{center1}"
-        puts "Center 2 = #{center2}"
+      def add_collision(body1, body2)
+        @collisions << Collision.new(body1, body2)
+      end
+
+      def collide?(body1, body2)
+        center1 = body1.bounding.world_center
+        radius1 = body1.bounding.radius
+        center2 = body2.bounding.world_center
+        radius2 = body2.bounding.radius
 
         distance = (center1 - center2).mag
 
-        puts "Distance: #{distance}"
-        if (distance / 2) < radius1 || (distance / 2) < radius2
-          true
-        else
-          false
-        end
+        distance - radius1 <= radius2 || distance - radius2 <= radius1
       end
     end
   end

@@ -9,6 +9,14 @@ module Volt
         make_circle(@hull.verts)
       end
 
+      def world_center
+        @hull.body.trans.transform_vert(@circle.center)
+      end
+
+      def radius
+        @circle.radius
+      end
+
       def make_circle(verts)
         points = Array.new(verts)
 
