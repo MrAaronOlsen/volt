@@ -1,5 +1,6 @@
 require 'gosu'
 require 'pry'
+require 'colorize'
 
 Dir["./lib/core/*.rb"].each { |file| require file }
 Dir["./lib/broad_phase/*.rb"].each { |file| require file }

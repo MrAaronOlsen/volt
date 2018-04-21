@@ -22,12 +22,15 @@ module Volt
       end
 
       def collide?(body1, body2)
-        center1 = body1.bounding.world_center
-        radius1 = body1.bounding.radius
-        center2 = body2.bounding.world_center
-        radius2 = body2.bounding.radius
+        b1 = body1.bounding
+        b2 = body2.bounding
 
-        distance = (center1 - center2).mag
+        center1 = body1.trans.transform_vert(b1.center)
+        radius1 = b1.radius
+        center2 = body2.trans.transform_vert(b2.center)
+        radius2 = b2.radius
+
+        distance = center1.distance(center2)
 
         distance - radius1 <= radius2 || distance - radius2 <= radius1
       end

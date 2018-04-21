@@ -1,42 +1,39 @@
 module Volt
   class BroadPhase
-    class Bounding
-      attr_reader :circle, :tab, :color
+    class BoundingOld
+      attr_reader :circle
 
       def initialize(verts)
-        return if verts.count.zero?
-
-        @circle = build_bounding(verts)
+        new_circle(verts)
       end
 
-      def build_bounding(points)
-        circle = solve_simple(points)
-        return circle unless circle.nil?
+      def center(trans = Mat.new_identity)
+        trans.transform_vert(@circle.center)
+      end
 
+      def radius
+        @circle.radius
+      end
+
+      def new_circle(points)
         points.each_with_index do |point_a, i|
-          if circle.nil? || !circle.contains_point(point_a)
-            circle = circle_one_point(points[0, i], point_a)
+          if @circle.nil? || !@circle.contains_point(point_a)
+            @circle = circle_one_point(points[0, i], point_a)
           end
         end
-
-        circle
       end
 
       def circle_one_point(points, point_a)
         circle = Circle.new(point_a, 0)
 
         points.each_with_index do |point_b, i|
-          if circle.contains_point(point_b)
-            next
-          end
+          next if circle.contains_point(point_b)
 
           if circle.radius.zero?
             circle = diameter(point_a, point_b)
           else
             circle = circle_two_points(points[0, i], point_a, point_b)
           end
-
-          display
         end
 
         circle
@@ -48,39 +45,31 @@ module Volt
 
         pq = point_b - point_a
 
-        points.each do |point_c|
-          if circle.contains_point(point_c)
-            next
-          end
+        points.each do |point|
+          next if circle.contains_point(point)
 
-          cross = pq.cross(point_c - point_a)
-          c = circumcircle(point_a, point_b, point_c)
+          cross = pq.cross(point - point_a)
+          c = circumcircle(point_a, point_b, point)
 
-          if c.nil?
-            next
-          end
+          next if c.nil?
 
-          if (cross > 0 && (left == nil || pq.cross(c.center - point_c) > pq.cross(left.center - point_c)))
+          if (cross > 0 && (left == nil || pq.cross(c.center - point) > pq.cross(left.center - point)))
             left = c
           end
 
-          if (cross < 0 && (right == nil || pq.cross(c.center - point_c) < pq.cross(right.center - point_c)))
+          if (cross < 0 && (right == nil || pq.cross(c.center - point) < pq.cross(right.center - point)))
             right = c
           end
         end
 
         if (left == nil && right == nil)
           return circle
-        elsif (left == nil)
+		    elsif (left == nil)
           return right
         elsif (right == nil)
           return left
         else
-          if left.radius <= right.radius
-            return left
-          else
-            return right
-          end
+			    return left.radius <= right.radius ? left : right;
         end
       end
 
@@ -114,27 +103,6 @@ module Volt
         radius = center.distance(a)
 
         Circle.new(center, radius);
-      end
-
-      def solve_simple(points)
-        case points.count
-        when 1
-          Circle.new(points[0], 0)
-        when 2
-          diameter(points[0], points[1])
-        when 3
-          circumcircle(points[0], points[1], points[2])
-        else
-          nil
-        end
-      end
-
-      def center
-        @circle.center
-      end
-
-      def radius
-        @circle.radius
       end
 
       def to_s

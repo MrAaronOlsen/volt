@@ -8,5 +8,3 @@ require 'pry'
 
 require './volt.rb'
 include Volt
-
-require_relative 'test_body.rb'
