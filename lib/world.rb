@@ -1,16 +1,16 @@
 module Volt
   class World
-    attr_accessor :bodies, :broad_phase
+    attr_accessor :bodies, :collision
 
     def initialize
       @bodies = []
-      @broad_phase = BroadPhase::Handler.new
+      @collision = Collision::Handler.new
     end
 
     def update(dt)
       return if dt <= 0.0
 
-      @broad_phase.query(bodies)
+      @collision.query(bodies)
 
       bodies.each do |body|
         body.update(dt)

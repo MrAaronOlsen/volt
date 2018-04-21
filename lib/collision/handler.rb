@@ -1,5 +1,5 @@
 module Volt
-  class BroadPhase
+  class Collision
     class Handler
       attr_reader :collisions
 
@@ -18,7 +18,7 @@ module Volt
       end
 
       def add_collision(body1, body2)
-        @collisions << Collision.new(body1, body2)
+        @collisions << Contact.new(body1, body2)
       end
 
       def collide?(body1, body2)
