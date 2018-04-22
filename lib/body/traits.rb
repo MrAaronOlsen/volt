@@ -113,7 +113,7 @@ module Volt
     end
 
     def set_bounding
-      @bounding = BroadPhase::Bounding.new(hull.verts)
+      @bounding = Bounding.new(hull.verts)
     end
 
     def set_i_mass(mass)
