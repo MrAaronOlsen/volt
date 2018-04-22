@@ -53,7 +53,11 @@ module Volt
       	v_sum += (vert + vert2) * cross
       end
 
-      @centroid = v_sum * 1.0/(3.0*sum)
+      if (sum.zero?)
+        @centroid = v_sum
+      else
+        @centroid = v_sum * 1.0/(3.0*sum)
+      end
     end
   end
 end

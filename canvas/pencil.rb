@@ -14,17 +14,17 @@ module Canvas
             if fill
         			tri([v1, v2, center], color, true, z)
             else
-              line(v1, v2, color, z )
+              line([v1, v2], color, z )
             end
 
       			axis1.rotate(6)
       		end
       end
 
-      def line(a, b, color, z = 1)
+      def line(points, color, z = 1)
         Gosu.draw_line(
-          a.x, a.y, color,
-          b.x, b.y, color, z )
+          points[0].x, points[0].y, color,
+          points[1].x, points[1].y, color, z )
       end
 
       def tri(points, color, fill, z = 1)
@@ -59,7 +59,7 @@ module Canvas
           if fill
             tri([center, point, point2], color, true, z)
           else
-            line(point, point2, color, z )
+            line([point, point2], color, z )
           end
         end
       end
@@ -70,7 +70,7 @@ module Canvas
         points.each_with_index do |point, i|
           point2 = points[(i+1) % points.count]
 
-          line(point, point2, color, z)
+          line([point, point2], color, z)
         end
       end
     end

@@ -16,8 +16,9 @@ class Ball
   end
 
   def build
-    @parts = [circle]
-    @body.build
+    @parts = [circle, line]
+
+    @body.rotate(90)
   end
 
   def go
@@ -41,7 +42,7 @@ class Ball
   def circle
     Shape::Circle.new do |circ|
       circ.body = @body
-      circ.mass = 3
+      circ.mass = 5
       circ.set_verts(V.new(0, 0), 100)
       circ.color = Canvas::Color.orange
     end
@@ -50,8 +51,8 @@ class Ball
   def line
     Shape::Line.new do |line|
       line.body = @body
-      line.mass = 1
-      line.set_verts(30, 20, V.new(40, 20))
+      line.mass = 0
+      line.set_verts(V.new(0, 0), V.new(0, -100))
       line.color = Canvas::Color.blue
     end
   end

@@ -9,7 +9,7 @@ module Volt
       end
 
       def set_verts(v1, v2)
-        @verts << v1 << v2
+        @verts = [v1, v2]
       end
     end
   end
