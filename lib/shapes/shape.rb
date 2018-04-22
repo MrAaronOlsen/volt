@@ -7,7 +7,7 @@ module Volt
     def initialize(type)
       @type = type
       @color, @fill, @z = 0xFF_FFFFFF, true, 1
-      @centroid, @verts = Vect.new, []
+      @mass, @centroid, @verts = 0, Vect.new, []
     end
 
     def body=(body)

@@ -24,10 +24,6 @@ module Volt
       set_transform
     end
 
-    def draw
-      @hull.draw
-    end
-
 # Lifecycle Methods
 
     def add_force(force)

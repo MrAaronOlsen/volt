@@ -1,10 +1,16 @@
 module Volt
   class Vector
     attr_reader :x, :y
+    attr_reader :name
 
     def initialize(x = 0.0, y = 0.0)
       @x = x.to_f
       @y = y.to_f
+    end
+
+    def with_name(name)
+      @name = name
+      self
     end
 
     # Handy constructors
@@ -54,6 +60,10 @@ module Volt
       self.tap { @x *= value; @y *= value }
     end
 
+    def cheap_mag
+      @x * @x + @y * @y
+    end
+
     def mag
       Math.sqrt(@x * @x + @y * @y)
     end
@@ -94,8 +104,12 @@ module Volt
   	  @y = x*Math.sin(theta) + @y*Math.cos(theta)
   	end
 
-    def print
-      puts "X: #{@x}, Y:#{@y}"
+    def to_s
+      unless @name.nil?
+        "#{@name} | X: #{@x}, Y: #{@y}"
+      else
+        "X: #{@x}, Y: #{@y}"
+      end
     end
   end
 

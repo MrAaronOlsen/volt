@@ -22,8 +22,10 @@ class Window < Gosu::Window
 		@space.draw
 	end
 
-	def button_down(id)
-		close if id == Gosu::KbEscape
+	def button_down(button)
+		close if button == Gosu::KbEscape
+
+		@space.button_down?(button)
   end
 end
 

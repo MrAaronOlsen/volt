@@ -1,37 +1,31 @@
 module Volt
   class Hull
-    attr_reader :body, :verts, :count
+    attr_reader :verts
 
-    def initialize(body)
-      @body = body
-      @verts = wrap(all_verts)
-      @count = @verts.count
+    def initialize(points)
+      @verts = wrap_hull(sorted(points))
     end
 
-    def all_verts
-      @body.shapes.reduce([]) do |verts, shape|
-        verts += shape.verts
-      end
+    def sorted(points)
+      points.sort_by { |point| point.x }
     end
 
-    def wrap(v)
-      hull = []
-      total = v.count
-      o = 0
+    def wrap_hull(points)
+      total = points.count
+      a = 0
 
-      loop do
-        hull << v[o]
-        b = (o + 1) % total
+      Array.new.tap do |hull|
+        loop do
+          hull << points[a]
+          b = (a + 1) % total
 
-        v.each_with_index do |vert, a|
-          b = a if determinant(v[o], v[a], v[b]) == 1
+          points.each_index do |c|
+            b = c if determinant(points[a], points[b], points[c]) == 1
+          end
+
+           b.zero? ? break : a = b
         end
-
-        o = b
-        break if o.zero?
       end
-
-      hull
     end
   end
 end

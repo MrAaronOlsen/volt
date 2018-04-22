@@ -41,6 +41,12 @@ module Volt
       @pos = pos
     end
 
+    def all_verts
+      @shapes.reduce([]) do |all, shape|
+        all + shape.verts
+      end
+    end
+
   # Transform Functions
 
     def init
@@ -60,6 +66,11 @@ module Volt
 
     def rotate(angle)
       transform(Mat.new_rotate(angle))
+      build
+    end
+
+    def scale(x, y)
+      transform(Mat.new_scale(x, y))
       build
     end
 
@@ -98,11 +109,11 @@ module Volt
     end
 
     def set_hull
-      @hull = Hull.new(self)
+      @hull = Hull.new(all_verts)
     end
 
     def set_bounding
-      @bounding = BroadPhase::Bounding.new(hull)
+      @bounding = BroadPhase::Bounding.new(hull.verts)
     end
 
     def set_i_mass(mass)

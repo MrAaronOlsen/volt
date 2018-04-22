@@ -17,12 +17,16 @@ module Volt
       end
 
       def new_translate(vect)
-        Mat.new(1, 0, vect.x, 0, 1, vect.y)
+        Mat.new(1.0, 0.0, vect.x, 0.0, 1.0, vect.y)
       end
 
       def new_rotate(angle)
       	rot = V.from_angle(angle);
       	Mat.new(rot.x, -rot.y, 0.0, rot.y,  rot.x, 0.0)
+      end
+
+      def new_scale(x, y)
+        Mat.new(x.to_f, 0.0, 0.0, 0.0, y.to_f, 0.0)
       end
 
       def new_transform(vect, angle)
