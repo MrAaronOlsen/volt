@@ -1,27 +1,23 @@
 module Volt
   class Collision
     class Handler
-      attr_reader :collisions
+      attr_reader :contacts
 
       def query(bodies)
-        @collisions = []
+        @contacts = []
 
         bodies.each_with_index do |body, i|
-          query_this(body, bodies[i+1..-1])
+          query_broad(body, bodies[i+1..-1])
         end
       end
 
-      def query_this(body1, bodies)
+      def query_broad(body1, bodies)
         bodies.each do |body2|
-          add_collision(body1, body2) if collide?(body1, body2)
+          @contacts << Contact.new(body1, body2) if broad_collide?(body1, body2)
         end
       end
 
-      def add_collision(body1, body2)
-        @collisions << Contact.new(body1, body2)
-      end
-
-      def collide?(body1, body2)
+      def broad_collide?(body1, body2)
         b1 = body1.bounding
         b2 = body2.bounding
 
@@ -33,6 +29,10 @@ module Volt
         distance = center1.distance(center2)
 
         distance - radius1 <= radius2 || distance - radius2 <= radius1
+      end
+
+      def narrow_collide?
+
       end
     end
   end
