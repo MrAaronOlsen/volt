@@ -13,8 +13,6 @@ module Volt
         @verts << Vect.new(width + offset.x, offset.y)
         @verts << Vect.new(width + offset.x, height + offset.y)
         @verts << Vect.new(offset.x, height + offset.y)
-
-        set_centroid
       end
     end
   end

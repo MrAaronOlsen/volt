@@ -19,8 +19,8 @@ module Volt
       @mass = mass
     end
 
-    def wire_frame
-      @fill = false
+    def fill=(fill)
+      @fill = fill
     end
 
     def color=(color)

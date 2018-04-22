@@ -22,6 +22,14 @@ module Volt
 
         Vector.new(Math.cos(theta), Math.sin(theta))
       end
+
+      # Makes a vector and rotates it by the given angle (in degrees)
+      def with_rotation(x, y, degree)
+        vect = Vector.new(x, y)
+        vect.rotate(degree)
+
+        vect
+      end
     end
 
     def zero!
@@ -102,6 +110,8 @@ module Volt
 
       @x = x*Math.cos(theta) - @y*Math.sin(theta)
   	  @y = x*Math.sin(theta) + @y*Math.cos(theta)
+
+      self
   	end
 
     def to_s
