@@ -1,5 +1,5 @@
 module Volt
-  class Collision
+  module Collision
     class Contact
       attr_reader :body1, :body2
 

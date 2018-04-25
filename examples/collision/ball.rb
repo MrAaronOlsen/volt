@@ -2,11 +2,11 @@ class Ball
   attr_reader :body, :parts
 
   def initialize(pos)
-    @body = new_ship(pos)
+    @body = new_ball(pos)
     build
   end
 
-  def new_ship(pos)
+  def new_ball(pos)
     Body.new do |b|
 			b.pos = pos
 			b.damp = 0.98

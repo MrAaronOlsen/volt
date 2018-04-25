@@ -85,7 +85,7 @@ module Volt
 
     def diameter(a, b)
       center = (a + b) / 2
-      radius = [center.distance(a), center.distance(b)].max
+      radius = [center.distance_to(a), center.distance_to(b)].max
 
       Circle.new(center, radius)
     end
@@ -110,7 +110,7 @@ module Volt
       y = (a2 * (cx - bx) + b2 * (ax - cx) + c2 * (bx - ax)) * d;
 
       center = V.new(ox + x, oy + y);
-      radius = center.distance(a)
+      radius = center.distance_to(a)
 
       Circle.new(center, radius);
     end
@@ -156,7 +156,7 @@ module Volt
     end
 
     def contains_point(point)
-      @center.distance(point) <= @radius * epsilon
+      @center.distance_to(point) <= @radius * epsilon
     end
 
     def to_s

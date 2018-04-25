@@ -1,7 +1,12 @@
 module Volt
-  class Collision
+  module Collision
     class Handler
       attr_reader :contacts
+      attr_reader :map
+
+      def initialize
+        @map = Handlers::Map.new
+      end
 
       def query(bodies)
         @contacts = []
@@ -9,6 +14,8 @@ module Volt
         bodies.each_with_index do |body, i|
           query_broad(body, bodies[i+1..-1])
         end
+
+        narrow_collide
       end
 
       def query_broad(body1, bodies)
@@ -26,13 +33,23 @@ module Volt
         center2 = body2.trans.transform_vert(b2.center)
         radius2 = b2.radius
 
-        distance = center1.distance(center2)
+        distance = center1.distance_to(center2)
 
         distance - radius1 <= radius2 || distance - radius2 <= radius1
       end
 
-      def narrow_collide?
+      def narrow_collide
+        @contacts.each do |contact|
+          contact.body1.shapes.each do |shape1|
+            contact.body2.shapes.each do |shape2|
+              handler = @map.get_handler[shape1.type][shape2.type]
 
+              if !handler.nil?
+                handler.query(shape1, shape2)
+              end
+            end
+          end
+        end
       end
     end
   end

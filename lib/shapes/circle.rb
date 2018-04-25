@@ -10,9 +10,10 @@ module Volt
 
       def set_verts(center, radius)
         @radius = radius
+        @center = center
 
-        x = center.x - radius
-        y = center.y
+        x = @center.x - radius
+        y = @center.y
 
         @verts = [
           V.with_rotation(x, y, 45),

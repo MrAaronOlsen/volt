@@ -1,6 +1,6 @@
 module Volt
   class Shape
-    attr_reader :centroid, :verts, :radius
+    attr_reader :centroid, :center, :verts, :radius
     attr_reader :type, :mass, :body
     attr_reader :color, :fill, :z
 
@@ -8,6 +8,10 @@ module Volt
       @type = type
       @color, @fill, @z = 0xFF_FFFFFF, true, 1
       @mass, @centroid, @verts = 0, Vect.new, []
+    end
+
+    def world_position(vect)
+      @body.trans.transform_vert(vect)
     end
 
     def body=(body)

@@ -5,8 +5,9 @@ class Space
     @world = World.new
 
     @player = Ball.new(V.new(600, 600))
+    @static = Ball.new(V.new(100, 600))
 
-    @world.add_bodies([@player.body])
+    @world.add_bodies([@player.body, @static.body])
     @drawer = Canvas::Drawer.new(debug: true)
   end
 

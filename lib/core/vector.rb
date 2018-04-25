@@ -76,7 +76,7 @@ module Volt
       Math.sqrt(@x * @x + @y * @y)
     end
 
-    def distance(vect)
+    def distance_to(vect)
       (self - vect).mag
     end
 
