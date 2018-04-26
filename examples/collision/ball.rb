@@ -10,7 +10,7 @@ class Ball
     Body.new do |b|
 			b.pos = pos
 			b.damp = 0.98
-			b.mass = 10
+			b.mass = 5
 			b.moment = 3000
 		end
   end
@@ -42,7 +42,7 @@ class Ball
   def circle
     Shape::Circle.new do |circ|
       circ.body = @body
-      circ.mass = 5
+      circ.mass = 1
       circ.set_verts(V.new(0, 0), 100)
       circ.color = Canvas::Color.orange
     end

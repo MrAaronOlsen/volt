@@ -4,13 +4,14 @@ module Volt
 
     def initialize
       @bodies = []
-      @collision = Collision::Handler.new
+      @Arbitor = Collision::Arbitor.new
     end
 
     def update(dt)
       return if dt <= 0.0
 
-      @collision.query(bodies)
+      @Arbitor.query(bodies)
+      @Arbitor.resolve(dt)
 
       bodies.each do |body|
         body.update(dt)

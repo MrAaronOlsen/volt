@@ -81,8 +81,8 @@ module Volt
     end
 
     def normalize
-      m = magnitude
-      unless m.zero? then @x/=m; @y/=m end
+      m = mag
+      self.tap { unless m.zero? then @x/=m; @y/=m end }
     end
 
     def dot(vect)

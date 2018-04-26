@@ -33,7 +33,7 @@ module Volt
     def add_force_at(force, vert)
       @forces.add(force)
 
-      r = point - @trans.transform_vert(cog)
+      r = point - world_position(cog)
       @torque += r.cross(force)
     end
 
@@ -44,12 +44,18 @@ module Volt
     def add_impulse_at(impulse, point)
       @vel += impulse * @i_mass
 
-      r = point - @trans.transform_vert(cog)
+      r = point - world_position(cog)
       @a_vel += r.cross(impulse) * @i_moment
     end
 
     def add_rotation(vel)
       @a_vel += vel
+    end
+
+# Transform Methods
+
+    def world_position(vert)
+      @trans.transform_vert(vert)
     end
   end
 end

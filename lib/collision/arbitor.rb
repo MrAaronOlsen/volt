@@ -1,7 +1,7 @@
 module Volt
   module Collision
-    class Handler
-      attr_reader :contacts
+    class Arbitor
+      attr_reader :broad_contacts
       attr_reader :map
 
       def initialize
@@ -16,6 +16,12 @@ module Volt
         end
 
         narrow_collide
+      end
+
+      def resolve(dt)
+        @contacts.each do |contact|
+          contact.resolve(dt)
+        end
       end
 
       def query_broad(body1, bodies)
@@ -45,7 +51,9 @@ module Volt
               handler = @map.get_handler[shape1.type][shape2.type]
 
               if !handler.nil?
-                handler.query(shape1, shape2)
+                if !handler.query(shape1, shape2, contact)
+                  @contacts.delete(contact)
+                end
               end
             end
           end
