@@ -1,11 +1,12 @@
 module Volt
   class Shape
     attr_reader :centroid, :center, :verts, :radius
-    attr_reader :type, :mass, :body
+    attr_reader :type, :static, :mass, :body
     attr_reader :color, :fill, :z
 
     def initialize(type)
       @type = type
+      @static = false
       @color, @fill, @z = 0xFF_FFFFFF, true, 1
       @mass, @centroid, @verts = 0, Vect.new, []
     end
@@ -35,9 +36,13 @@ module Volt
       @z = z
     end
 
-    def transform(transform)
+    def static=(static)
+      @static = static
+    end
+
+    def transform(trans)
       @verts.each do |vert|
-        vert.transform(transform)
+        vert.transform(trans)
       end
 
       set_centroid

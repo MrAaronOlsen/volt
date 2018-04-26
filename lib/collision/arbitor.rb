@@ -47,13 +47,15 @@ module Volt
       def narrow_collide
         @contacts.each do |contact|
           contact.body1.shapes.each do |shape1|
+            next if shape1.static
+
             contact.body2.shapes.each do |shape2|
+              next if shape2.static
+
               handler = @map.get_handler[shape1.type][shape2.type]
 
-              if !handler.nil?
-                if !handler.query(shape1, shape2, contact)
-                  @contacts.delete(contact)
-                end
+              if !handler.nil? && !handler.query(shape1, shape2, contact)
+                @contacts.delete(contact)
               end
             end
           end

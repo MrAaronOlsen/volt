@@ -33,7 +33,7 @@ module Canvas
         sprite.center = body.cog
         sprite.trans = body.trans
         sprite.fill = false
-        sprite.color = Color.yellow
+        sprite.color = Color.red
         sprite.z = 1
       end
     end

@@ -1,7 +1,7 @@
 module Canvas
   class Sprite
     attr_accessor :shape, :verts, :trans
-    attr_accessor :center, :radius
+    attr_accessor :centroid, :center, :radius
     attr_accessor :color, :fill, :z
 
     def initialize(shape = nil)
@@ -19,8 +19,8 @@ module Canvas
     end
 
     def set_on_shape
-      @verts = @shape.verts
       @center = @shape.centroid
+      @verts = @shape.verts
       @radius = @shape.radius
       @trans = @shape.body.trans
       @color = @shape.color

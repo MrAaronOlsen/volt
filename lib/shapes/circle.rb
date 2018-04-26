@@ -12,14 +12,15 @@ module Volt
         @radius = radius
         @center = center
 
-        x = @center.x - radius
+        x = @center.x
         y = @center.y
 
         @verts = [
-          V.with_rotation(x, y, 45),
-          V.with_rotation(x, y, 135),
-          V.with_rotation(x, y, 225),
-          V.with_rotation(x, y, 315) ]
+          V.new(x - radius, y),
+          V.new(x, y - radius),
+          V.new(x + radius, y),
+          V.new(x, y + radius)
+        ]
       end
     end
   end

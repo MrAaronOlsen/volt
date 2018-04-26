@@ -1,4 +1,4 @@
-class Ball
+class Blob
   attr_reader :body, :parts
 
   def initialize(pos)
@@ -16,9 +16,9 @@ class Ball
   end
 
   def build
-    @parts = [circle, line]
+    @parts = [circle1, circle2]
 
-    @body.rotate(90)
+    @body.init
   end
 
   def go
@@ -39,12 +39,21 @@ class Ball
 
   # Parts
 
-  def circle
+  def circle1
     Shape::Circle.new do |circ|
       circ.body = @body
       circ.mass = 3
       circ.set_verts(V.new(0, 0), 100)
       circ.color = Canvas::Color.orange
+    end
+  end
+
+  def circle2
+    Shape::Circle.new do |circ|
+      circ.body = @body
+      circ.mass = 1
+      circ.set_verts(V.new(100, 0), 50)
+      circ.color = Canvas::Color.white
     end
   end
 

@@ -10,16 +10,15 @@ module Volt
           center2 = shape2.world_position(shape2.center)
           radius2 = shape2.radius
 
-          distance = center1.distance_to(center2)
-          penetration = (radius1 + radius2) - distance
+          penetration = (radius1 + radius2) - center1.distance_to(center2)
 
           if penetration > 0
-            contact_normal = (center1 - center2).normalize
-            contact_loc = shape1.world_position(contact_normal * -radius1)
+            midline = center1 - center2
 
             contact.penetration = penetration
-            contact.contact_normal = contact_normal
-            contact.contact_loc = contact_loc
+            contact.contact_normal = midline.unit
+            contact.contact_loc = center1 + (midline * 0.5)
+            contact.restitution = 1.0
           end
         end
       end

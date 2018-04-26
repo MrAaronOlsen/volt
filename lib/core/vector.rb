@@ -85,6 +85,11 @@ module Volt
       self.tap { unless m.zero? then @x/=m; @y/=m end }
     end
 
+    def unit
+      vector = copy
+      vector.normalize
+    end
+
     def dot(vect)
       ( @x * vect.x ) + ( @y * vect.y )
     end
