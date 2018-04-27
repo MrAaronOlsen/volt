@@ -3,12 +3,12 @@ class Space
 
   def initialize
     @world = World.new
-
-    @player = Ball.new(V.new(600, 600))
-    @blob = Blob.new(V.new(900, 600))
-
-    @world.add_bodies([@player.body, @blob.body])
     @drawer = Canvas::Drawer.new(debug: true)
+
+    @ball = Ball.new(V.new(1100, 600))
+    @player = Blob.new(V.new(600, 600))
+
+    @world.add_bodies([@player.body, @ball.body])
   end
 
   def update(dt)

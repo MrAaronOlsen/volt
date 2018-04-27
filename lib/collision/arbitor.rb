@@ -1,7 +1,7 @@
 module Volt
   module Collision
     class Arbitor
-      attr_reader :broad_contacts
+      attr_reader :broad_contacts, :narrow_collide
       attr_reader :map
 
       def initialize
@@ -9,7 +9,8 @@ module Volt
       end
 
       def query(bodies)
-        @contacts = []
+        @broad_contacts = []
+        @narrow_collide = []
 
         bodies.each_with_index do |body, i|
           query_broad(body, bodies[i+1..-1])
@@ -19,14 +20,14 @@ module Volt
       end
 
       def resolve(dt)
-        @contacts.each do |contact|
+        @narrow_collide.each do |contact|
           contact.resolve(dt)
         end
       end
 
       def query_broad(body1, bodies)
         bodies.each do |body2|
-          @contacts << Contact.new(body1, body2) if broad_collide?(body1, body2)
+          @broad_contacts << Contact.new(body1, body2) if broad_collide?(body1, body2)
         end
       end
 
@@ -45,7 +46,7 @@ module Volt
       end
 
       def narrow_collide
-        @contacts.each do |contact|
+        @broad_contacts.each do |contact|
           contact.body1.shapes.each do |shape1|
             next if shape1.static
 
@@ -53,9 +54,8 @@ module Volt
               next if shape2.static
 
               handler = @map.get_handler[shape1.type][shape2.type]
-
-              if !handler.nil? && !handler.query(shape1, shape2, contact)
-                @contacts.delete(contact)
+              if !handler.nil? && handler.query(shape1, shape2, contact)
+                @narrow_collide << handler.contact
               end
             end
           end

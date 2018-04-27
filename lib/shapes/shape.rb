@@ -1,6 +1,7 @@
 module Volt
   class Shape
-    attr_reader :centroid, :center, :verts, :radius
+    attr_reader :name
+    attr_reader :centroid, :verts, :radius
     attr_reader :type, :static, :mass, :body
     attr_reader :color, :fill, :z
 
@@ -13,6 +14,10 @@ module Volt
 
     def world_position(vect)
       @body.trans.transform_vert(vect)
+    end
+
+    def name=(name)
+      @name = name
     end
 
     def body=(body)

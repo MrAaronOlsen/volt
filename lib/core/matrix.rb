@@ -49,6 +49,10 @@ module Volt
         -@b * i,  @a * i, (@tx * @b - @a * @ty) * i
       )
     end
+
+    def to_s
+      "A: #{@a} C: #{@c} X: #{@tx}\nB: #{@b} D: #{@d} Y: #{@ty}\n\n"
+    end
   end
 
   Mat = Matrix

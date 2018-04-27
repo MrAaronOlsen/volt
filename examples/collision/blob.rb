@@ -9,16 +9,15 @@ class Blob
   def new_ball(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0.98
-			b.mass = 5
-			b.moment = 3000
+			b.damp = 0.99
+			b.mass = 20
+			b.moment = 1000
 		end
   end
 
   def build
-    @parts = [circle1, circle2]
-
-    @body.init
+    @parts = [main_body, neck, head]
+    @body.rotate(-90)
   end
 
   def go
@@ -39,8 +38,9 @@ class Blob
 
   # Parts
 
-  def circle1
+  def main_body
     Shape::Circle.new do |circ|
+      circ.name = "Blob Body"
       circ.body = @body
       circ.mass = 3
       circ.set_verts(V.new(0, 0), 100)
@@ -48,22 +48,23 @@ class Blob
     end
   end
 
-  def circle2
+  def neck
     Shape::Circle.new do |circ|
+      circ.name = "Blob Neck"
       circ.body = @body
       circ.mass = 1
-      circ.set_verts(V.new(100, 0), 50)
+      circ.set_verts(V.new(0, 100), 50)
       circ.color = Canvas::Color.white
     end
   end
 
-  def line
-    Shape::Line.new do |line|
-      line.body = @body
-      line.static = true
-      line.mass = 0
-      line.set_verts(V.new(0, 0), V.new(0, -100))
-      line.color = Canvas::Color.blue
+  def head
+    Shape::Circle.new do |circ|
+      circ.name = "Blob Head"
+      circ.body = @body
+      circ.mass = 2
+      circ.set_verts(V.new(0, 200), 75)
+      circ.color = Canvas::Color.blue
     end
   end
 end
