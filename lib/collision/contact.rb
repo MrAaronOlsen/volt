@@ -5,10 +5,12 @@ module Volt
       attr_reader :shape1, :shape2
       attr_accessor :contact_normal, :contact_loc
       attr_accessor :restitution, :penetration, :movement
+      attr_accessor :debug
 
       def initialize(body1, body2)
         @body1, @body2 = body1, body2
         @restitution = 0.98
+        @debug = []
       end
 
       def add_shapes(shape1, shape2)

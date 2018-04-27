@@ -11,7 +11,7 @@ module Canvas
     end
 
     def verts
-      @verts.map { |vert| @trans.transform_vert(vert)}
+      @verts.map { |vert| @trans.transform_vert(vert) }
     end
 
     def center

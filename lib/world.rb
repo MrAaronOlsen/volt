@@ -1,6 +1,6 @@
 module Volt
   class World
-    attr_accessor :bodies, :collision
+    attr_accessor :bodies
 
     def initialize
       @bodies = []
@@ -11,7 +11,7 @@ module Volt
       return if dt <= 0.0
 
       @Arbitor.query(bodies)
-      @Arbitor.resolve(dt)
+      @collisions = @Arbitor.resolve(dt)
 
       bodies.each do |body|
         body.update(dt)
@@ -24,10 +24,6 @@ module Volt
 
     def add_bodies(bodies)
       bodies.each { |body| add_body(body) }
-    end
-
-    def draw
-      @bodies.each { |body| body.draw }
     end
   end
 end

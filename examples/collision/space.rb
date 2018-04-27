@@ -5,10 +5,11 @@ class Space
     @world = World.new
     @drawer = Canvas::Drawer.new(debug: true)
 
-    @ball = Ball.new(V.new(1100, 600))
-    @player = Blob.new(V.new(600, 600))
+    @ball = Ball.new(V.new(600, 200))
+    @player = Blob.new(V.new(1200, 600))
+    @wall = Wall.new(V.new(100, 100))
 
-    @world.add_bodies([@player.body, @ball.body])
+    @world.add_bodies([@player.body, @ball.body, @wall.body])
   end
 
   def update(dt)

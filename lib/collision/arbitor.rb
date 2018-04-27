@@ -23,6 +23,8 @@ module Volt
         @narrow_collide.each do |contact|
           contact.resolve(dt)
         end
+
+        @narrow_collide
       end
 
       def query_broad(body1, bodies)
@@ -42,7 +44,7 @@ module Volt
 
         distance = center1.distance_to(center2)
 
-        distance - radius1 <= radius2 || distance - radius2 <= radius1
+        (radius1 + radius2) - distance > 0
       end
 
       def narrow_collide
@@ -53,8 +55,8 @@ module Volt
             contact.body2.shapes.each do |shape2|
               next if shape2.static
 
-              handler = @map.get_handler[shape1.type][shape2.type]
-              if !handler.nil? && handler.query(shape1, shape2, contact)
+              handler = @map.get_handler(shape1, shape2)
+              if !handler.nil? && handler.query
                 @narrow_collide << handler.contact
               end
             end

@@ -102,6 +102,17 @@ module Volt
       @x == vect.x && @y == vect.y
     end
 
+    def projection_onto(vect)
+      d = vect.dot(vect)
+
+      if 0 < d
+        dp = self.dot(vect)
+        vect * (dp / d)
+      else
+        vect
+      end
+    end
+
     # matrix related
     def transform(matrix)
       vect = matrix.transform_vert(self)
