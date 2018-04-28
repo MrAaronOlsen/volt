@@ -4,16 +4,20 @@ class Space
   def initialize
     @world = World.new
     @drawer = Canvas::Drawer.new(debug: false)
+    @bodies = []
 
     @player = Ball.new(V.new(600, 200))
-    @blob = Blob.new(V.new(600, 600))
+    @bodies << @player.body
 
-    @left = Wall.new(V.new(50, 50), 0)
-    @top = Wall.new(V.new(50, 50), -90)
-    @right = Wall.new(V.new(1150, 50), 0)
-    @bot = Wall.new(V.new(1150, 1150), 90)
+    @bodies << Blob.new(V.new(600, 600)).body
+    @bodies << Box.new(V.new(200, 200)).body
 
-    @world.add_bodies([@player.body, @blob.body, @left.body, @top.body, @right.body, @bot.body])
+    @bodies << Wall.new(V.new(50, 50), 0).body
+    @bodies << Wall.new(V.new(50, 50), -90).body
+    @bodies << Wall.new(V.new(1150, 50), 0).body
+    @bodies << Wall.new(V.new(1150, 1150), 90).body
+
+    @world.add_bodies(@bodies)
   end
 
   def update(dt)

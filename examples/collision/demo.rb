@@ -3,6 +3,7 @@ require_relative 'space.rb'
 require_relative 'ball.rb'
 require_relative 'blob.rb'
 require_relative 'wall.rb'
+require_relative 'box.rb'
 
 class Window < Gosu::Window
 
