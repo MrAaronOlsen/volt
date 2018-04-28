@@ -3,13 +3,17 @@ class Space
 
   def initialize
     @world = World.new
-    @drawer = Canvas::Drawer.new(debug: true)
+    @drawer = Canvas::Drawer.new(debug: false)
 
     @player = Ball.new(V.new(600, 200))
-    @blob = Blob.new(V.new(1200, 600))
-    @wall = Wall.new(V.new(100, 100))
+    @blob = Blob.new(V.new(600, 600))
 
-    @world.add_bodies([@player.body, @wall.body])
+    @left = Wall.new(V.new(50, 50), 0)
+    @top = Wall.new(V.new(50, 50), -90)
+    @right = Wall.new(V.new(1150, 50), 0)
+    @bot = Wall.new(V.new(1150, 1150), 90)
+
+    @world.add_bodies([@player.body, @blob.body, @left.body, @top.body, @right.body, @bot.body])
   end
 
   def update(dt)
@@ -19,7 +23,7 @@ class Space
 
   def draw
     @drawer.render(@world.bodies)
-    @world.debug
+    # @world.debug
   end
 
   def button_down?(id)

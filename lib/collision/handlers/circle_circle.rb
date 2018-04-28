@@ -27,7 +27,6 @@ module Volt
             @contact.penetration = penetration
             @contact.contact_normal = midline.unit
             @contact.contact_loc = center1 + (midline * 0.5)
-            @contact.restitution = 1.0
           end
         end
 

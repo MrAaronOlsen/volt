@@ -9,7 +9,7 @@ module Volt
 
       def initialize(body1, body2)
         @body1, @body2 = body1, body2
-        @restitution = 0.98
+        @restitution = 0.9
         @dummy = false
       end
 
@@ -79,8 +79,8 @@ module Volt
           return
         end
 
-        new_sep_velocity = -seperating_velocity * restitution
-        velocity_buildup = @body1.vel.copy
+        new_sep_velocity = -seperating_velocity * @restitution
+        velocity_buildup = @body1.acc.copy
 
         if @body2
           velocity_buildup.sub(@body2.acc)
@@ -89,7 +89,7 @@ module Volt
         buildup_sep_vel = velocity_buildup.dot(contact_normal * dt)
 
         if buildup_sep_vel < 0
-          new_sep_velocity += (buildup_sep_vel * restitution)
+          new_sep_velocity += (buildup_sep_vel * @restitution)
 
           if new_sep_velocity < 0
             new_sep_velocity = 0

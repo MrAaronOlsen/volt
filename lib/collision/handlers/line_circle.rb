@@ -60,9 +60,6 @@ module Volt
           @contact.penetration = @penetration
           @contact.contact_normal = (@contact_loc - @center).unit
           @contact.contact_loc = @contact_loc
-          @contact.restitution = 0.2
-
-          @contact
         end
       end
     end

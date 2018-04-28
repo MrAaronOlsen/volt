@@ -9,7 +9,6 @@ class Ball
   def new_ball(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0.99
 			b.mass = 20
 			b.moment = 3000
 		end

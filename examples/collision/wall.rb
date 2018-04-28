@@ -1,9 +1,9 @@
 class Wall
   attr_reader :body, :parts
 
-  def initialize(pos)
+  def initialize(pos, angle)
     @body = new_wall(pos)
-    build
+    build(angle)
   end
 
   def new_wall(pos)
@@ -15,10 +15,10 @@ class Wall
 		end
   end
 
-  def build
+  def build(angle)
     @parts = [line]
 
-    @body.init
+    @body.rotate(angle)
   end
 
   # Parts
@@ -27,7 +27,7 @@ class Wall
     Shape::Line.new do |line|
       line.body = @body
       line.mass = 1
-      line.set_verts(V.new(0, 0), V.new(0, 1000))
+      line.set_verts(V.new(0, 0), V.new(0, 1100))
       line.color = Canvas::Color.grey
     end
   end

@@ -2,22 +2,22 @@ class Blob
   attr_reader :body, :parts
 
   def initialize(pos)
-    @body = new_ball(pos)
+    @body = new_blob(pos)
     build
   end
 
-  def new_ball(pos)
+  def new_blob(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0.99
-			b.mass = 20
-			b.moment = 1000
+			b.mass = 10
+			b.moment = 500
 		end
   end
 
   def build
-    @parts = [main_body, neck, head]
-    @body.rotate(-90)
+    @parts = [tail, neck, head]
+    @body.init
+    @body.recenter
   end
 
   def go
@@ -38,13 +38,13 @@ class Blob
 
   # Parts
 
-  def main_body
+  def tail
     Shape::Circle.new do |circ|
-      circ.name = "Blob Body"
+      circ.name = "Blob Tail"
       circ.body = @body
       circ.mass = 3
-      circ.set_verts(V.new(0, 0), 100)
-      circ.color = Canvas::Color.orange
+      circ.set_verts(V.new(0, 0), 75)
+      circ.color = Canvas::Color.blue
     end
   end
 
@@ -62,7 +62,7 @@ class Blob
     Shape::Circle.new do |circ|
       circ.name = "Blob Head"
       circ.body = @body
-      circ.mass = 2
+      circ.mass = 3
       circ.set_verts(V.new(0, 200), 75)
       circ.color = Canvas::Color.blue
     end

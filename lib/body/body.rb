@@ -42,7 +42,7 @@ module Volt
     end
 
     def add_impulse_at(impulse, point)
-      @vel += impulse * @i_mass
+      @vel += impulse
 
       r = point - world_position(cog)
       @a_vel += r.cross(impulse) * @i_moment

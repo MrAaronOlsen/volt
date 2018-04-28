@@ -17,7 +17,7 @@ module Volt
       @pos, @trans = V.new, Mat.new_identity
       @acc, @vel, @mass = V.new, V.new, 0.0
       @angle, @a_vel, @moment = 0.0, 0.0, 0.0
-      @damp, @forces, @torque = 1.0, V.new, 0.0
+      @damp, @forces, @torque = 0.995, V.new, 0.0
       @shapes, @cog = [], V.new
     end
 
