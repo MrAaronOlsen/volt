@@ -37,6 +37,13 @@ module Volt
 
 # Math
 
+    def +(mat)
+      Mat.new(
+        @a + mat.a, @c + mat.c, @tx + mat.tx,
+        @b + mat.b, @d + mat.d, @ty + mat.ty,
+      )
+    end
+
     def transform_vert(vert)
       V.new(@a*vert.x + @c*vert.y + @tx, @b*vert.x + @d*vert.y + @ty)
     end

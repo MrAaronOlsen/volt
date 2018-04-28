@@ -16,7 +16,7 @@ class Box
 
   def build
     @parts = [box]
-    @body.init
+    @body.rotate(25)
   end
 
   # Parts
