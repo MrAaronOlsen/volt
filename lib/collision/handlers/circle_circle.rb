@@ -21,14 +21,18 @@ module Volt
 
           if penetration > 0
             @contact = Contact.new(@circ1.body, @circ2.body)
+            @contact.add_shapes(@circ1, @circ2)
+            @contact.handler = self
 
             @contact.penetration = penetration
             @contact.contact_normal = midline.unit
             @contact.contact_loc = center1 + (midline * 0.5)
             @contact.restitution = 1.0
-
-            @contact.add_shapes(@circ1, @circ2)
           end
+        end
+
+        def debug
+
         end
       end
     end

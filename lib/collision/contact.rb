@@ -5,12 +5,12 @@ module Volt
       attr_reader :shape1, :shape2
       attr_accessor :contact_normal, :contact_loc
       attr_accessor :restitution, :penetration, :movement
-      attr_accessor :debug
+      attr_accessor :handler, :dummy
 
       def initialize(body1, body2)
         @body1, @body2 = body1, body2
         @restitution = 0.98
-        @debug = []
+        @dummy = false
       end
 
       def add_shapes(shape1, shape2)
@@ -19,6 +19,8 @@ module Volt
       end
 
       def resolve(dt)
+        return if @dummy
+
         resolve_interpenetration(dt)
         resolve_velocity(dt)
       end
@@ -28,6 +30,14 @@ module Volt
         rel_velocity.sub(@body2.vel) if @body2
 
         rel_velocity.dot(contact_normal)
+      end
+
+      def is_dummy
+        @dummy = true
+      end
+
+      def debug
+        @handler.debug
       end
 
       private

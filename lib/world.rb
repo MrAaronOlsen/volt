@@ -18,6 +18,10 @@ module Volt
       end
     end
 
+    def debug
+      @collisions.each { |col| col.debug }
+    end
+
     def add_body(body)
       @bodies << body
     end

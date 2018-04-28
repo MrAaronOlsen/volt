@@ -10,7 +10,7 @@ class Ball
     Body.new do |b|
 			b.pos = pos
 			b.damp = 0.99
-			b.mass = 5
+			b.mass = 20
 			b.moment = 3000
 		end
   end
