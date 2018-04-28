@@ -29,8 +29,16 @@ module Canvas
         0xff_ffffff
       end
 
+      def light_grey
+        0xff_aaaaaa
+      end
+
       def grey
-        0xff_888888
+        0xff_777777
+      end
+
+      def black
+        0xff_000000
       end
 
       def orange

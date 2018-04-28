@@ -28,7 +28,7 @@ class Wall
       line.body = @body
       line.mass = 1
       line.set_verts(V.new(0, 0), V.new(0, 1100))
-      line.color = Canvas::Color.grey
+      line.color = Canvas::Color.light_grey
     end
   end
 end
