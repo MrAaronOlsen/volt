@@ -12,7 +12,7 @@ class Space
       @player
     ]
 
-    @player.body.scale(1.5, 1.5)
+    @player.body.scale(3, 3)
 
     @bodies = @ships.map { |ship| ship.body }
 

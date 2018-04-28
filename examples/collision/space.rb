@@ -3,7 +3,7 @@ class Space
 
   def initialize
     @world = World.new
-    @drawer = Canvas::Drawer.new(debug: false)
+    @drawer = Canvas::Drawer.new(debug: true)
 
     @player = Ball.new(V.new(600, 200))
     @blob = Blob.new(V.new(600, 600))
@@ -23,7 +23,7 @@ class Space
 
   def draw
     @drawer.render(@world.bodies)
-    # @world.debug
+    @world.debug
   end
 
   def button_down?(id)
