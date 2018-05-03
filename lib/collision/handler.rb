@@ -22,7 +22,10 @@ module Volt
         {
           :circle => { circle: lambda { |circ1, circ2| Handlers::CircleCircle.new(circ1, circ2) } },
           :line => { circle: lambda { |line, circ| Handlers::LineCircle.new(line, circ) } },
-          :rect => { circle: lambda { |rect, circ| Handlers::RectCircle.new(rect, circ) } }
+          :rect => {
+            circle: lambda { |rect, circ| Handlers::RectCircle.new(rect, circ) },
+            line: lambda { |rect, circ| Handlers::RectLine.new(rect, circ) }
+          }
         }
       end
     end

@@ -65,7 +65,6 @@ module Volt
     end
 
     def rotate(angle)
-      @origin_angle = angle
       transform(Mat.new_rotate(angle))
       build
     end
@@ -77,10 +76,6 @@ module Volt
 
     def add_shape(shape)
       @shapes << shape
-    end
-
-    def inverse
-      Mat.new_transform(@pos, @origin_angle).inverse
     end
 
     def build

@@ -4,14 +4,12 @@ module Volt
     attr_reader :centroid, :verts, :radius
     attr_reader :type, :static, :mass, :body
     attr_reader :color, :fill, :z
-    attr_reader :trans
 
     def initialize(type)
       @type = type
       @static = false
       @color, @fill, @z = 0xFF_FFFFFF, true, 1
       @mass, @centroid, @verts = 0, Vect.new, []
-      @trans = Matrix.new_identity
     end
 
     def world_position(vect)

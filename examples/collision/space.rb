@@ -6,11 +6,11 @@ class Space
     @drawer = Canvas::Drawer.new(debug: false)
     @bodies = []
 
-    @player = Ball.new(V.new(600, 200))
-    @bodies << @player.body
-
+    @bodies << Ball.new(V.new(600, 200)).body
     @bodies << Blob.new(V.new(600, 600)).body
-    @bodies << Box.new(V.new(200, 200)).body
+
+    @player = Box.new(V.new(800, 900))
+    @bodies << @player.body
 
     @bodies << Wall.new(V.new(50, 50), 0).body
     @bodies << Wall.new(V.new(50, 50), -90).body
@@ -39,5 +39,6 @@ class Space
     @player.stop if Gosu.button_down?(Gosu::KbDown)
     @player.left if Gosu.button_down?(Gosu::KbLeft)
     @player.right if Gosu.button_down?(Gosu::KbRight)
+    @player.freeze if Gosu.button_down?(Gosu::KbSpace)
   end
 end

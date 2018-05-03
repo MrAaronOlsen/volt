@@ -11,6 +11,8 @@ module Volt
         @body1, @body2 = body1, body2
         @restitution = 0.9
         @dummy = false
+
+        yield self if block_given?
       end
 
       def add_shapes(shape1, shape2)
@@ -43,7 +45,7 @@ module Volt
       private
 
       def resolve_interpenetration(dt)
-        if penetration <= 0
+        if @penetration <= 0
           return
         end
 
@@ -58,7 +60,7 @@ module Volt
           return
         end
 
-        move_per_i_mass = contact_normal * (penetration / total_i_mass)
+        move_per_i_mass = @contact_normal * (@penetration / total_i_mass)
         @movement[0] = move_per_i_mass * @body1.i_mass
 
         if @body2
@@ -86,7 +88,7 @@ module Volt
           velocity_buildup.sub(@body2.acc)
         end
 
-        buildup_sep_vel = velocity_buildup.dot(contact_normal * dt)
+        buildup_sep_vel = velocity_buildup.dot(@contact_normal * dt)
 
         if buildup_sep_vel < 0
           new_sep_velocity += (buildup_sep_vel * @restitution)
@@ -106,7 +108,7 @@ module Volt
         end
 
         impulse = delta_velocity / total_i_mass
-        impulse_per_i_mass = contact_normal * impulse
+        impulse_per_i_mass = @contact_normal * impulse
 
         @body1.add_impulse_at(impulse_per_i_mass * @body1.i_mass, @contact_loc)
 

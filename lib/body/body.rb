@@ -52,6 +52,14 @@ module Volt
       @a_vel += vel
     end
 
+    def set_vel(vel)
+      @vel = vel
+    end
+
+    def set_a_vel(a_vel)
+      @a_vel = a_vel
+    end
+
 # Transform Methods
 
     def world_position(vert)

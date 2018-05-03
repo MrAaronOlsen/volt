@@ -23,7 +23,7 @@ module Volt
             b = c if determinant(points[a], points[b], points[c]) == 1
           end
 
-           b.zero? ? break : a = b
+          b.zero? ? break : a = b
         end
       end
     end

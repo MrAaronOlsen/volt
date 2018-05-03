@@ -1,12 +1,12 @@
 module Volt
   module Collision
     module Handlers
-      class CircleCircle
+      class CircleCircle < Base
         attr_reader :contact
 
         def initialize(circ1, circ2)
-          @circ1 = circ1
-          @circ2 = circ2
+          @circ1 = @body1 = circ1
+          @circ2 = @body2 = circ2
         end
 
         def query
@@ -20,16 +20,9 @@ module Volt
           @midline = @center1 - @center2
 
           @contact_loc = @center1 - (@midline.unit * @radius1)
+          @contact_normal = @midline.unit
 
-          if @penetration > 0
-            @contact = Contact.new(@circ1.body, @circ2.body)
-            @contact.add_shapes(@circ1, @circ2)
-            @contact.handler = self
-
-            @contact.penetration = @penetration
-            @contact.contact_normal = @midline.unit
-            @contact.contact_loc = @contact_loc
-          end
+          @penetration > 0
         end
 
         def debug

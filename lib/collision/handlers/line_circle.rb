@@ -1,12 +1,12 @@
 module Volt
   module Collision
     module Handlers
-      class LineCircle
+      class LineCircle < Base
         attr_reader :contact
 
         def initialize(line, circ)
-          @line = line
-          @circ = circ
+          @line = @body1 = line
+          @circ = @body2 = circ
         end
 
         def query
@@ -22,10 +22,12 @@ module Volt
 
           @thread = @line_start - @center
           @projection = @thread.projection_onto(@segment)
+
           @contact_loc = @line_start - @projection
+          @contact_normal = (@contact_loc - @center).unit
           @penetration = @radius - @contact_loc.distance_to(@center)
 
-          build_contact if collided?
+          line_circ_collision
         end
 
         def debug
@@ -37,7 +39,7 @@ module Volt
 
         private
 
-        def collided?
+        def line_circ_collision
           if @to_start < @radius
             @contact_loc = @line_start
             @penetration = @radius - @to_start
@@ -51,15 +53,6 @@ module Volt
           else
             false
           end
-        end
-
-        def build_contact
-          @contact = Contact.new(@line.body, @circ.body)
-          @contact.handler = self
-
-          @contact.penetration = @penetration
-          @contact.contact_normal = (@contact_loc - @center).unit
-          @contact.contact_loc = @contact_loc
         end
       end
     end

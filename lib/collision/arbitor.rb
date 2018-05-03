@@ -53,9 +53,9 @@ module Volt
               next if shape2.static
 
               handler = @handler.get(shape1, shape2)
-              
+
               if handler.exists? && handler.query
-                @narrow_contacts << handler.contact
+                @narrow_contacts << handler.get_contact
               end
             end
           end

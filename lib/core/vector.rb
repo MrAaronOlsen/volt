@@ -98,6 +98,10 @@ module Volt
       ( @x * vect.y ) - ( @y * vect.x )
     end
 
+    def normal
+      V.new(-@y, @x)
+    end
+
     def ==(vect)
       @x == vect.x && @y == vect.y
     end
