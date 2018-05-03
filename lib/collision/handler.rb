@@ -20,11 +20,16 @@ module Volt
 
       def sieve
         {
-          :circle => { circle: lambda { |circ1, circ2| Handlers::CircleCircle.new(circ1, circ2) } },
-          :line => { circle: lambda { |line, circ| Handlers::LineCircle.new(line, circ) } },
+          :circle => {
+            circle: lambda { |circ1, circ2| Handlers::CircleCircle.new(circ1, circ2) },
+          },
+          :line => {
+            circle: lambda { |line, circ| Handlers::LineCircle.new(line, circ) }
+          },
           :rect => {
             circle: lambda { |rect, circ| Handlers::RectCircle.new(rect, circ) },
-            line: lambda { |rect, circ| Handlers::RectLine.new(rect, circ) }
+            line: lambda { |rect, circ| Handlers::RectLine.new(rect, circ) },
+            rect: lambda { |rect1, rect2| Handlers::RectRect.new(rect1, rect2) }
           }
         }
       end
