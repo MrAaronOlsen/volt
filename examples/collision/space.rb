@@ -8,6 +8,7 @@ class Space
 
     @bodies << Ball.new(V.new(600, 200)).body
     @bodies << Blob.new(V.new(600, 600)).body
+    @bodies << Line.new(V.new(250, 400), 150, 90).body
 
     @player = Box.new(V.new(800, 900))
     @bodies << @player.body

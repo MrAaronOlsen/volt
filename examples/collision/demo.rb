@@ -4,6 +4,7 @@ require_relative 'ball.rb'
 require_relative 'blob.rb'
 require_relative 'wall.rb'
 require_relative 'box.rb'
+require_relative 'line.rb'
 
 class Window < Gosu::Window
 

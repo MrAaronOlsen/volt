@@ -27,9 +27,10 @@ module Volt
 
           @thread = @line_start - @center
           @projection = @thread.projection_onto(@segment)
+          
           @contact_loc = @line_start - @projection
           @penetration = @radius - @contact_loc.distance_to(@center)
-          @contact_normal = @segment.normal.unit * -1
+          @contact_normal = (@contact_loc - @center).unit
 
           circ_rect_collision
         end
