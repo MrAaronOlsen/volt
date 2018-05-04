@@ -3,6 +3,10 @@ module Volt
     class Handler
 
       def get(shape1, shape2)
+        if sieve[shape1.type].nil?
+          return
+        end
+        
         handler = sieve[shape1.type][shape2.type]
 
         if handler.nil?
@@ -24,7 +28,8 @@ module Volt
             circle: lambda { |circ1, circ2| Handlers::CircleCircle.new(circ1, circ2) },
           },
           :line => {
-            circle: lambda { |line, circ| Handlers::LineCircle.new(line, circ) }
+            circle: lambda { |line, circ| Handlers::LineCircle.new(line, circ) },
+            line: lambda { |line1, line2| Handlers::LineLine.new(line1, line2) }
           },
           :rect => {
             circle: lambda { |rect, circ| Handlers::RectCircle.new(rect, circ) },

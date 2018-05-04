@@ -27,7 +27,7 @@ module Volt
         def line_end_collision
           @rect_verts.each_with_index do |vert, i|
             vert2 = @rect_verts[(i+1) % @rect_verts.count]
-            @contact_loc = seg_seg_intersection(@line_start, @line_end, vert, vert2)
+            @contact_loc = line_line_intersection(@line_start, @line_end, vert, vert2)
 
             if @contact_loc
               @penetration = [@contact_loc.distance_to(@line_start), @contact_loc.distance_to(@line_end)].min

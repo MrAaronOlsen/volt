@@ -9,9 +9,9 @@ class Line
   def new_line(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0
-			b.mass = 0
-			b.moment = 0
+			b.damp = 0.998
+			b.mass = 6
+			b.moment = 500
 		end
   end
 
@@ -19,6 +19,7 @@ class Line
     @parts = [line(length)]
 
     @body.rotate(angle)
+    @body.recenter
   end
 
   # Parts

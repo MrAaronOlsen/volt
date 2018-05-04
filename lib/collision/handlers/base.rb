@@ -3,6 +3,10 @@ module Volt
     module Handlers
       class Base
 
+        def package
+          Struct.new(:point, :distance)
+        end
+
         def get_contact
           Contact.new(@body1.body, @body2.body) do |contact|
             contact.handler = self
@@ -12,7 +16,17 @@ module Volt
           end
         end
 
-        def seg_seg_intersection(p0, p1, p2, p3)
+        def distance_of_point_to_line(point, line_start, line_end)
+          segment = line_start - line_end
+          thread = line_start - point
+
+          projection = thread.projection_onto(segment)
+          distance = point.distance_to(line_start - projection)
+
+          package.new(point, distance)
+        end
+
+        def line_line_intersection(p0, p1, p2, p3)
           s1_x = p1.x - p0.x
           s1_y = p1.y - p0.y
           s2_x = p3.x - p2.x
