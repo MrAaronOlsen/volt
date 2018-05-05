@@ -12,6 +12,7 @@ module Volt
         def query
           @line_start = @line.world_position(@line.verts[0])
           @line_end = @line.world_position(@line.verts[1])
+
           @rect_verts = @rect.verts.map { |vert| @rect.world_position(vert) }
           @rect_center = @rect.world_position(@rect.centroid)
 
@@ -62,7 +63,6 @@ module Volt
 
           false
         end
-
       end
     end
   end

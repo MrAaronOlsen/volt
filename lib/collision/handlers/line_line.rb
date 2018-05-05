@@ -10,47 +10,50 @@ module Volt
         end
 
         def query
-          @line1_start = @line1.world_position(@line1.verts[0])
-          @line1_end = @line1.world_position(@line1.verts[1])
+          line1_start = @line1.world_position(@line1.verts[0])
+          line1_end = @line1.world_position(@line1.verts[1])
 
-          @line2_start = @line2.world_position(@line2.verts[0])
-          @line2_end = @line2.world_position(@line2.verts[1])
+          line2_start = @line2.world_position(@line2.verts[0])
+          line2_end = @line2.world_position(@line2.verts[1])
 
-          @segment1 = @line1_start - @line1_end
-          @segment2 = @line2_start - @line2_end
-
-          @contact_loc = line_line_intersection(@line1_start, @line1_end, @line2_start, @line2_end)
+          @contact_loc = line_line_intersection(line1_start, line1_end, line2_start, line2_end)
 
           if @contact_loc
-            line1_points = [@line1_start, @line1_end].map do |point|
-              distance_of_point_to_line(point, @line2_start, @line2_end)
-            end
+            seg1 = line1_start - line1_end
+            seg2 = line2_start - line2_end
+            
+            l1_distance = [line1_start, line1_end].map do |point|
+              distance_of_point_to_line(point, line2_start, line2_end)
+            end.min
 
-            line2_points = [@line2_start, @line2_end].map do |point|
-              distance_of_point_to_line(point, @line1_start, @line1_end)
-            end
+            l2_distance = [line2_start, line2_end].map do |point|
+              distance_of_point_to_line(point, line1_start, line1_end)
+            end.min
 
-            line1_point = line1_points.min_by { |point| point.distance }
-            line2_point = line2_points.min_by { |point| point.distance }
+            if l1_distance < l2_distance
+              @penetration = l1_distance
+              @line_center = line1_start - (seg1 * 0.5)
 
-            if line1_point.distance < line2_point.distance
-              @penetration = line1_point.distance
-              center = @line1_start - (@segment1 * 0.5)
-
-              d = determinant(@line2_start, @line2_end, center)
-              @contact_normal = @segment2.normal.unit * d
+              d = determinant(line2_start, line2_end, @line_center)
+              @contact_normal = seg2.normal.unit * d
             else
-              @penetration = line2_point.distance
-              center = @line2_start - (@segment2 * 0.5)
+              @penetration = l2_distance
+              @line_center = line2_start - (seg2 * 0.5)
 
-              d = determinant(@line1_start, @line1_end, center)
-              @contact_normal = @segment1.normal.unit * d
+              d = determinant(line1_start, line1_end, @line_center)
+              @contact_normal = seg1.normal.unit * d
             end
           end
         end
 
         def debug
           Canvas::Pencil.circle(@contact_loc, 10, Canvas::Color.yellow, true, 2)
+          Canvas::Pencil.circle(@line_center, 10, Canvas::Color.blue, true, 2)
+        end
+
+      private
+        def method_name
+
         end
       end
     end

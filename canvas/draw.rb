@@ -13,8 +13,7 @@ module Canvas
       end
 
       def circle(sprite)
-        Pencil.circle(sprite.center, sprite.radius,
-          sprite.color, sprite.fill, sprite.z)
+        Pencil.circle(sprite.center, sprite.radius, sprite.color, sprite.fill, sprite.z)
       end
 
       def line(sprite)

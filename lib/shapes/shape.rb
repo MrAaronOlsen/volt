@@ -67,8 +67,12 @@ module Volt
       	v_sum += (vert + vert2) * cross
       end
 
-      if (sum.zero?)
-        @centroid = v_sum
+      if sum.zero?
+        if type == :line
+          @centroid = @verts[0] - ((@verts[0] - @verts[1]) * 0.5)
+        else
+          @centroid = v_sum
+        end
       else
         @centroid = v_sum * 1.0/(3.0*sum)
       end

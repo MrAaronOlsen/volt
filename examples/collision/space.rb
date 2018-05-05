@@ -8,15 +8,15 @@ class Space
 
     @bodies << Ball.new(V.new(600, 200)).body
     @bodies << Blob.new(V.new(600, 600)).body
-    @bodies << Line.new(V.new(250, 400), 150, 90).body
-
-    @player = Box.new(V.new(800, 900))
-    @bodies << @player.body
+    @bodies << Line.new(V.new(250, 400), 150).body
 
     @bodies << Wall.new(V.new(50, 50), 0).body
     @bodies << Wall.new(V.new(50, 50), -90).body
     @bodies << Wall.new(V.new(1150, 50), 0).body
     @bodies << Wall.new(V.new(1150, 1150), 90).body
+
+    @player = Box.new(V.new(800, 900))
+    @bodies << @player.body
 
     @world.add_bodies(@bodies)
   end
@@ -28,7 +28,7 @@ class Space
 
   def draw
     @drawer.render(@world.bodies)
-    @world.debug
+    # @world.debug
   end
 
   def button_down?(id)
