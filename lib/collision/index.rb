@@ -32,9 +32,16 @@ module Volt
             line: lambda { |line1, line2| Handlers::LineLine.new(line1, line2) }
           },
           :rect => {
-            circle: lambda { |rect, circ| Handlers::RectCircle.new(rect, circ) },
-            line: lambda { |rect, circ| Handlers::RectLine.new(rect, circ) },
-            rect: lambda { |rect1, rect2| Handlers::RectRect.new(rect1, rect2) }
+            circle: lambda { |rect, circ| Handlers::PolyCircle.new(rect, circ) },
+            line: lambda { |rect, circ| Handlers::PolyLine.new(rect, circ) },
+            rect: lambda { |rect1, rect2| Handlers::PolyPoly.new(rect1, rect2) },
+            poly: lambda { |rect1, rect2| Handlers::PolyPoly.new(rect1, rect2) }
+          },
+          :poly => {
+            circle: lambda { |rect, circ| Handlers::PolyCircle.new(rect, circ) },
+            line: lambda { |rect, circ| Handlers::PolyLine.new(rect, circ) },
+            rect: lambda { |rect1, rect2| Handlers::PolyPoly.new(rect1, rect2) },
+            poly: lambda { |rect1, rect2| Handlers::PolyPoly.new(rect1, rect2) }
           }
         }
       end

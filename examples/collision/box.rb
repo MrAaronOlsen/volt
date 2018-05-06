@@ -15,9 +15,10 @@ class Box
   end
 
   def build
-    @parts = [box, line]
+    @parts = [poly]
     @body.init
     @body.recenter
+    @body.rotate(-90)
   end
 
   def go
@@ -43,12 +44,14 @@ class Box
 
   # Parts
 
-  def box
-    Shape::Rect.new do |rect|
-      rect.name = "Box"
+  def poly
+    verts = [V.new(0, 0), V.new(100, 0), V.new(100, 100), V.new(50, 150), V.new(0, 100)]
+
+    Shape::Poly.new do |rect|
+      rect.name = "Poly"
       rect.body = @body
       rect.mass = 10
-      rect.set_verts(200, 200, V.new(0, 0))
+      rect.set_verts(verts)
       rect.color = Canvas::Color.light_grey
     end
   end

@@ -11,6 +11,20 @@ module Volt
           point.distance_to(ls - projection)
         end
 
+        def closest_point_to_line(points, line_start, line_end)
+          closest = nil
+
+          points.each do |point|
+            distance = distance_of_point_to_line(point, line_start, line_end)
+
+            if closest.nil? || distance < closest.distance
+              closest = Struct.new(:distance, :point).new(distance, point)
+            end
+          end
+
+          return closest
+        end
+
         def line_line_intersection(l1s, l1e, l2s, l2e)
           seg1 = l1e - l1s
           seg2 = l2e - l2s

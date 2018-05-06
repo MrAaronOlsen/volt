@@ -1,18 +1,18 @@
 module Volt
   module Collision
     module Handlers
-      class RectCircle < Base
+      class PolyCircle < Base
 
-        def initialize(rect, circ)
-          @rect, @circ = rect, circ
+        def initialize(poly, circ)
+          @poly, @circ = poly, circ
         end
 
         def query
           @center = @circ.world_position(@circ.centroid)
           @radius = @circ.radius
 
-          @verts = @rect.verts.map do |vert|
-            @rect.world_position(vert)
+          @verts = @poly.verts.map do |vert|
+            @poly.world_position(vert)
           end.sort_by { |vert| vert.distance_to(@center) }
 
           @line_start = @verts[0]
@@ -30,7 +30,7 @@ module Volt
         end
 
         def get_contact
-          Contact.new(@rect, @circ) do |contact|
+          Contact.new(@poly, @circ) do |contact|
             contact.handler = self
             contact.penetration = @penetration
             contact.contact_normal = @contact_normal

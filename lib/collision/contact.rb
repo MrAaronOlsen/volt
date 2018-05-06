@@ -9,7 +9,7 @@ module Volt
 
       def initialize(shape1, shape2)
         @body1, @body2 = shape1.body, shape2.body
-        @restitution = 0.9
+        @restitution = 0.5
         @dummy = false
         @life = 0
 

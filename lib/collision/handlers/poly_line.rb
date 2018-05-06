@@ -1,22 +1,22 @@
 module Volt
   module Collision
     module Handlers
-      class RectLine < Base
+      class PolyLine < Base
         attr_reader :type
 
-        def initialize(rect, line)
-          @rect, @line = rect, line
+        def initialize(poly, line)
+          @poly, @line = poly, line
         end
 
         def query
           @line_start = @line.world_position(@line.verts[0])
           @line_end = @line.world_position(@line.verts[1])
 
-          @rect_verts = @rect.verts.map { |vert| @rect.world_position(vert) }
-          @rect_center = @rect.world_position(@rect.centroid)
+          @poly_verts = @poly.verts.map { |vert| @poly.world_position(vert) }
+          @poly_center = @poly.world_position(@poly.centroid)
 
-          @rect_verts.each_with_index do |vert1, i|
-            vert2 = @rect_verts[(i+1) % @rect_verts.count]
+          @poly_verts.each_with_index do |vert1, i|
+            vert2 = @poly_verts[(i+1) % @poly_verts.count]
             @contact_loc = line_line_intersection(@line_start, @line_end, vert1, vert2)
 
             if @contact_loc
@@ -24,7 +24,7 @@ module Volt
               return true
             end
           end
-          
+
           false
         end
 
@@ -33,7 +33,7 @@ module Volt
         end
 
         def get_contact
-          Contact.new(@rect, @line) do |contact|
+          Contact.new(@poly, @line) do |contact|
             contact.handler = self
             contact.penetration = @penetration
             contact.contact_normal = @contact_normal
@@ -65,20 +65,6 @@ module Volt
             d = determinant(line_start, line_end, closest_side.point)
             @contact_normal = line_seg.normal.unit * d
           end
-        end
-
-        def closest_point_to_line(points, line_start, line_end)
-          closest = nil
-
-          points.each do |point|
-            distance = distance_of_point_to_line(point, line_start, line_end)
-
-            if closest.nil? || distance < closest.distance
-              closest = Struct.new(:distance, :point).new(distance, point)
-            end
-          end
-
-          return closest
         end
       end
     end
