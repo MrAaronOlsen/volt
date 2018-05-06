@@ -12,7 +12,7 @@ module Volt
       return if dt <= 0.0
 
       @Arbitor.query(bodies)
-      @contacts += @Arbitor.resolve(dt)
+      @contacts = @Arbitor.resolve(dt)
 
       bodies.each do |body|
         body.update(dt)
@@ -20,15 +20,7 @@ module Volt
     end
 
     def debug(pause)
-      @contacts.each do |contact|
-        next if contact.nil?
-
-        if contact.life > 50 && !pause
-          @contacts.delete(contact)
-        else
-          contact.debug
-        end
-      end
+      @contacts.each { |contact| contact.debug }
     end
 
     def add_body(body)

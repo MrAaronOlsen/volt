@@ -1,9 +1,9 @@
-class Box
+class Poly
   attr_reader :body, :parts
 
-  def initialize(pos)
+  def initialize(pos, angle)
     @body = new_box(pos)
-    build
+    build(angle)
   end
 
   def new_box(pos)
@@ -14,10 +14,12 @@ class Box
 		end
   end
 
-  def build
-    @parts = [box, line]
+  def build(angle)
+    @parts = [poly]
+
     @body.init
     @body.recenter
+    @body.rotate(angle)
   end
 
   def go
@@ -43,22 +45,15 @@ class Box
 
   # Parts
 
-  def box
-    Shape::Rect.new do |rect|
-      rect.name = "Box"
+  def poly
+    verts = [V.new(0, 0), V.new(100, 0), V.new(100, 100), V.new(50, 150), V.new(0, 100)]
+
+    Shape::Poly.new do |rect|
+      rect.name = "Poly"
       rect.body = @body
       rect.mass = 10
-      rect.set_verts(200, 200, V.new(0, 0))
+      rect.set_verts(verts)
       rect.color = Canvas::Color.light_grey
-    end
-  end
-
-  def line
-    Shape::Line.new do |line|
-      line.body = @body
-      line.static = true
-      line.set_verts(V.new(100, 100), V.new(200, 100))
-      line.color = Canvas::Color.green
     end
   end
 end

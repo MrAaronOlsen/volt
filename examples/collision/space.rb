@@ -6,16 +6,18 @@ class Space
     @drawer = Canvas::Drawer.new(debug: false)
     @bodies = []
 
-    @bodies << Ball.new(V.new(600, 200)).body
-    @bodies << Blob.new(V.new(600, 600)).body
-    @bodies << Line.new(V.new(200, 400), 200).body
-
     @bodies << Wall.new(V.new(50, 50), 0).body
     @bodies << Wall.new(V.new(50, 50), -90).body
     @bodies << Wall.new(V.new(1150, 50), 0).body
     @bodies << Wall.new(V.new(1150, 1150), 90).body
 
-    @player = Box.new(V.new(800, 900))
+    @bodies << Ball.new(V.new(900, 900)).body
+    @bodies << Blob.new(V.new(600, 200)).body
+    @bodies << Line.new(V.new(200, 400), 200).body
+    @bodies << Box.new(V.new(200, 900)).body
+    @bodies << Poly.new(V.new(700, 900), 160).body
+
+    @player = Poly.new(V.new(600, 600), -90)
     @bodies << @player.body
 
     @world.add_bodies(@bodies)
@@ -32,7 +34,7 @@ class Space
 
   def draw
     @drawer.render(@world.bodies)
-    # @world.debug(@pause)
+    @world.debug(@pause)
   end
 
   def button_down?(id)

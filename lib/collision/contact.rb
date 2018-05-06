@@ -5,7 +5,7 @@ module Volt
       attr_reader :shape1, :shape2
       attr_accessor :contact_normal, :contact_loc, :penetration
       attr_accessor :restitution, :movement
-      attr_accessor :handler, :dummy, :life
+      attr_accessor :handler, :dummy
 
       def initialize(shape1, shape2)
         @body1, @body2 = shape1.body, shape2.body
@@ -32,7 +32,6 @@ module Volt
 
       def debug
         @handler.debug
-        @life += 1
       end
 
       private

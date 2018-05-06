@@ -20,25 +20,18 @@ module Volt
             seg1 = line1_start - line1_end
             seg2 = line2_start - line2_end
 
-            l1_distance = [line1_start, line1_end].map do |point|
-              distance_of_point_to_line(point, line2_start, line2_end)
-            end.min
+            l1_point = closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
+            l2_point = closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
 
-            l2_distance = [line2_start, line2_end].map do |point|
-              distance_of_point_to_line(point, line1_start, line1_end)
-            end.min
+            if l1_point.distance < l2_point.distance
+              @penetration = l1_point.distance
 
-            if l1_distance < l2_distance
-              @penetration = l1_distance
-              @line_center = line1_start - (seg1 * 0.5)
-
-              d = determinant(line2_start, line2_end, @line_center)
+              d = determinant(line2_start, line2_end, l1_point.point)
               @contact_normal = seg2.normal.unit * d
             else
-              @penetration = l2_distance
-              @line_center = line2_start - (seg2 * 0.5)
+              @penetration = l2_point.distance
 
-              d = determinant(line1_start, line1_end, @line_center)
+              d = determinant(line1_start, line1_end, l2_point.point)
               @contact_normal = seg1.normal.unit * d
             end
           end
