@@ -14,7 +14,6 @@ class Window < Gosu::Window
 
     super($window_width, $window_height, false)
     self.caption = "Ship Demo"
-
     @space = Space.new
  	end
 

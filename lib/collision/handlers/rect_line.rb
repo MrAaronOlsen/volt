@@ -2,11 +2,10 @@ module Volt
   module Collision
     module Handlers
       class RectLine < Base
-        attr_reader :contact
+        attr_reader :type
 
         def initialize(rect, line)
-          @rect = @body1 = rect
-          @line = @body2 = line
+          @rect, @line = rect, line
         end
 
         def query
@@ -16,52 +15,70 @@ module Volt
           @rect_verts = @rect.verts.map { |vert| @rect.world_position(vert) }
           @rect_center = @rect.world_position(@rect.centroid)
 
-          rect_line_collision || line_end_collision
+          @rect_verts.each_with_index do |vert1, i|
+            vert2 = @rect_verts[(i+1) % @rect_verts.count]
+            @contact_loc = line_line_intersection(@line_start, @line_end, vert1, vert2)
+
+            if @contact_loc
+              collide(@line_start, @line_end, vert1, vert2)
+              return true
+            end
+          end
+          
+          false
         end
 
         def debug
           Canvas::Pencil.circle(@contact_loc, 10, Canvas::Color.yellow, true, 2)
         end
 
-      private
-
-        def line_end_collision
-          @rect_verts.each_with_index do |vert, i|
-            vert2 = @rect_verts[(i+1) % @rect_verts.count]
-            @contact_loc = line_line_intersection(@line_start, @line_end, vert, vert2)
-
-            if @contact_loc
-              @penetration = [@contact_loc.distance_to(@line_start), @contact_loc.distance_to(@line_end)].min
-              @contact_normal = (vert2 - vert).normal.unit
-              return true
-            end
+        def get_contact
+          Contact.new(@rect, @line) do |contact|
+            contact.handler = self
+            contact.penetration = @penetration
+            contact.contact_normal = @contact_normal
+            contact.contact_loc = @contact_loc
           end
-
-          false
         end
 
-        def rect_line_collision
-          @base = determinant(@line_start, @line_end, @rect_center)
-          @segment = @line_start - @line_end
+      private
 
-          @rect_verts.each do |vert|
-            determinant = determinant(@line_start, @line_end, vert)
+        def collide(line_start, line_end, side_start, side_end)
+          line_seg = line_end - line_start
+          side_seg = side_end - side_start
 
-            if determinant != @base
-              @thread = @line_start - vert
-              @projection = @thread.projection_onto(@segment)
+          closest_line = closest_point_to_line([line_start, line_end], side_start, side_end)
+          closest_side = closest_point_to_line([side_start, side_end], line_start, line_end)
 
-              if @projection.dot(@segment) > 0 && @projection.mag < @segment.mag
-                @contact_vert = vert
-                @contact_loc = @line_start - @projection
-                @penetration = @contact_loc.distance_to(@line_start - @thread)
-                @contact_normal = (@segment.normal.unit * determinant) * -1
-                return true
-              end
+          if closest_line.distance < closest_side.distance
+            # Line has collided with a box side
+            @penetration = closest_line.distance
+            @line_center = line_start + (line_seg * 0.5)
+
+            @contact_normal = side_seg.normal.unit
+          else
+            # Box corner has collided with the line
+            @penetration = closest_side.distance
+            @line_center = side_start + (side_seg * 0.5)
+
+            @face_start, @face_end = line_start, line_end
+            d = determinant(line_start, line_end, closest_side.point)
+            @contact_normal = line_seg.normal.unit * d
+          end
+        end
+
+        def closest_point_to_line(points, line_start, line_end)
+          closest = nil
+
+          points.each do |point|
+            distance = distance_of_point_to_line(point, line_start, line_end)
+
+            if closest.nil? || distance < closest.distance
+              closest = Struct.new(:distance, :point).new(distance, point)
             end
           end
 
-          false
+          return closest
         end
       end
     end

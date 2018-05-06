@@ -2,11 +2,9 @@ module Volt
   module Collision
     module Handlers
       class LineLine < Base
-        attr_reader :contact
 
         def initialize(line1, line2)
-          @line1 = @body1 = line1
-          @line2 = @body2 = line2
+          @line1, @line2 = line1, line2
         end
 
         def query
@@ -21,7 +19,7 @@ module Volt
           if @contact_loc
             seg1 = line1_start - line1_end
             seg2 = line2_start - line2_end
-            
+
             l1_distance = [line1_start, line1_end].map do |point|
               distance_of_point_to_line(point, line2_start, line2_end)
             end.min
@@ -46,14 +44,17 @@ module Volt
           end
         end
 
-        def debug
-          Canvas::Pencil.circle(@contact_loc, 10, Canvas::Color.yellow, true, 2)
-          Canvas::Pencil.circle(@line_center, 10, Canvas::Color.blue, true, 2)
+        def get_contact
+          Contact.new(@line1, @line2) do |contact|
+            contact.handler = self
+            contact.penetration = @penetration
+            contact.contact_normal = @contact_normal
+            contact.contact_loc = @contact_loc
+          end
         end
 
-      private
-        def method_name
-
+        def debug
+          Canvas::Pencil.circle(@contact_loc, 10, Canvas::Color.yellow, true, 2)
         end
       end
     end

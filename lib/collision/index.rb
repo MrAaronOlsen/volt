@@ -1,28 +1,28 @@
 module Volt
   module Collision
-    class Handler
+    class Index
 
-      def get(shape1, shape2)
-        if sieve[shape1.type].nil?
+      def find_handler(shape1, shape2)
+        if query[shape1.type].nil?
           return
         end
-        
-        handler = sieve[shape1.type][shape2.type]
 
-        if handler.nil?
-          handler = sieve[shape2.type][shape1.type]
+        handler = query[shape1.type][shape2.type]
+
+        if handler.exists?
+          handler = handler.call(shape1, shape2)
+        else
+          handler = query[shape2.type][shape1.type]
 
           if handler.exists?
             handler = handler.call(shape2, shape1)
           end
-        else
-          handler = handler.call(shape1, shape2)
         end
 
         handler
       end
 
-      def sieve
+      def query
         {
           :circle => {
             circle: lambda { |circ1, circ2| Handlers::CircleCircle.new(circ1, circ2) },

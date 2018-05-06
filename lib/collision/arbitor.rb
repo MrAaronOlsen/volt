@@ -2,10 +2,11 @@ module Volt
   module Collision
     class Arbitor
       attr_reader :broad_contacts, :narrow_contacts
-      attr_reader :handler
+      attr_reader :index, :BroadContact
 
       def initialize
-        @handler = Handler.new
+        @index = Index.new
+        @BroadContact = Struct.new(:body1, :body2)
       end
 
       def query(bodies)
@@ -25,7 +26,7 @@ module Volt
       def collect_broad_contacts(bodies)
         bodies.each_with_index do |body1, i|
           bodies[i+1..-1].each do |body2|
-            @broad_contacts << Contact.new(body1, body2) if broad_collide?(body1, body2)
+            @broad_contacts << @BroadContact.new(body1, body2) if broad_collide?(body1, body2)
           end
         end
       end
@@ -52,7 +53,7 @@ module Volt
             contact.body2.shapes.each do |shape2|
               next if shape2.static
 
-              handler = @handler.get(shape1, shape2)
+              handler = @index.find_handler(shape1, shape2)
 
               if handler.exists? && handler.query
                 @narrow_contacts << handler.get_contact

@@ -10,8 +10,8 @@ class Line
     Body.new do |b|
 			b.pos = pos
 			b.damp = 0.998
-			b.mass = 6
-			b.moment = 500
+			b.mass = 5
+			b.moment = 50
 		end
   end
 

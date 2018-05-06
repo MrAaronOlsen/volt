@@ -9,8 +9,8 @@ class Blob
   def new_blob(pos)
     Body.new do |b|
 			b.pos = pos
-			b.mass = 10
-			b.moment = 500
+			b.mass = 40
+			b.moment = 400
 		end
   end
 

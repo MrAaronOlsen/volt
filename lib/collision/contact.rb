@@ -3,21 +3,17 @@ module Volt
     class Contact
       attr_reader :body1, :body2
       attr_reader :shape1, :shape2
-      attr_accessor :contact_normal, :contact_loc
-      attr_accessor :restitution, :penetration, :movement
-      attr_accessor :handler, :dummy
+      attr_accessor :contact_normal, :contact_loc, :penetration
+      attr_accessor :restitution, :movement
+      attr_accessor :handler, :dummy, :life
 
-      def initialize(body1, body2)
-        @body1, @body2 = body1, body2
+      def initialize(shape1, shape2)
+        @body1, @body2 = shape1.body, shape2.body
         @restitution = 0.9
         @dummy = false
+        @life = 0
 
         yield self if block_given?
-      end
-
-      def add_shapes(shape1, shape2)
-        @shape1 = shape1
-        @shape2 = shape2
       end
 
       def resolve(dt)
@@ -34,12 +30,9 @@ module Volt
         rel_velocity.dot(contact_normal)
       end
 
-      def is_dummy
-        @dummy = true
-      end
-
       def debug
         @handler.debug
+        @life += 1
       end
 
       private

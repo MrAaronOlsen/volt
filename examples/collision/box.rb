@@ -9,8 +9,8 @@ class Box
   def new_box(pos)
     Body.new do |b|
 			b.pos = pos
-			b.mass = 10
-			b.moment = 500
+			b.mass = 30
+			b.moment = 300
 		end
   end
 
@@ -29,11 +29,11 @@ class Box
   end
 
   def right
-    @body.add_rotation(10)
+    @body.add_rotation(2)
   end
 
   def left
-    @body.add_rotation(-10)
+    @body.add_rotation(-2)
   end
 
   def freeze
