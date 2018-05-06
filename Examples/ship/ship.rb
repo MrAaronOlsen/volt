@@ -9,7 +9,7 @@ class Ship
   def new_ship(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0.98
+			b.damp = 0.998
 			b.mass = 10
 			b.moment = 3000
 		end

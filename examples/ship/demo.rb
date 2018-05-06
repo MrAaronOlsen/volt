@@ -1,5 +1,6 @@
 require_relative '../example.rb'
 require_relative 'space.rb'
+require_relative 'wall.rb'
 require_relative 'ship.rb'
 
 class Window < Gosu::Window

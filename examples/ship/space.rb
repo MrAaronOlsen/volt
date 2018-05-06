@@ -3,21 +3,23 @@ class Space
 
   def initialize
     @world = World.new
+    @bodies = []
+
+    @bodies << Wall.new(V.new(50, 50), 0).body
+    @bodies << Wall.new(V.new(50, 50), -90).body
+    @bodies << Wall.new(V.new(1150, 50), 0).body
+    @bodies << Wall.new(V.new(1150, 1150), 90).body
+
+    @bodies << Ship.new(V.new(200, 900)).body
+    @bodies << Ship.new(V.new(900, 200)).body
 
     @player = Ship.new(V.new(600, 600))
-
-    @ships = [
-      Ship.new(V.new(100, 600)),
-      Ship.new(V.new(900, 200)),
-      @player
-    ]
-
     @player.body.scale(3, 3)
 
-    @bodies = @ships.map { |ship| ship.body }
+    @bodies << @player.body
 
     @world.add_bodies(@bodies)
-    @drawer = Canvas::Drawer.new(debug: true)
+    @drawer = Canvas::Drawer.new(debug: false)
   end
 
   def update(dt)
