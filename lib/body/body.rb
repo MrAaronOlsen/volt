@@ -72,6 +72,10 @@ module Volt
       callbacks[type] << callback
     end
 
+    def add_callback_block(type, &block)
+      callbacks[type] << block
+    end
+
     def run_callbacks(type, contact)
       callbacks[type].each { |callback| callback.call(self, contact)}
     end

@@ -21,7 +21,10 @@ class Space
 
     @player = Poly.new(V.new(600, 600), -90)
 
-    @player.body.add_callback(:post, lambda { |body, contact| @scene.contacts << contact } )
+    @player.body.add_callback_block(:post) do |body, contact|
+      @scene.contacts << contact
+    end
+
     @bodies << @player.body
 
     @world.add_bodies(@bodies)
