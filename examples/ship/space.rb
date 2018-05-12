@@ -3,6 +3,7 @@ class Space
 
   def initialize
     @world = World.new
+    @scene = Scene.new(@world)
     @bodies = []
 
     @bodies << Wall.new(V.new(50, 50), 0).body
@@ -28,7 +29,7 @@ class Space
   end
 
   def draw
-    @drawer.render(@world.bodies)
+    @drawer.render(@scene)
   end
 
   def button_down?(id)

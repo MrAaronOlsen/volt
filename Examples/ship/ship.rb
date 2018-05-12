@@ -11,7 +11,7 @@ class Ship
 			b.pos = pos
 			b.damp = 0.998
 			b.mass = 10
-			b.moment = 3000
+			b.moment = 1000
 		end
   end
 
@@ -33,11 +33,11 @@ class Ship
   end
 
   def right
-    @body.add_rotation(10)
+    @body.add_rotation(4)
   end
 
   def left
-    @body.add_rotation(-10)
+    @body.add_rotation(-4)
   end
 
   # Parts

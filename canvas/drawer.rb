@@ -11,6 +11,8 @@ module Canvas
         render_body(body)
       end
 
+      return unless @debug
+
       scene.contacts.each do |contact|
         Canvas::Pencil.circle(contact.contact_loc, 10, Canvas::Color.yellow, true, 2)
       end
@@ -25,7 +27,8 @@ module Canvas
         Draw.shape[shape.type].call(Sprite.new(shape))
       end
 
-      render_debug(body) if @debug
+      return unless @debug
+      render_debug(body)
     end
 
     def render_debug(body)
