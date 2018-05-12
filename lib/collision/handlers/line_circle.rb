@@ -32,10 +32,6 @@ module Volt
             contact.contact_loc = @contact_loc
           end
         end
-
-        def debug
-          Canvas::Pencil.circle(@contact_loc, 10, Canvas::Color.yellow, true, 2)
-        end
       end
     end
   end

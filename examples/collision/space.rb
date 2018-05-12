@@ -3,6 +3,8 @@ class Space
 
   def initialize
     @world = World.new
+    @scene = Scene.new(@world)
+
     @drawer = Canvas::Drawer.new(debug: false)
     @bodies = []
 
@@ -18,7 +20,8 @@ class Space
     @bodies << Poly.new(V.new(700, 900), 160).body
 
     @player = Poly.new(V.new(600, 600), -90)
-    @player.body.add_callback(:pre, lambda { |body, collision| binding.pry } )
+
+    @player.body.add_callback(:post, lambda { |body, contact| @scene.contacts << contact } )
     @bodies << @player.body
 
     @world.add_bodies(@bodies)
@@ -28,14 +31,14 @@ class Space
 
   def update(dt)
     return if @pause
+    @scene.reset
 
     move_player?
     @world.update(dt)
   end
 
   def draw
-    @drawer.render(@world.bodies)
-    @world.debug(@pause)
+    @drawer.render(@scene)
   end
 
   def button_down?(id)

@@ -28,10 +28,6 @@ module Volt
           false
         end
 
-        def debug
-          Canvas::Pencil.circle(@contact_loc, 10, Canvas::Color.yellow, true, 2)
-        end
-
         def get_contact
           Contact.new(@poly, @line) do |contact|
             contact.handler = self

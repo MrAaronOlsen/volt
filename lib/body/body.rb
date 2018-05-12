@@ -72,8 +72,8 @@ module Volt
       callbacks[type] << callback
     end
 
-    def run_callbacks(type, collision)
-      callbacks[type].each { |callback| callback.call(self, collision)}
+    def run_callbacks(type, contact)
+      callbacks[type].each { |callback| callback.call(self, contact)}
     end
 
 # Transform Methods

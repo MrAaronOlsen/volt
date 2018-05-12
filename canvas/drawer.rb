@@ -6,8 +6,14 @@ module Canvas
       @debug = debug
     end
 
-    def render(bodies)
-      bodies.each { |body| render_body(body) }
+    def render(scene)
+      scene.world.bodies.each do |body|
+        render_body(body)
+      end
+
+      scene.contacts.each do |contact|
+        Canvas::Pencil.circle(contact.contact_loc, 10, Canvas::Color.yellow, true, 2)
+      end
     end
 
     def flip_debug
