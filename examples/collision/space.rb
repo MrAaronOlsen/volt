@@ -18,6 +18,7 @@ class Space
     @bodies << Poly.new(V.new(700, 900), 160).body
 
     @player = Poly.new(V.new(600, 600), -90)
+    @player.body.add_callback(:pre, lambda { |body, collision| binding.pry } )
     @bodies << @player.body
 
     @world.add_bodies(@bodies)

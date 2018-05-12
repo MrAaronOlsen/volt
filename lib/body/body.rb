@@ -1,8 +1,14 @@
 module Volt
   class Body < Traits
+    attr_reader :callbacks
 
     def initialize
       super
+
+      @callbacks = {
+        pre: Array.new,
+        post: Array.new
+      }
 
       yield self if block_given?
     end
@@ -58,6 +64,16 @@ module Volt
 
     def set_a_vel(a_vel)
       @a_vel = a_vel
+    end
+
+# Call back functions
+
+    def add_callback(type, callback)
+      callbacks[type] << callback
+    end
+
+    def run_callbacks(type, collision)
+      callbacks[type].each { |callback| callback.call(self, collision)}
     end
 
 # Transform Methods

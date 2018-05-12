@@ -19,8 +19,12 @@ module Volt
       def resolve(dt)
         return if @dummy
 
+        @body1.run_callbacks(:pre, self)
+        @body2.run_callbacks(:pre, self)
         resolve_interpenetration(dt)
         resolve_velocity(dt)
+        @body1.run_callbacks(:post, self)
+        @body2.run_callbacks(:post, self)
       end
 
       def get_seperating_velocity

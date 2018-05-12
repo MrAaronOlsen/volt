@@ -27,15 +27,15 @@ class Poly
   end
 
   def stop
-    @body.add_force(V.from_angle(@body.angle) * -100) if @body.vel.mag > 0
+    @body.add_force(V.from_angle(@body.angle) * -200) if @body.vel.mag > 0
   end
 
   def right
-    @body.add_rotation(2)
+    @body.add_rotation(4)
   end
 
   def left
-    @body.add_rotation(-2)
+    @body.add_rotation(-4)
   end
 
   def freeze
