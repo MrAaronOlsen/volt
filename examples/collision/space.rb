@@ -14,7 +14,7 @@ class Space
     @bodies << Wall.new(V.new(1150, 1150), 90).body
 
     @bodies << Ball.new(V.new(900, 900)).body
-    @bodies << Blob.new(V.new(600, 200)).body
+    @bodies << Blob.new(V.new(600, 300)).body
     @bodies << Line.new(V.new(200, 400), 200).body
     @bodies << Box.new(V.new(200, 900)).body
     @bodies << Poly.new(V.new(700, 900), 160).body

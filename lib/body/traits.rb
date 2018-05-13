@@ -19,6 +19,7 @@ module Volt
       @angle, @a_vel, @moment = 0.0, 0.0, 0.0
       @damp, @forces, @torque = 0.995, V.new, 0.0
       @shapes, @cog = [], V.new
+      @bounding = Bounding::Box.new(self)
     end
 
   # Attribute Getters / Setters
@@ -82,7 +83,7 @@ module Volt
       set_transform
       set_cog
       set_hull
-      set_bounding
+      # set_bounding
     end
 
     private
@@ -113,7 +114,7 @@ module Volt
     end
 
     def set_bounding
-      @bounding = Bounding.new(hull.verts)
+      @bounding.build(hull.verts)
     end
 
     def set_i_mass(mass)

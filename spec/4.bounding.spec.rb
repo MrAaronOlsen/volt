@@ -26,6 +26,4 @@ hull = Hull.new(verts)
 # end
 bounding = BroadPhase::Bounding.new(hull.verts)
 
-puts "\nSolution: ".green
-puts "#{bounding}".green
 # puts "Old: #{BroadPhase::BoundingOld.new(verts)}"

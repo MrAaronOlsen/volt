@@ -33,7 +33,7 @@ module Canvas
 
     def render_debug(body)
       Draw.shape[:poly].call(hull_sprite(body))
-      Draw.shape[:circle].call(bounding_sprite(body))
+      Draw.shape[:rect].call(bounding_sprite(body))
     end
 
     def hull_sprite(body)
@@ -47,11 +47,11 @@ module Canvas
       end
     end
 
-    def bounding_sprite(body)
+    def bounding_box_sprite(body)
       Sprite.new do |sprite|
-        sprite.center = body.bounding.circle.center
-        sprite.radius = body.bounding.circle.radius
-        sprite.trans = body.trans
+        sprite.verts = body.bounding.corners
+        sprite.center = body.cog
+        sprite.use_transform = false
         sprite.fill = false
         sprite.color = Color.green
         sprite.z = 1

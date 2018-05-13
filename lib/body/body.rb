@@ -80,10 +80,24 @@ module Volt
       callbacks[type].each { |callback| callback.call(self, contact)}
     end
 
+# Broadphase query
+
+    def broadphase(body)
+      @bounding.query(body.bounding)
+    end
+
+    def use_box_bounding
+      @bounding = Bounding::Box.new(self)
+    end
+
 # Transform Methods
 
     def world_position(vert)
       @trans.transform_vert(vert)
+    end
+
+    def world_positions(verts)
+      verts.map { |vert| world_position(vert) }
     end
   end
 end

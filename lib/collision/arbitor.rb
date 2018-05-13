@@ -26,23 +26,9 @@ module Volt
       def collect_broad_contacts(bodies)
         bodies.each_with_index do |body1, i|
           bodies[i+1..-1].each do |body2|
-            @broad_contacts << @BroadContact.new(body1, body2) if broad_collide?(body1, body2)
+            @broad_contacts << @BroadContact.new(body1, body2) if Bounding::Box.query(body1.bounding, body2.bounding)
           end
         end
-      end
-
-      def broad_collide?(body1, body2)
-        b1 = body1.bounding
-        b2 = body2.bounding
-
-        center1 = body1.trans.transform_vert(b1.center)
-        radius1 = b1.radius
-        center2 = body2.trans.transform_vert(b2.center)
-        radius2 = b2.radius
-
-        distance = center1.distance_to(center2)
-
-        (radius1 + radius2) - distance > 0
       end
 
       def collect_narrow_contacts
