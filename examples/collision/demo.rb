@@ -1,4 +1,4 @@
-require_relative '../example.rb'
+require './volt.rb'
 require_relative 'space.rb'
 require_relative 'scene.rb'
 require_relative 'ball.rb'
@@ -16,11 +16,13 @@ class Window < Gosu::Window
 
     super($window_width, $window_height, false)
     self.caption = "Ship Demo"
+		
     @space = Space.new
+		@time_step = 1.0/60.0
  	end
 
 	def update
-    @space.update(1.0/60.0)
+    @space.update(@time_step)
   end
 
 	def draw

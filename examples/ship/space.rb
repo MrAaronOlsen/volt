@@ -4,6 +4,7 @@ class Space
   def initialize
     @world = World.new
     @scene = Scene.new(@world)
+    @drawer = Canvas::Drawer.new(debug: true)
     @bodies = []
 
     @bodies << Wall.new(V.new(50, 50), 0).body
@@ -20,7 +21,7 @@ class Space
     @bodies << @player.body
 
     @world.add_bodies(@bodies)
-    @drawer = Canvas::Drawer.new(debug: false)
+
   end
 
   def update(dt)

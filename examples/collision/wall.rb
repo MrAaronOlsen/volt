@@ -3,8 +3,6 @@ class Wall
 
   def initialize(pos, angle)
     @body = new_wall(pos)
-    @body.use_box_bounding
-    
     build(angle)
   end
 

@@ -4,8 +4,8 @@ class Space
   def initialize
     @world = World.new
     @scene = Scene.new(@world)
-
     @drawer = Canvas::Drawer.new(debug: true)
+    
     @bodies = []
 
     @bodies << Wall.new(V.new(50, 50), 0).body

@@ -9,12 +9,10 @@ class Window < Gosu::Window
     super($window_width, $window_height, false)
     self.caption = "Base Window"
 
-    @world = World.new
-    @time = TimeStep.new
+		@time_step = 1.0/60.0
  	end
 
 	def update
-    @world.update(@time.get_dt)
   end
 
 	def draw

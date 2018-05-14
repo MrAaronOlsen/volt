@@ -26,7 +26,7 @@ module Volt
       def collect_broad_contacts(bodies)
         bodies.each_with_index do |body1, i|
           bodies[i+1..-1].each do |body2|
-            @broad_contacts << @BroadContact.new(body1, body2) if Bounding::Box.query(body1.bounding, body2.bounding)
+            @broad_contacts << @BroadContact.new(body1, body2) if AABB.query(body1.bounding, body2.bounding)
           end
         end
       end

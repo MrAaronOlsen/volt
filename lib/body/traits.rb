@@ -19,7 +19,7 @@ module Volt
       @angle, @a_vel, @moment = 0.0, 0.0, 0.0
       @damp, @forces, @torque = 0.995, V.new, 0.0
       @shapes, @cog = [], V.new
-      @bounding = Bounding::Box.new(self)
+      @bounding = AABB.new(self)
     end
 
   # Attribute Getters / Setters

@@ -47,7 +47,7 @@ module Canvas
       end
     end
 
-    def bounding_box_sprite(body)
+    def bounding_sprite(body)
       Sprite.new do |sprite|
         sprite.verts = body.bounding.corners
         sprite.center = body.cog
