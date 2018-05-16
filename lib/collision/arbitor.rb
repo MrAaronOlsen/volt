@@ -18,9 +18,8 @@ module Volt
       end
 
       def resolve(dt)
-        @narrow_contacts.each do |contact|
-          contact.resolve(dt)
-        end
+        sorted_contacts = @narrow_contacts.sort_by { |contact| contact.penetration }
+        sorted_contacts.each { |contact| contact.resolve(dt) }
       end
 
       def collect_broad_contacts(bodies)

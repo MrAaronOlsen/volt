@@ -10,7 +10,7 @@ module Volt
     attr_reader :damp, :forces, :torque
     # shapes
     attr_reader :shapes, :cog
-    # colision shapes
+    # collision shapes
     attr_reader :hull, :bounding
 
     def initialize()
@@ -83,7 +83,6 @@ module Volt
       set_transform
       set_cog
       set_hull
-      # set_bounding
     end
 
     private
@@ -111,10 +110,6 @@ module Volt
 
     def set_hull
       @hull = Hull.new(all_verts)
-    end
-
-    def set_bounding
-      @bounding.build(hull.verts)
     end
 
     def set_i_mass(mass)

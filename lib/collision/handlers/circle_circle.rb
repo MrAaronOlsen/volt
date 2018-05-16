@@ -8,10 +8,10 @@ module Volt
         end
 
         def query
-          @center1 = @circ1.world_position(@circ1.centroid)
+          @center1 = Ref.get(@circ1.body, @circ1.centroid)
           @radius1 = @circ1.radius
 
-          @center2 = @circ2.world_position(@circ2.centroid)
+          @center1 = Ref.get(@circ2.body, @circ2.centroid)
           @radius2 = @circ2.radius
 
           @thread = @center1 - @center2

@@ -8,11 +8,11 @@ module Volt
         end
 
         def query
-          line1_start = @line1.world_position(@line1.verts[0])
-          line1_end = @line1.world_position(@line1.verts[1])
+          line1_start = Ref.get(@line1.body, @line1.verts[0])
+          line1_end = Ref.get(@line1.body, @line1.verts[1])
 
-          line2_start = @line2.world_position(@line2.verts[0])
-          line2_end = @line2.world_position(@line2.verts[1])
+          line2_start = Ref.get(@line2.body, @line2.verts[0])
+          line2_end = Ref.get(@line2.body, @line2.verts[1])
 
           @contact_loc = line_line_intersection(line1_start, line1_end, line2_start, line2_end)
 

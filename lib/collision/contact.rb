@@ -19,19 +19,17 @@ module Volt
       def resolve(dt)
         return if @dummy
 
-        @body1.run_callbacks(:pre, self)
-        @body2.run_callbacks(:pre, self)
+        [@body1, @body2].each { |body| body.run_callbacks(:pre, self) }
         resolve_interpenetration(dt)
         resolve_velocity(dt)
-        @body1.run_callbacks(:post, self)
-        @body2.run_callbacks(:post, self)
+        [@body1, @body2].each { |body| body.run_callbacks(:post, self) }
       end
 
       def get_seperating_velocity
         rel_velocity = @body1.vel.copy
         rel_velocity.sub(@body2.vel) if @body2
 
-        rel_velocity.dot(contact_normal)
+        rel_velocity.dot(@contact_normal)
       end
 
       def debug

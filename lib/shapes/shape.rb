@@ -12,10 +12,6 @@ module Volt
       @mass, @centroid, @verts = 0, Vect.new, []
     end
 
-    def world_position(vect)
-      @body.world_position(vect)
-    end
-
     def name=(name)
       @name = name
     end

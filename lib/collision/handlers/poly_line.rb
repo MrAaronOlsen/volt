@@ -9,11 +9,11 @@ module Volt
         end
 
         def query
-          @line_start = @line.world_position(@line.verts[0])
-          @line_end = @line.world_position(@line.verts[1])
+          @line_start = Ref.get(@line.body, @line.verts[0])
+          @line_end = Ref.get(@line.body, @line.verts[1])
 
-          @poly_verts = @poly.verts.map { |vert| @poly.world_position(vert) }
-          @poly_center = @poly.world_position(@poly.centroid)
+          @poly_verts = Ref.get_all(@poly.body, @poly.verts)
+          @poly_center = Ref.get(@poly.body, @poly.centroid)
 
           @poly_verts.each_with_index do |vert1, i|
             vert2 = @poly_verts[(i+1) % @poly_verts.count]

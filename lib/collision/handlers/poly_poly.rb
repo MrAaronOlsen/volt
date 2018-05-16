@@ -9,8 +9,8 @@ module Volt
         end
 
         def query
-          @poly1_verts = @poly1.verts.map { |vert| @poly1.world_position(vert) }
-          @poly2_verts = @poly2.verts.map { |vert| @poly2.world_position(vert) }
+          @poly1_verts = Ref.get_all(@poly1.body, @poly1.verts)
+          @poly2_verts = Ref.get_all(@poly2.body, @poly2.verts)
 
           poly1_count = @poly1_verts.count
           poly2_count = @poly2_verts.count

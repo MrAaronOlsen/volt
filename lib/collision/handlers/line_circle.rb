@@ -8,9 +8,10 @@ module Volt
         end
 
         def query
-          @line_start = @line.world_position(@line.verts[0])
-          @line_end = @line.world_position(@line.verts[1])
-          @center = @circ.world_position(@circ.centroid)
+          @line_start = Ref.get(@line.body, @line.verts[0])
+          @line_end = Ref.get(@line.body, @line.verts[1])
+
+          @center = Ref.get(@circ.body, @circ.centroid)
           @radius = @circ.radius
 
           @segment = @line_start - @line_end

@@ -7,8 +7,8 @@ module Volt
     end
 
     def update
-      verts = @body.world_positions(@body.hull.verts)
-      center = @body.world_position(@body.cog)
+      verts = Ref.get_all(@body, @body.hull.verts)
+      center = Ref.get(@body, @body.cog)
 
       xs = verts.minmax_by { |vert| vert.x }
       ys = verts.minmax_by { |vert| vert.y }

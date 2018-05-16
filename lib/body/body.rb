@@ -39,7 +39,7 @@ module Volt
     def add_force_at(force, vert)
       @forces.add(force)
 
-      r = point - world_position(cog)
+      r = point - Ref.get(self, cog)
       @torque += r.cross(force)
     end
 
@@ -50,7 +50,7 @@ module Volt
     def add_impulse_at(impulse, point)
       @vel += impulse
 
-      r = point - world_position(cog)
+      r = point - Ref.get(self, cog)
       @a_vel += r.cross(impulse) * @i_moment
     end
 
@@ -88,16 +88,6 @@ module Volt
 
     def use_box_bounding
       @bounding = Bounding::Box.new(self)
-    end
-
-# Transform Methods
-
-    def world_position(vert)
-      @trans.transform_vert(vert)
-    end
-
-    def world_positions(verts)
-      verts.map { |vert| world_position(vert) }
     end
   end
 end
