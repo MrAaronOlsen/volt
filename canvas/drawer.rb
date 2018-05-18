@@ -25,6 +25,8 @@ module Canvas
     def render_body(body)
       body.shapes.each do |shape|
         Draw.shape[shape.type].call(Sprite.new(shape))
+        center = shape.body.trans.transform_vert(shape.centroid)
+        Pencil.circle(center, 10, Canvas::Color.orange, true, 2)
       end
 
       return unless @debug
