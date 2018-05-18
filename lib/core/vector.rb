@@ -60,6 +60,10 @@ module Volt
       Vector.new(@x * value, @y * value)
     end
 
+    def mult(value)
+      @x *= value; @y *= value
+    end
+
     def /(value)
       Vector.new(@x / value, @y / value) unless value.zero?
     end
@@ -96,6 +100,10 @@ module Volt
 
     def cross(vect)
       ( @x * vect.y ) - ( @y * vect.x )
+    end
+
+    def cross_scalar(scalar)
+      V.new(-scalar * @y, scalar * @x)
     end
 
     def normal

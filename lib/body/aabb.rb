@@ -13,8 +13,8 @@ module Volt
       xs = verts.minmax_by { |vert| vert.x }
       ys = verts.minmax_by { |vert| vert.y }
 
-      @left, @right = xs[0], xs[1]
-      @top, @bot = ys[0], ys[1]
+      @left, @right = xs[0] + V.new(-5, 0), xs[1] + V.new(5, 0)
+      @top, @bot = ys[0] + V.new(0, -5), ys[1] + V.new(0, 5)
     end
 
     def corners

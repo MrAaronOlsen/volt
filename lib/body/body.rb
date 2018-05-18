@@ -28,6 +28,7 @@ module Volt
       @angle += @a_vel * dt
 
       set_transform
+      @bounding.update
     end
 
 # Lifecycle Methods
@@ -52,6 +53,11 @@ module Volt
 
       r = point - Ref.get(self, cog)
       @a_vel += r.cross(impulse) * @i_moment
+    end
+
+    def add_impulse_with(impulse, contact)
+      add_impulse(impulse)
+      @a_vel += contact.cross(impulse) * @i_moment
     end
 
     def add_rotation(vel)
@@ -84,10 +90,6 @@ module Volt
 
     def broadphase(body)
       @bounding.query(body.bounding)
-    end
-
-    def use_box_bounding
-      @bounding = Bounding::Box.new(self)
     end
   end
 end

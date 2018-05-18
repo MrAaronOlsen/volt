@@ -9,7 +9,7 @@ class Poly
   def new_box(pos)
     Body.new do |b|
 			b.pos = pos
-			b.mass = 30
+			b.mass = 3
 			b.moment = 300
 		end
   end

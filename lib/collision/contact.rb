@@ -9,9 +9,8 @@ module Volt
 
       def initialize(shape1, shape2)
         @body1, @body2 = shape1.body, shape2.body
-        @restitution = 0.5
+        @restitution = 0.8
         @dummy = false
-        @life = 0
 
         yield self if block_given?
       end
