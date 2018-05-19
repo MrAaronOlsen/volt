@@ -44,7 +44,7 @@ class Blob
       circ.body = @body
       circ.mass = 3
       circ.set_verts(V.new(0, 0), 75)
-      circ.color = Canvas::Color.light_grey
+      circ.color = Canvas::Colors.light_grey
     end
   end
 
@@ -54,7 +54,7 @@ class Blob
       circ.body = @body
       circ.mass = 1
       circ.set_verts(V.new(0, 100), 50)
-      circ.color = Canvas::Color.light_grey
+      circ.color = Canvas::Colors.light_grey
     end
   end
 
@@ -64,7 +64,7 @@ class Blob
       circ.body = @body
       circ.mass = 3
       circ.set_verts(V.new(0, 200), 75)
-      circ.color = Canvas::Color.light_grey
+      circ.color = Canvas::Colors.light_grey
     end
   end
 end

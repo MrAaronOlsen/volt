@@ -43,7 +43,7 @@ class Ball
       circ.name = "Player Body"
       circ.mass = 3
       circ.set_verts(V.new(0, 0), 100)
-      circ.color = Canvas::Color.light_grey
+      circ.color = Canvas::Colors.light_grey
     end
   end
 
@@ -53,7 +53,7 @@ class Ball
       line.static = true
       line.mass = 0
       line.set_verts(V.new(0, 0), V.new(0, -100))
-      line.color = Canvas::Color.black
+      line.color = Canvas::Colors.black
     end
   end
 end

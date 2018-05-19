@@ -1,7 +1,8 @@
 module Canvas
   class Sprite
-    attr_accessor :shape, :verts, :trans, :use_transform
-    attr_accessor :centroid, :center, :radius
+    attr_accessor :shape, :type, :verts
+    attr_accessor :trans, :use_transform
+    attr_accessor :center, :radius
     attr_accessor :color, :fill, :z
 
     def initialize(shape = nil)

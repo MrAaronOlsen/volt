@@ -30,7 +30,7 @@ class Line
       line.name = "line"
       line.mass = 1
       line.set_verts(V.new(0, 0), V.new(length, 0))
-      line.color = Canvas::Color.light_grey
+      line.color = Canvas::Colors.light_grey
     end
   end
 end

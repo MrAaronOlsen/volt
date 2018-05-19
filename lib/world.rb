@@ -1,6 +1,7 @@
 module Volt
   class World
     attr_accessor :bodies
+    attr_reader :dt
 
     def initialize
       @bodies = []
@@ -9,6 +10,7 @@ module Volt
     end
 
     def update(dt)
+      @dt = dt
       return if dt <= 0.0
 
       @Arbitor.query(bodies)

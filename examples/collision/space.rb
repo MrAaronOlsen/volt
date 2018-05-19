@@ -19,25 +19,18 @@ class Space
     # @bodies << Box.new(V.new(200, 900)).body
     # @bodies << Poly.new(V.new(700, 900), 160).body
 
-    @player = Poly.new(V.new(600, 600), -90)
-
-    @player.body.add_callback_block(:post) do |body, contact|
-      @scene.contacts << contact
-    end
+    @player = Poly.new(V.new(600, 600), -90, @scene)
 
     @bodies << @player.body
-
     @world.add_bodies(@bodies)
-
     @pause = false
   end
 
   def update(dt)
-    return if @pause
     @scene.reset
 
     move_player?
-    @world.update(dt)
+    @world.update(@pause ? 0 : dt)
   end
 
   def draw
@@ -45,7 +38,7 @@ class Space
   end
 
   def button_down?(id)
-    @drawer.flip_debug if id == Gosu::KbD
+    @drawer.toggle_debug if id == Gosu::KbD
     @pause = !@pause if id == Gosu::KbSpace
   end
 

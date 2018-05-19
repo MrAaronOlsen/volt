@@ -49,7 +49,7 @@ class Box
       rect.body = @body
       rect.mass = 10
       rect.set_verts(200, 200, V.new(0, 0))
-      rect.color = Canvas::Color.light_grey
+      rect.color = Canvas::Colors.light_grey
     end
   end
 
@@ -58,7 +58,7 @@ class Box
       line.body = @body
       line.static = true
       line.set_verts(V.new(100, 100), V.new(200, 100))
-      line.color = Canvas::Color.green
+      line.color = Canvas::Colors.green
     end
   end
 end

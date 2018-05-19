@@ -11,26 +11,23 @@ module Canvas
         render_body(body)
       end
 
-      return unless @debug
-
-      scene.contacts.each do |contact|
-        Canvas::Pencil.circle(contact.contact_loc, 10, Canvas::Color.yellow, true, 2)
+      scene.effects.each do |effect|
+        effect.draw(scene.world.dt)
       end
-    end
-
-    def flip_debug
-      @debug ? (@debug = false) : (@debug = true)
     end
 
     def render_body(body)
       body.shapes.each do |shape|
         Draw.shape[shape.type].call(Sprite.new(shape))
-        center = shape.body.trans.transform_vert(shape.centroid)
-        Pencil.circle(center, 10, Canvas::Color.orange, true, 2)
       end
 
       return unless @debug
+
       render_debug(body)
+    end
+
+    def toggle_debug
+      @debug = !@debug
     end
 
     def render_debug(body)
@@ -44,7 +41,7 @@ module Canvas
         sprite.center = body.cog
         sprite.trans = body.trans
         sprite.fill = false
-        sprite.color = Color.red
+        sprite.color = Colors.red
         sprite.z = 1
       end
     end
@@ -55,7 +52,7 @@ module Canvas
         sprite.center = body.cog
         sprite.use_transform = false
         sprite.fill = false
-        sprite.color = Color.green
+        sprite.color = Colors.green
         sprite.z = 1
       end
     end

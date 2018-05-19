@@ -1,49 +1,21 @@
 module Canvas
   class Color
-    class << self
-      def red
-        0xff_ff0000
-      end
+    attr_reader :a, :r, :g, :b
+    attr_reader :color
 
-      def green
-        0xff_00ff00
-      end
+    def initialize(a, r, g, b)
+      @a, @r, @g, @b = a, r, g, b
 
-      def blue
-        0xff_0000ff
-      end
+      @color = Gosu::Color.new(@a, @r, @g, @b)
+    end
 
-      def yellow
-        0xff_ffff00
-      end
+    def fade(n)
+      @a += n
+      @color = Gosu::Color.new(@a, @r, @g, @b)
+    end
 
-      def megenta
-        0xff_00ffff
-      end
-
-      def purple
-        0xff_ff00ff
-      end
-
-      def white
-        0xff_ffffff
-      end
-
-      def light_grey
-        0xff_aaaaaa
-      end
-
-      def grey
-        0xff_777777
-      end
-
-      def black
-        0xff_000000
-      end
-
-      def orange
-        0xff_ff8000
-      end
+    def get
+      @color
     end
   end
 end

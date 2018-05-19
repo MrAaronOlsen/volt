@@ -1,8 +1,9 @@
 class Poly
-  attr_reader :body, :parts
+  attr_reader :body, :parts, :scene
 
-  def initialize(pos, angle)
+  def initialize(pos, angle, scene)
     @body = new_box(pos)
+    @scene = scene
     build(angle)
   end
 
@@ -20,6 +21,8 @@ class Poly
     @body.init
     @body.recenter
     @body.rotate(angle)
+
+    add_contact_effect
   end
 
   def go
@@ -43,6 +46,23 @@ class Poly
     @body.set_a_vel(0)
   end
 
+  def add_contact_effect
+    @body.add_callback_block(:post) do |body, contact|
+
+      sprite = Canvas::Sprite.new do |sprite|
+        sprite.type = :circle
+        sprite.center = contact.contact_loc
+        sprite.radius = 10
+        sprite.use_transform = false
+        sprite.fill = true
+        sprite.color = Canvas::Colors.yellow
+        sprite.z = 1
+      end
+
+      @scene.add_effect(Canvas::Fade.new(sprite, 10))
+    end
+  end
+
   # Parts
 
   def poly
@@ -53,7 +73,7 @@ class Poly
       rect.body = @body
       rect.mass = 10
       rect.set_verts(verts)
-      rect.color = Canvas::Color.light_grey
+      rect.color = Canvas::Colors.light_grey
     end
   end
 end

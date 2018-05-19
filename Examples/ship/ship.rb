@@ -47,7 +47,7 @@ class Ship
       poly.body = @body
       poly.mass = 3
       poly.set_verts([V.new(50, 0), V.new(60, 0), V.new(70, 20), V.new(40, 20)])
-      poly.color = Canvas::Color.orange
+      poly.color = Canvas::Colors.orange
     end
   end
 
@@ -56,7 +56,7 @@ class Ship
       rect.body = @body
       rect.mass = 1
       rect.set_verts(30, 20, V.new(40, 20))
-      rect.color = Canvas::Color.blue
+      rect.color = Canvas::Colors.blue
     end
   end
 
@@ -65,7 +65,7 @@ class Ship
       rect.body = @body
       rect.mass = 4
       rect.set_verts(30, 60, V.new(40, 30))
-      rect.color = Canvas::Color.orange
+      rect.color = Canvas::Colors.orange
     end
   end
 
@@ -82,7 +82,7 @@ class Ship
       poly.body = @body
       poly.mass = 1
       poly.set_verts(verts)
-      poly.color = Canvas::Color.grey
+      poly.color = Canvas::Colors.grey
     end
   end
 
@@ -99,7 +99,7 @@ class Ship
       tri.body = @body
       tri.mass = 0.5
       tri.set_verts(v1, v2, v3)
-      tri.color = Canvas::Color.grey
+      tri.color = Canvas::Colors.grey
     end
   end
 
@@ -116,7 +116,7 @@ class Ship
       poly.body = @body
       poly.mass = 0.5
       poly.set_verts(verts)
-      poly.color = Canvas::Color.red
+      poly.color = Canvas::Colors.red
     end
   end
 end

@@ -5,6 +5,7 @@ module Canvas
           axis1 = Vector.new(radius, 0)
       		axis2 = Vector.new(radius, 0)
 
+
       		60.times do
       			axis2.rotate(6)
 
@@ -22,12 +23,14 @@ module Canvas
       end
 
       def line(points, color, z = 1)
+
         Gosu.draw_line(
           points[0].x, points[0].y, color,
           points[1].x, points[1].y, color, z )
       end
 
       def tri(points, color, fill, z = 1)
+
         if fill
           Gosu.draw_triangle(
             points[0].x, points[0].y, color,
@@ -39,6 +42,7 @@ module Canvas
       end
 
       def rect(points, color, fill, z = 1)
+
         if fill
           Gosu.draw_quad(
             points[0].x, points[0].y, color,
