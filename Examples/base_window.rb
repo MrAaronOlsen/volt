@@ -1,5 +1,3 @@
-require_relative 'example.rb'
-
 class Window < Gosu::Window
 
 	def initialize

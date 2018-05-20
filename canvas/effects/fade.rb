@@ -12,9 +12,14 @@ module Canvas
     end
 
     def draw(dt)
-      @sprite.color.fade(-@fade * dt)
       Draw.shape[@type].call(@sprite)
 
+      if dt.zero?
+        @lifespan += Time.now - @born
+        return
+      end
+
+      @sprite.color.fade(-@fade * dt)
       @dead = true if Time.now - @born >= lifespan
     end
   end

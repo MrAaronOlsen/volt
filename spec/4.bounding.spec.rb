@@ -15,7 +15,7 @@ verts = [
   V.new(8, 5).with_name("J")
 ]
 
-hull = Hull.new(verts)
+# hull = Hull.new(verts)
 
 # Benchmark.bm do |x|
 #   x.report { BroadPhase::Bounding.new(hull.verts) }
@@ -24,6 +24,6 @@ hull = Hull.new(verts)
 # Benchmark.bm do |x|
 #   x.report { BroadPhase::BoundingOld.new(verts) }
 # end
-bounding = BroadPhase::Bounding.new(hull.verts)
+# bounding = BroadPhase::Bounding.new(hull.verts)
 
 # puts "Old: #{BroadPhase::BoundingOld.new(verts)}"
