@@ -1,23 +1,22 @@
 module Canvas
   class Sprite
-    attr_accessor :shape, :type, :verts
-    attr_accessor :trans, :use_transform
+    attr_accessor :shape, :type
+    attr_accessor :trans, :verts
     attr_accessor :center, :radius
     attr_accessor :color, :fill, :z
 
     def initialize(shape = nil)
       @shape = shape
-      @use_transform = true
 
       if block_given? then yield(self) else set_on_shape end
     end
 
     def verts
-      @use_transform ? @verts.map { |vert| @trans.transform_vert(vert) } : @verts
+      @trans.nil? ? @verts : @verts.map { |vert| @trans.transform_vert(vert) }
     end
 
     def center
-      @use_transform ? @trans.transform_vert(@center) : @center
+      @trans.nil? ? @center : @trans.transform_vert(@center)
     end
 
     def set_on_shape

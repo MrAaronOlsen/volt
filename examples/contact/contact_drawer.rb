@@ -12,7 +12,6 @@ class ContactExamples
           sprite.type = :circle
           sprite.center = contact.contact_loc
           sprite.radius = 10
-          sprite.use_transform = false
           sprite.fill = true
           sprite.color = Canvas::Colors.yellow
           sprite.z = 1
@@ -26,7 +25,6 @@ class ContactExamples
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
           sprite.verts = [normal_start, normal_end]
-          sprite.use_transform = false
           sprite.color = Canvas::Colors.red
           sprite.z = 1
         end

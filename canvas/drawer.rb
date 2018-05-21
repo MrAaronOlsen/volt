@@ -50,7 +50,6 @@ module Canvas
       Sprite.new do |sprite|
         sprite.verts = body.bounding.corners
         sprite.center = body.cog
-        sprite.use_transform = false
         sprite.fill = false
         sprite.color = Colors.green
         sprite.z = 1
