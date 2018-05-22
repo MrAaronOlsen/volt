@@ -8,7 +8,7 @@ class ContactExamples
       @drawer = Canvas::Drawer.new(debug: false)
 
       @bodies = Wall.get_walls
-      @bodies << Line.new(V.new(700, 600), 200, 75).body
+      @bodies << Line.new(V.new(700, 600), 300, 75).body
 
       @player = Player.new(V.new(600, 600), -90, @scene)
       @bodies << @player.body
@@ -38,6 +38,7 @@ class ContactExamples
       @player.stop if Gosu.button_down?(Gosu::KbDown)
       @player.left if Gosu.button_down?(Gosu::KbLeft)
       @player.right if Gosu.button_down?(Gosu::KbRight)
+      @player.freeze if Gosu.button_down?(Gosu::KbP)
     end
   end
 end

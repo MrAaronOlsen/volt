@@ -48,7 +48,7 @@ class ContactExamples
     end
 
     def add_callbacks
-      @body.add_callback_block(:post) do |body, contact|
+      @body.add_callback_block(:pre) do |body, contact|
         ContactDrawer.sketch(contact, @scene)
       end
     end

@@ -3,7 +3,7 @@ module Volt
     class Contact
       attr_reader :body1, :body2
       attr_reader :shape1, :shape2
-      attr_accessor :contact_normal, :contact_loc, :contact_face, :penetration
+      attr_accessor :contact_normal, :contact_loc, :contact_face, :penetration, :body1_minmax, :body2_minmax
       attr_accessor :restitution, :movement
       attr_accessor :handler, :dummy
 
@@ -16,9 +16,8 @@ module Volt
       end
 
       def resolve(dt)
-        return if @dummy
-
         [@body1, @body2].each { |body| body.run_callbacks(:pre, self) }
+        return if @dummy
         resolve_interpenetration(dt)
         resolve_velocity(dt)
         [@body1, @body2].each { |body| body.run_callbacks(:post, self) }

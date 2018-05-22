@@ -5,7 +5,7 @@ module Canvas
 
     def initialize(sprite, lifespan)
       @sprite, @type, @alpha = sprite, sprite.type, sprite.color.a
-      @fade = @alpha / lifespan
+      lifespan.zero? ? @fade = lifespan : @fade = @alpha / lifespan
       @lifespan = lifespan
       @born = Time.now
       @dead = false
@@ -19,7 +19,7 @@ module Canvas
         return
       end
 
-      @sprite.color.fade(-@fade * dt)
+      @sprite.color.fade(@fade * -dt)
       @dead = true if Time.now - @born >= lifespan
     end
   end
