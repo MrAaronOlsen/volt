@@ -34,6 +34,7 @@ module Volt
             contact.penetration = @penetration
             contact.contact_normal = @contact_normal
             contact.contact_loc = @contact_loc
+            contact.contact_face = @contact_face
           end
         end
 
@@ -49,17 +50,17 @@ module Volt
           if closest_line.distance < closest_side.distance
             # Line has collided with a box side
             @penetration = closest_line.distance
-            @line_center = line_start + (line_seg * 0.5)
 
             @contact_normal = side_seg.normal.unit
+            @contact_face = Face.new(side_start, side_end)
           else
             # Box corner has collided with the line
             @penetration = closest_side.distance
-            @line_center = side_start + (side_seg * 0.5)
 
-            @face_start, @face_end = line_start, line_end
             d = determinant(line_start, line_end, closest_side.point)
             @contact_normal = line_seg.normal.unit * d
+
+            @contact_face = Face.new(line_start, line_end)
           end
         end
       end

@@ -5,9 +5,11 @@ class ContactExamples
     def initialize
       @world = World.new
       @scene = Scene.new(@world)
-      @drawer = Canvas::Drawer.new(debug: true)
+      @drawer = Canvas::Drawer.new(debug: false)
 
       @bodies = Wall.get_walls
+      @bodies << Line.new(V.new(700, 600), 200, 75).body
+
       @player = Player.new(V.new(600, 600), -90, @scene)
       @bodies << @player.body
 

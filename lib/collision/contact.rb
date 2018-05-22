@@ -3,7 +3,7 @@ module Volt
     class Contact
       attr_reader :body1, :body2
       attr_reader :shape1, :shape2
-      attr_accessor :contact_normal, :contact_loc, :penetration
+      attr_accessor :contact_normal, :contact_loc, :contact_face, :penetration
       attr_accessor :restitution, :movement
       attr_accessor :handler, :dummy
 
