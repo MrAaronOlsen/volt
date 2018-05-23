@@ -56,6 +56,7 @@ module Volt
           face_minmax = MinMax.by_projection(face_verts, axis)
 
           if poly_minmax.max > face_minmax.min && poly_minmax.min < face_minmax.max
+            binding.pry
             return [poly_minmax.max - face_minmax.min, poly_minmax.max - face_minmax.min].min
           end
         end

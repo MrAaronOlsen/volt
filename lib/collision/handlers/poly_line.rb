@@ -36,22 +36,19 @@ module Volt
             end
           end
 
-          # Check the contact along the line's axis
+          # Initial contact normal. Does not matter yet what direction it's facing.
+          @contact_normal = line_face.normal
           line_axis = line_face.axis
+
           # Do a SAT check on the line's axis
           return false unless sat_check_for_poly_line(poly_verts, line_face.start, line_axis)
 
-          # Check the contact along the lines' normal
-          # Initial contact normal. Does not matter yet what direction it's facing.
-          @contact_normal = line_face.normal
           # Do a SAT check on the face's axis
-          return false unless sat_check_for_poly_face(poly_verts, [line_face.start, line_face.end], @contact_normal)
+          @penetration = sat_check_for_poly_face(poly_verts, [line_face.start, line_face.end], @contact_normal)
+          return false if @penetration.nil?
 
           # Flip the normal if the poly centroid is on the other side
           @contact_normal.mult(-1) if determinant(line_face.end, line_face.start, poly_centroid) == -1
-
-          # Penetration is going to be smallest of both possibilities since we could be on either side of the line
-          @penetration = [body_minmax.max - line_minmax.min, line_minmax.max - body_minmax.min].min
 
           # To find the contact location we'll need to check each face of the poly with the line
           @contact_loc = find_contact_point_of_line_with_poly(poly_verts, line_face.start, line_face.end)
