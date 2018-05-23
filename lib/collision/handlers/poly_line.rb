@@ -24,7 +24,7 @@ module Volt
           line_contact = line_face.start if point_is_inside_poly(poly_verts, line_face.start)
           line_contact = line_face.end if line_contact.nil? && point_is_inside_poly(poly_verts, line_face.end)
 
-          # If we have a line contact then find the rest of the contact data
+          # If we have a line contact then find the rest of the contact data and return it.
           if line_contact.exists?
             @contact_face = find_face_intersecting_with_line(poly_verts, line_face.start, line_face.end)
 
@@ -36,32 +36,19 @@ module Volt
             end
           end
 
-          # Otherwise we check for a poly to line contact
-
-          # First we check the contact along the line's axis
+          # Check the contact along the line's axis
           line_axis = line_face.axis
+          # Do a SAT check on the line's axis
+          return false unless sat_check_for_poly_line(poly_verts, line_face.start, line_axis)
 
-          body_minmax = MinMax.by_projection(poly_verts, line_axis)
-          line_minmax = MinMax.by_projection([line_face.start, line_face.end], line_axis)
-
-          # If the poly's min and max overlap the line's min we have a contact on the line's axis
-          return false unless body_minmax.max > line_minmax.min || body_minmax.min < line_minmax.max
-
-          # Initial contact normal
+          # Check the contact along the lines' normal
+          # Initial contact normal. Does not matter yet what direction it's facing.
           @contact_normal = line_face.normal
-
-          # Then check for contact along the lines normal
-          # Gets the min and max projection onto the contact normal
-          body_minmax = MinMax.by_projection(poly_verts, @contact_normal)
-          line_minmax = MinMax.by_projection([line_face.start, line_face.end], @contact_normal)
-
-          # If the poly's min and max are on either side of the line we have a contact on the normal axis
-          return false unless body_minmax.max > line_minmax.min && body_minmax.min < line_minmax.min
+          # Do a SAT check on the face's axis
+          return false unless sat_check_for_poly_face(poly_verts, [line_face.start, line_face.end], @contact_normal)
 
           # Flip the normal if the poly centroid is on the other side
-          if determinant(line_face.end, line_face.start, poly_centroid) == -1
-            @contact_normal.mult(-1)
-          end
+          @contact_normal.mult(-1) if determinant(line_face.end, line_face.start, poly_centroid) == -1
 
           # Penetration is going to be smallest of both possibilities since we could be on either side of the line
           @penetration = [body_minmax.max - line_minmax.min, line_minmax.max - body_minmax.min].min

@@ -42,6 +42,24 @@ module Volt
           face.contact_loc if face.exists?
         end
 
+        def sat_check_for_poly_line(poly_verts, line_vert, line_axis)
+          poly_minmax = MinMax.by_projection(poly_verts, line_axis)
+          line_minmax = MinMax.by_projection([line_vert], line_axis)
+
+          if poly_minmax.max > line_minmax.min || poly_minmax.min < line_minmax.max
+            return [poly_minmax.max - line_minmax.min, poly_minmax.max - line_minmax.min].min
+          end
+        end
+
+        def sat_check_for_poly_face(poly_verts, face_verts, axis)
+          poly_minmax = MinMax.by_projection(poly_verts, axis)
+          face_minmax = MinMax.by_projection(face_verts, axis)
+
+          if poly_minmax.max > face_minmax.min && poly_minmax.min < face_minmax.max
+            return [poly_minmax.max - face_minmax.min, poly_minmax.max - face_minmax.min].min
+          end
+        end
+
         def distance_of_point_to_line(point, ls, le)
           segment = ls - le
           thread = ls - point
