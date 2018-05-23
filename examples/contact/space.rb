@@ -8,9 +8,9 @@ class ContactExamples
       @drawer = Canvas::Drawer.new(debug: false)
 
       @bodies = Wall.get_walls
-      @bodies << Line.new(V.new(700, 600), 300, 75).body
+      @bodies << Line.new(V.new(850, 600), 300, 170).body
 
-      @player = Player.new(V.new(600, 600), -90, @scene)
+      @player = Player.new(V.new(200, 590), -90, @scene)
       @bodies << @player.body
 
       @world.add_bodies(@bodies)

@@ -9,9 +9,9 @@ class Line
   def new_line(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0.998
-			b.mass = 5
-			b.moment = 500
+			b.damp = 0
+			b.mass = 0
+			b.moment = 0
 		end
   end
 

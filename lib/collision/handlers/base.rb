@@ -3,6 +3,45 @@ module Volt
     module Handlers
       class Base
 
+        def point_is_inside_poly(poly_verts, point)
+          count = poly_verts.count
+          intersections = 0
+
+          poly_verts.each_with_index do |face_start, i|
+            face_end = poly_verts[(i+1) % count]
+
+            if line_line_intersection(V.new(0, 0), point, face_start, face_end)
+              intersections += 1
+            end
+          end
+
+          !intersections.modulo(2).zero?
+        end
+
+        def find_face_intersecting_with_line(poly_verts, line_start, line_end)
+          count = poly_verts.count
+          face = nil
+
+          poly_verts.each_with_index do |face_start, i|
+            face_end = poly_verts[(i+1) % count]
+
+            contact_loc = line_line_intersection(face_start, face_end, line_start, line_end)
+
+            if contact_loc
+              face = Face.new(face_start, face_end)
+              face.contact_loc = contact_loc
+              break
+            end
+          end
+
+          return face
+        end
+
+        def find_contact_point_of_line_with_poly(poly_verts, line_start, line_end)
+          face = find_face_intersecting_with_line(poly_verts, line_start, line_end)
+          face.contact_loc if face.exists?
+        end
+
         def distance_of_point_to_line(point, ls, le)
           segment = ls - le
           thread = ls - point

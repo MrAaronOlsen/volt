@@ -9,9 +9,9 @@ module Volt
 
       def initialize(shape1, shape2)
         @body1, @body2 = shape1.body, shape2.body
-        @restitution = 0.8
+        @restitution = 0.5
         @dummy = false
-
+        
         yield self if block_given?
       end
 
@@ -28,10 +28,6 @@ module Volt
         rel_velocity.sub(@body2.vel) if @body2
 
         rel_velocity.dot(@contact_normal)
-      end
-
-      def debug
-        @handler.debug
       end
 
       private
