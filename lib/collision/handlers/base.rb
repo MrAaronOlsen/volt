@@ -47,7 +47,7 @@ module Volt
           line_minmax = MinMax.by_projection([line_vert], line_axis)
 
           if poly_minmax.max > line_minmax.min || poly_minmax.min < line_minmax.max
-            return [poly_minmax.max - line_minmax.min, poly_minmax.max - line_minmax.min].min
+            return [poly_minmax.max - line_minmax.min, line_minmax.max - poly_minmax.min].min
           end
         end
 
@@ -56,8 +56,7 @@ module Volt
           face_minmax = MinMax.by_projection(face_verts, axis)
 
           if poly_minmax.max > face_minmax.min && poly_minmax.min < face_minmax.max
-            binding.pry
-            return [poly_minmax.max - face_minmax.min, poly_minmax.max - face_minmax.min].min
+            return [poly_minmax.max - face_minmax.min, face_minmax.max - poly_minmax.min].min
           end
         end
 
