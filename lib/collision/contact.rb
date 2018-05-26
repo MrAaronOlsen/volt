@@ -3,7 +3,8 @@ module Volt
     class Contact
       attr_reader :body1, :body2
       attr_reader :shape1, :shape2
-      attr_accessor :contact_normal, :contact_loc, :contact_face, :penetration, :body1_minmax, :body2_minmax
+      attr_accessor :contact_normal, :contact_loc, :contact_face, :penetration
+      attr_accessor :body1_norm_proj, :body2_norm_proj, :body1_face_proj, :body2_face_proj
       attr_accessor :restitution, :movement
       attr_accessor :handler, :dummy
 
@@ -11,7 +12,7 @@ module Volt
         @body1, @body2 = shape1.body, shape2.body
         @restitution = 0.5
         @dummy = false
-        
+
         yield self if block_given?
       end
 

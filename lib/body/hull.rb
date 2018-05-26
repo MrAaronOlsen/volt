@@ -1,5 +1,7 @@
 module Volt
   class Hull
+    include Geometry
+    
     attr_reader :verts
 
     def initialize(points)

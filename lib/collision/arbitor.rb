@@ -1,12 +1,12 @@
 module Volt
   module Collision
     class Arbitor
+      include Structs
       attr_reader :broad_contacts, :narrow_contacts
       attr_reader :index, :BroadContact
 
       def initialize
         @index = Index.new
-        @BroadContact = Struct.new(:body1, :body2)
       end
 
       def query(bodies)
@@ -25,7 +25,7 @@ module Volt
       def collect_broad_contacts(bodies)
         bodies.each_with_index do |body1, i|
           bodies[i+1..-1].each do |body2|
-            @broad_contacts << @BroadContact.new(body1, body2) if AABB.query(body1.bounding, body2.bounding)
+            @broad_contacts << BroadContact.new(body1, body2) if AABB.query(body1.bounding, body2.bounding)
           end
         end
       end

@@ -10,8 +10,6 @@ module Volt
 
       def set_verts(v1, v2)
         @verts = [v1, v2]
-
-        set_centroid
       end
     end
   end

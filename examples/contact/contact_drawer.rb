@@ -3,11 +3,13 @@ class ContactExamples
 
     class << self
       def sketch(contact, scene)
-        scene.add_effect(Canvas::Fade.new(contact_loc_sprite(contact), 10))
-        scene.add_effect(Canvas::Fade.new(contact_normal_sprite(contact),10))
-        scene.add_effect(Canvas::Fade.new(contact_face_sprite(contact), 10))
-        # scene.add_effect(Canvas::Fade.new(body_projection_sprite(contact), 0))
-        # scene.add_effect(Canvas::Fade.new(line_projection_sprite(contact), 0))
+        scene.add_effect(Canvas::Fade.new(contact_loc_sprite(contact), 0))
+        scene.add_effect(Canvas::Fade.new(contact_normal_sprite(contact), 0))
+        # scene.add_effect(Canvas::Fade.new(contact_face_sprite(contact), 10))
+        # scene.add_effect(Canvas::Fade.new(body1_projection_normal_sprite(contact), 0))
+        # scene.add_effect(Canvas::Fade.new(body2_projection_normal_sprite(contact), 0))
+        # scene.add_effect(Canvas::Fade.new(body1_projection_face_sprite(contact), 0))
+        # scene.add_effect(Canvas::Fade.new(body2_projection_face_sprite(contact), 0))
       end
 
       def contact_loc_sprite(contact)
@@ -42,9 +44,9 @@ class ContactExamples
         end
       end
 
-      def body_projection_sprite(contact)
-        line_start = V.new(contact.body1_minmax.min.abs, 50)
-        line_end = V.new(contact.body1_minmax.max.abs, 50)
+      def body1_projection_normal_sprite(contact)
+        line_start = V.new(contact.body1_norm_proj.min, 55)
+        line_end = V.new(contact.body1_norm_proj.max, 55)
 
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
@@ -54,9 +56,33 @@ class ContactExamples
         end
       end
 
-      def line_projection_sprite(contact)
-        line_start = V.new(contact.body2_minmax.min.abs, 50)
-        line_end = V.new(contact.body2_minmax.max.abs + 1, 50)
+      def body2_projection_normal_sprite(contact)
+        line_start = V.new(contact.body2_norm_proj.min, 50)
+        line_end = V.new(contact.body2_norm_proj.max, 50)
+
+        Canvas::Sprite.new do |sprite|
+          sprite.type = :line
+          sprite.verts = [line_start, line_end]
+          sprite.color = Canvas::Colors.red
+          sprite.z = 1
+        end
+      end
+
+      def body1_projection_face_sprite(contact)
+        line_start = V.new(55, contact.body1_face_proj.min)
+        line_end = V.new(55, contact.body1_face_proj.max)
+
+        Canvas::Sprite.new do |sprite|
+          sprite.type = :line
+          sprite.verts = [line_start, line_end]
+          sprite.color = Canvas::Colors.green
+          sprite.z = 1
+        end
+      end
+
+      def body2_projection_face_sprite(contact)
+        line_start = V.new(50, contact.body2_face_proj.min)
+        line_end = V.new(50, contact.body2_face_proj.max)
 
         Canvas::Sprite.new do |sprite|
           sprite.type = :line

@@ -46,14 +46,7 @@ module Volt
         vert.transform(trans)
       end
 
-      set_centroid
-    end
-
-  private
-
-    def set_centroid
-      @centroid = V.new
-      @verts.each { |vert| @centroid += vert / @verts.size }
+      @centroid = Volt.get_centroid(@verts)
     end
   end
 end

@@ -64,7 +64,7 @@ RSpec.describe Vector do
       end
 
       it 'can calculate its magnitude' do
-        mag = @vect1.magnitude
+        mag = @vect1.mag
 
         expect(mag).to eq(5.0)
       end

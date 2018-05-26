@@ -8,9 +8,8 @@ class ContactExamples
       @drawer = Canvas::Drawer.new(debug: false)
 
       @bodies = Wall.get_walls
-      @bodies << Line.new(V.new(850, 600), 300, 170).body
-
-      @player = Player.new(V.new(200, 590), -90, @scene)
+      @bodies << Poly.new(V.new(850, 300), 0).body
+      @player = Player.new(V.new(761.4410362379585, 220.54368327322817), -135, @scene)
       @bodies << @player.body
 
       @world.add_bodies(@bodies)
@@ -29,8 +28,9 @@ class ContactExamples
     end
 
     def button_down?(id)
+      $debug = !$debug if Gosu.button_down?(Gosu::KbR)
       @drawer.toggle_debug if id == Gosu::KbD
-      @pause = !@pause if id == Gosu::KbSpace
+      @pause = !@pause if id == Gosu::KbP
     end
 
     def move_player?
@@ -38,7 +38,9 @@ class ContactExamples
       @player.stop if Gosu.button_down?(Gosu::KbDown)
       @player.left if Gosu.button_down?(Gosu::KbLeft)
       @player.right if Gosu.button_down?(Gosu::KbRight)
-      @player.freeze if Gosu.button_down?(Gosu::KbP)
+      @player.freeze if Gosu.button_down?(Gosu::KbSpace)
+
+
     end
   end
 end

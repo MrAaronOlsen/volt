@@ -4,6 +4,7 @@ module Volt
 
     def initialize(body)
       @body = body
+      @pad = 20
     end
 
     def update
@@ -13,8 +14,8 @@ module Volt
       xs = verts.minmax_by { |vert| vert.x }
       ys = verts.minmax_by { |vert| vert.y }
 
-      @left, @right = xs[0] + V.new(-5, 0), xs[1] + V.new(5, 0)
-      @top, @bot = ys[0] + V.new(0, -5), ys[1] + V.new(0, 5)
+      @left, @right = xs[0] + V.new(-@pad, 0), xs[1] + V.new(@pad, 0)
+      @top, @bot = ys[0] + V.new(0, -@pad), ys[1] + V.new(0, @pad)
     end
 
     def corners

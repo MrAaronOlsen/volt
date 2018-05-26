@@ -1,5 +1,7 @@
 module Volt
   class Vector
+    include Geometry
+
     attr_reader :x, :y
     attr_reader :name
 
@@ -15,7 +17,7 @@ module Volt
 
     # Handy constructors
     class << self
-
+      include Geometry
       # Makes a unit vector based on the given angle (in degrees)
       def from_angle(degree)
         theta = radian(degree)
@@ -90,8 +92,8 @@ module Volt
     end
 
     def unit
-      vector = copy
-      vector.normalize
+      m = mag
+      V.new(@x/m, @y/m) unless m.zero?
     end
 
     def dot(vect)
@@ -149,20 +151,6 @@ module Volt
         "X: #{@x}, Y: #{@y}"
       end
     end
-  end
-
-  # Volt level helpers
-
-  # Returns 1 if b is to the right of a in reference to o
-  def determinant(o, a, b)
-    d = (a.y - o.y) * (b.x - a.x) - (b.y - a.y) * (a.x - o.x)
-    return 0 if d.zero?
-
-    d <=> 0
-  end
-
-  def radian(degree) #convert a degree to a radian
-     degree*(Math::PI/180)
   end
 
   Vect = Vector

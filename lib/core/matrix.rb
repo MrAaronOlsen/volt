@@ -1,6 +1,7 @@
 module Volt
-
   class Matrix
+    include Geometry
+
     attr_reader :a, :c, :tx
     attr_reader :b, :d, :ty
 

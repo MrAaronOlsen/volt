@@ -4,6 +4,7 @@ require_relative 'scene.rb'
 require_relative 'player.rb'
 require_relative 'wall.rb'
 require_relative 'line.rb'
+require_relative 'poly.rb'
 require_relative 'contact_drawer.rb'
 
 

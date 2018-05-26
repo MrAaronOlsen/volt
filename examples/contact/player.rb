@@ -27,7 +27,7 @@ class ContactExamples
     end
 
     def go
-      @body.add_impulse(V.from_angle(@body.angle) * 100)
+      @body.add_impulse(V.from_angle(@body.angle) * 50)
     end
 
     def stop
@@ -35,11 +35,11 @@ class ContactExamples
     end
 
     def right
-      @body.add_rotation(4)
+      @body.add_rotation(5)
     end
 
     def left
-      @body.add_rotation(-4)
+      @body.add_rotation(-5)
     end
 
     def freeze
