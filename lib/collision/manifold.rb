@@ -1,37 +1,24 @@
 module Volt
   module Collision
     class Manifold
-      attr_reader :penetration, :contact_normal, :contact_loc, :contact_face
-      attr_reader :shape_a, :shape_b
+      attr_accessor :penetration, :contact_normal
+      attr_accessor :reference, :incident
+      attr_accessor :contact_loc
 
-      def penetration=(penetration)
-        @penetration = penetration
-      end
-
-      def contact_normal=(contact_normal)
-        @contact_normal = contact_normal
-      end
-
-      def contact_loc=(contact_loc)
-        @contact_loc = contact_loc
-      end
-
-      def add_sat_data(penetration, normal, shape_a, shape_b)
+      def add_sat_data(penetration, normal)
 
         if @penetration.nil? || penetration < @penetration
           @penetration = penetration
           @contact_normal = normal
-          @shape_a, @shape_b = shape_a, shape_b
         end
+      end
+
+      def add_contact_faces(reference, incident)
+        @reference, @incident = reference, incident
       end
 
       def flip_normal
         @contact_normal *= -1
-      end
-
-      def to_s
-        "Penetration: #{@penetration}\n" +
-        "Contact Normal: #{@contact_normal}"
       end
     end
   end

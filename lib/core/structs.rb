@@ -6,20 +6,15 @@ module Volt
     PointAlongAxis = Struct.new(:distance, :point)
     BroadContact = Struct.new(:body1, :body2)
 
-    Face = Struct.new(:start, :end) do
-      attr_accessor :start, :end
+    Edge = Struct.new(:from, :to) do
       attr_accessor :axis, :normal
 
-      def initialize(line_start, line_end)
-        @start, @end = line_start, line_end
-      end
-
       def axis
-        @axis ||= @end - @start
+        @axis ||= to - from
       end
 
       def normal
-        @normal ||= (@end - @start).normal.unit
+        @normal ||= (to - from).normal.unit
       end
     end
   end

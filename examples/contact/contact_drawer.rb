@@ -8,8 +8,8 @@ class ContactExamples
         # scene.add_effect(Canvas::Fade.new(contact_face_sprite(contact), 10))
         # scene.add_effect(Canvas::Fade.new(body1_projection_normal_sprite(contact), 0))
         # scene.add_effect(Canvas::Fade.new(body2_projection_normal_sprite(contact), 0))
-        scene.add_effect(Canvas::Fade.new(body1_projection_face_sprite(contact), 0))
-        scene.add_effect(Canvas::Fade.new(body2_projection_face_sprite(contact), 0))
+        scene.add_effect(Canvas::Fade.new(reference_edge_sprite(contact), 0))
+        scene.add_effect(Canvas::Fade.new(incident_edge_sprite(contact), 0))
       end
 
       def contact_loc_sprite(contact)
@@ -38,7 +38,7 @@ class ContactExamples
       def contact_face_sprite(contact)
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
-          sprite.verts = [contact.contact_face.start, contact.contact_face.end]
+          sprite.verts = [contact.contact_face.from, contact.contact_face.to]
           sprite.color = Canvas::Colors.green
           sprite.z = 1
         end
@@ -68,9 +68,9 @@ class ContactExamples
         end
       end
 
-      def body1_projection_face_sprite(contact)
-        line_start = contact.reference_face.start
-        line_end = contact.reference_face.end
+      def reference_edge_sprite(contact)
+        line_start = contact.reference_face.from
+        line_end = contact.reference_face.to
 
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
@@ -80,9 +80,9 @@ class ContactExamples
         end
       end
 
-      def body2_projection_face_sprite(contact)
-        line_start = contact.incident_face.start
-        line_end = contact.incident_face.end
+      def incident_edge_sprite(contact)
+        line_start = contact.incident_face.from
+        line_end = contact.incident_face.to
 
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
