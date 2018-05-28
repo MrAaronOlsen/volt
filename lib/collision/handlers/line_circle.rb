@@ -7,10 +7,10 @@ module Volt
       end
 
       def query
-        @line_start = Ref.get(@line.body, @line.verts[0])
-        @line_end = Ref.get(@line.body, @line.verts[1])
+        @line_start = Ref.get(@line.body.trans, @line.verts[0])
+        @line_end = Ref.get(@line.body.trans, @line.verts[1])
 
-        @center = Ref.get(@circ.body, @circ.centroid)
+        @center = Ref.get(@circ.body.trans, @circ.centroid)
         @radius = @circ.radius
 
         @segment = @line_start - @line_end

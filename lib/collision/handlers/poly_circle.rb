@@ -7,10 +7,10 @@ module Volt
       end
 
       def query
-        @center = Ref.get(@circ.body, @circ.centroid)
+        @center = Ref.get(@circ.body.trans, @circ.centroid)
         @radius = @circ.radius
 
-        @verts = Ref.get_all(@poly.body, @poly.verts)
+        @verts = Ref.get_all(@poly.body.trans, @poly.verts)
         @verts = @verts.sort_by { |vert| vert.distance_to(@center) }
 
         @line_start = @verts[0]

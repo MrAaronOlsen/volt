@@ -8,7 +8,7 @@ module Volt
 
       def query
         # Get world coords of verts in play
-        line_face = Face.new(Ref.get(@line.body, @line.verts[0]), Ref.get(@line.body, @line.verts[1]))
+        line_face = Face.new(Ref.get(@line.body.trans, @line.verts[0]), Ref.get(@line.body.trans, @line.verts[1]))
         @contact_face = Face.new(line_face.start, line_face.end)
 
         poly_centroid = Ref.get(@poly.body, @poly.centroid)
