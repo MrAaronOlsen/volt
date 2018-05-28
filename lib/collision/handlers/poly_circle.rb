@@ -1,6 +1,6 @@
 module Volt
   module Collision
-    class PolyCircle < Base
+    class PolyCircle
 
       def initialize(poly, circ)
         @poly, @circ = poly, circ

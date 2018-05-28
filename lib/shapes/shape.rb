@@ -46,7 +46,7 @@ module Volt
         vert.transform(trans)
       end
 
-      @centroid = Volt.get_centroid(@verts)
+      @centroid = Geo.get_centroid(@verts)
     end
   end
 end

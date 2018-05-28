@@ -1,6 +1,6 @@
 module Volt
   module Collision
-    class LineLine < Base
+    class LineLine
 
       def initialize(line1, line2)
         @line1, @line2 = line1, line2
@@ -13,24 +13,24 @@ module Volt
         line2_start = Ref.get(@line2.body, @line2.verts[0])
         line2_end = Ref.get(@line2.body, @line2.verts[1])
 
-        @contact_loc = line_line_intersection(line1_start, line1_end, line2_start, line2_end)
+        @contact_loc = Geo.line_line_intersection(line1_start, line1_end, line2_start, line2_end)
 
         if @contact_loc
           seg1 = line1_start - line1_end
           seg2 = line2_start - line2_end
 
-          l1_point = closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
-          l2_point = closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
+          l1_point = Geo.closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
+          l2_point = Geo.closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
 
           if l1_point.distance < l2_point.distance
             @penetration = l1_point.distance
 
-            d = determinant(line2_start, line2_end, l1_point.point)
+            d = Geo.determinant(line2_start, line2_end, l1_point.point)
             @contact_normal = seg2.normal.unit * d
           else
             @penetration = l2_point.distance
 
-            d = determinant(line1_start, line1_end, l2_point.point)
+            d = Geo.determinant(line1_start, line1_end, l2_point.point)
             @contact_normal = seg1.normal.unit * d
           end
         end

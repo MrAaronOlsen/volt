@@ -1,7 +1,5 @@
 module Volt
   class Hull
-    include Geometry
-    
     attr_reader :verts
 
     def initialize(points)
@@ -22,7 +20,7 @@ module Volt
           b = (a + 1) % total
 
           points.each_index do |c|
-            b = c if determinant(points[a], points[b], points[c]) == 1
+            b = c if Geo.determinant(points[a], points[b], points[c]) == 1
           end
 
           b.zero? ? break : a = b

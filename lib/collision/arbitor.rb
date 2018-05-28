@@ -3,11 +3,6 @@ module Volt
     class Arbitor
       include Structs
       attr_reader :broad_contacts, :narrow_contacts
-      attr_reader :index, :BroadContact
-
-      def initialize
-        @index = Index.new
-      end
 
       def query(bodies)
         @broad_contacts = []
@@ -38,7 +33,7 @@ module Volt
             contact.body2.shapes.each do |shape2|
               next if shape2.static
 
-              handler = @index.find_handler(shape1, shape2)
+              handler = Dispatch.find_handler(shape1, shape2)
 
               if handler.exists? && handler.query
                 @narrow_contacts << handler.get_contact

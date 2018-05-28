@@ -1,6 +1,6 @@
 module Volt
   module Collision
-    class LineCircle < Base
+    class LineCircle
 
       def initialize(line, circ)
         @line, @circ = line, circ

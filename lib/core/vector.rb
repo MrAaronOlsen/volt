@@ -1,7 +1,5 @@
 module Volt
   class Vector
-    include Geometry
-
     attr_reader :x, :y
     attr_reader :name
 
@@ -17,10 +15,10 @@ module Volt
 
     # Handy constructors
     class << self
-      include Geometry
+      
       # Makes a unit vector based on the given angle (in degrees)
       def from_angle(degree)
-        theta = radian(degree)
+        theta = Geo.radian(degree)
 
         Vector.new(Math.cos(theta), Math.sin(theta))
       end
@@ -112,6 +110,10 @@ module Volt
       V.new(-@y, @x)
     end
 
+    def flipped
+      self * -1
+    end
+
     def ==(vect)
       @x == vect.x && @y == vect.y
     end
@@ -135,7 +137,7 @@ module Volt
 
     # rotation
     def rotate(degree) #rotate self by some degree
-      theta = radian(degree)
+      theta = Geo.radian(degree)
   		x = @x
 
       @x = x*Math.cos(theta) - @y*Math.sin(theta)

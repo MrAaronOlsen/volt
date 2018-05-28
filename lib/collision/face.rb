@@ -12,13 +12,11 @@ module Volt
         @normal = @axis.normal.unit
       end
 
-      def correct_normal(verts1, verts2)
-        d = get_centroid(verts1) - get_centroid(verts2)
-        flip_normal if d.dot(@normal) > 0
-      end
-
-      def flip_normal
-        @normal *= -1
+      def to_s
+        "Start: #{@start}\n" +
+        "End: #{@end}\n" +
+        "Axis: #{@axis}\n" +
+        "Normal: #{@normal}"
       end
     end
   end
