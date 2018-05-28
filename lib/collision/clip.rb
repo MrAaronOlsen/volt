@@ -3,8 +3,6 @@ module Volt
     class Clip
 
       class << self
-        include Structs
-
         def from_manifold(manifold)
           ref = manifold.reference
           inc = manifold.incident
@@ -35,37 +33,39 @@ module Volt
           max = refNorm.dot(ref.from)
 
           # make sure the final points are not past this maximum
-          cp.delete(cp[0]) if refNorm.dot(cp[0]) - max < 0.0
-          cp.delete(cp[1]) if refNorm.dot(cp[1]) - max < 0.0
+          depth1 = refNorm.dot(cp[0]) - max
+          depth2 = refNorm.dot(cp[1]) - max
+
+          cp.delete(cp[0]) if depth1 < 0.0
+          cp.delete(cp[1]) if depth2 < 0.0
 
           manifold.contact_loc = cp
         end
 
         def clip(v1, v2, n, o)
-          cp = Array.new
+          Array.new.tap do |cp|
+            d1 = n.dot(v1) - o;
+            d2 = n.dot(v2) - o;
 
-          d1 = n.dot(v1) - o;
-          d2 = n.dot(v2) - o;
+            # if either point is past o along n then we can keep the point
+            cp.push(v1) if (d1 >= 0.0)
+            cp.push(v2) if (d2 >= 0.0)
 
-          # if either point is past o along n then we can keep the point
-          cp.push(v1) if (d1 >= 0.0)
-          cp.push(v2) if (d2 >= 0.0)
-
-          # finally we need to check if they are on opposing sides so that we can compute the correct point
-          if d1 * d2 < 0.0
-            # if they are on different sides of the offset, d1 and d2 will be a (+) * (-)
-            # and will yield a (-) and therefore be less than zero get the vector for the edge we are clipping
-            e = v2 - v1
-            # compute the location along e
-            u = d1 / (d1 - d2)
-            e.mult(u)
-            e.add(v1)
-            # add the point
-            cp.push(e)
+            # finally we need to check if they are on opposing sides so that we can compute the correct point
+            if d1 * d2 < 0.0
+              # if they are on different sides of the offset, d1 and d2 will be a (+) * (-)
+              # and will yield a (-) and therefore be less than zero get the vector for the edge we are clipping
+              e = v2 - v1
+              # compute the location along e
+              u = d1 / (d1 - d2)
+              e.mult(u)
+              e.add(v1)
+              # add the point
+              cp.push(e)
+            end
           end
-
-          cp
         end
+
       end
     end
   end

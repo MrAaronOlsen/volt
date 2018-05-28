@@ -38,7 +38,6 @@ module Volt
 
       def get_contact
         Contact.new(@line1, @line2) do |contact|
-          contact.handler = self
           contact.penetration = @penetration
           contact.contact_normal = @contact_normal
           contact.contact_loc = @contact_loc

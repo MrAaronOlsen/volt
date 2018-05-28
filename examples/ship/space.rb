@@ -34,7 +34,9 @@ class Space
   end
 
   def button_down?(id)
-    @drawer.flip_debug if id == Gosu::KbD
+    $debug = !$debug if Gosu.button_down?(Gosu::KbR)
+    @drawer.toggle_debug if id == Gosu::KbD
+    @pause = !@pause if id == Gosu::KbP
   end
 
   def move_player?
@@ -42,5 +44,6 @@ class Space
     @player.stop if Gosu.button_down?(Gosu::KbDown)
     @player.left if Gosu.button_down?(Gosu::KbLeft)
     @player.right if Gosu.button_down?(Gosu::KbRight)
+    @player.freeze if Gosu.button_down?(Gosu::KbSpace)
   end
 end

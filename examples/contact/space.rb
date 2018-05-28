@@ -39,8 +39,6 @@ class ContactExamples
       @player.left if Gosu.button_down?(Gosu::KbLeft)
       @player.right if Gosu.button_down?(Gosu::KbRight)
       @player.freeze if Gosu.button_down?(Gosu::KbSpace)
-
-
     end
   end
 end

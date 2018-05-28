@@ -7,42 +7,39 @@ module Volt
       end
 
       def query
-        @line_start = Ref.get(@line.body.trans, @line.verts[0])
-        @line_end = Ref.get(@line.body.trans, @line.verts[1])
+        line_start = Ref.get(@line.body.trans, @line.verts[0])
+        line_end = Ref.get(@line.body.trans, @line.verts[1])
 
-        @center = Ref.get(@circ.body.trans, @circ.centroid)
-        @radius = @circ.radius
+        center = Ref.get(@circ.body.trans, @circ.centroid)
+        radius = @circ.radius
 
-        @segment = @line_start - @line_end
-        thread = @line_start - @center
-        @projection = thread.projection_onto(@segment)
+        segment = line_start - line_end
+        thread = line_start - center
 
-        @contact_loc = @line_start - @projection
-        @contact_normal = (@contact_loc - @center).unit
-        @penetration = @radius - @contact_loc.distance_to(@center)
+        projection = thread.projection_onto(segment)
 
-        circle_face_or_point_collision
-      end
+        @contact_loc = line_start - projection
+        @contact_normal = (@contact_loc - center).unit
+        @penetration = radius - @contact_loc.distance_to(center)
 
-      def circle_face_or_point_collision
-        if @penetration > 0 && @projection.dot(@segment) > 0 && @projection.mag < @segment.mag
+        if @penetration > 0 && projection.dot(segment) > 0 && projection.mag < segment.mag
           return true
         else
-          to_start = @center.distance_to(@line_start)
+          to_start = center.distance_to(line_start)
 
-          if to_start < @radius
-            @contact_loc = @line_start
-            @penetration = @radius - to_start
-            @contact_normal = (@line_start - @center).unit
+          if to_start < radius
+            @contact_loc = line_start
+            @penetration = radius - to_start
+            @contact_normal = (line_start - center).unit
             return true
           end
 
-          to_end = @center.distance_to(@line_end)
+          to_end = center.distance_to(line_end)
 
-          if to_end < @radius
-            @contact_loc = @line_end
-            @penetration = @radius - to_end
-            @contact_normal = (@line_end - @center).unit
+          if to_end < radius
+            @contact_loc = line_end
+            @penetration = radius - to_end
+            @contact_normal = (line_end - center).unit
             return true
           end
         end
@@ -50,7 +47,6 @@ module Volt
 
       def get_contact
         Contact.new(@line, @circ) do |contact|
-          contact.handler = self
           contact.penetration = @penetration
           contact.contact_normal = @contact_normal
           contact.contact_loc = @contact_loc
