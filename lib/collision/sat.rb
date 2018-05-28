@@ -112,6 +112,7 @@ module Volt
             manifold.add_contact_faces(edge1, edge2)
           else
             manifold.add_contact_faces(edge2, edge1)
+            manifold.flip
           end
         end
       end

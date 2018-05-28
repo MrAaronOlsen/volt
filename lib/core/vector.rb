@@ -15,7 +15,7 @@ module Volt
 
     # Handy constructors
     class << self
-      
+
       # Makes a unit vector based on the given angle (in degrees)
       def from_angle(degree)
         theta = Geo.radian(degree)
@@ -108,6 +108,11 @@ module Volt
 
     def normal
       V.new(-@y, @x)
+    end
+
+    def flip
+      @x *= -1
+      @y *= -1
     end
 
     def flipped

@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module Volt
   module Structs
     ContactFaces = Struct.new(:reference, :incident)
@@ -7,7 +5,7 @@ module Volt
     BroadContact = Struct.new(:body1, :body2)
 
     Edge = Struct.new(:from, :to) do
-      attr_accessor :axis, :normal
+      attr_accessor :axis, :normal, :contact_loc
 
       def axis
         @axis ||= to - from
@@ -15,6 +13,10 @@ module Volt
 
       def normal
         @normal ||= (to - from).normal.unit
+      end
+
+      def contact_loc=(loc)
+        @contact_loc = loc
       end
     end
   end

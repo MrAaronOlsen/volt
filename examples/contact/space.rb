@@ -7,8 +7,7 @@ class ContactExamples
       @scene = Scene.new(@world)
       @drawer = Canvas::Drawer.new(debug: false)
 
-      @bodies = Array.new
-      # @bodies = Wall.get_walls
+      @bodies = Wall.get_walls
       @bodies << Poly.new(V.new(700, 600), 0).body
       @player = Player.new(V.new(500, 600), -90, @scene)
       @bodies << @player.body

@@ -3,13 +3,13 @@ class ContactExamples
 
     class << self
       def sketch(contact, scene)
-        scene.add_effect(Canvas::Fade.new(contact_loc_sprite(contact), 0))
-        scene.add_effect(Canvas::Fade.new(contact_normal_sprite(contact), 0))
+        scene.add_effect(Canvas::Fade.new(contact_loc_sprite(contact), 5))
+        scene.add_effect(Canvas::Fade.new(contact_normal_sprite(contact), 5))
         # scene.add_effect(Canvas::Fade.new(contact_face_sprite(contact), 10))
         # scene.add_effect(Canvas::Fade.new(body1_projection_normal_sprite(contact), 0))
         # scene.add_effect(Canvas::Fade.new(body2_projection_normal_sprite(contact), 0))
-        scene.add_effect(Canvas::Fade.new(reference_edge_sprite(contact), 0))
-        scene.add_effect(Canvas::Fade.new(incident_edge_sprite(contact), 0))
+        # scene.add_effect(Canvas::Fade.new(reference_edge_sprite(contact), 0))
+        # scene.add_effect(Canvas::Fade.new(incident_edge_sprite(contact), 0))
       end
 
       def contact_loc_sprite(contact)
