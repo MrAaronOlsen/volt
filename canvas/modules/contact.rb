@@ -1,5 +1,5 @@
-class ContactExamples
-  class ContactDrawer
+module Canvas
+  class Contact
 
     class << self
       def sketch(contact, scene)

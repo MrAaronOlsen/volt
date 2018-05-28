@@ -17,8 +17,16 @@ class Wall
 
   def build(angle)
     @parts = [line]
-
     @body.rotate(angle)
+  end
+
+  class << self
+    def get_walls
+      [ Wall.new(V.new(50, 50), 0).body,
+        Wall.new(V.new(50, 50), -90).body,
+        Wall.new(V.new(1150, 50), 0).body,
+        Wall.new(V.new(1150, 1150), 90).body ]
+    end
   end
 
   # Parts

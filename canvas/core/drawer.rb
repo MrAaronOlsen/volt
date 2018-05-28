@@ -6,6 +6,10 @@ module Canvas
       @debug = debug
     end
 
+    def toggle_debug
+      @debug = !@debug
+    end
+
     def render(scene)
       scene.world.bodies.each do |body|
         render_body(body)
@@ -24,10 +28,6 @@ module Canvas
       return unless @debug
 
       render_debug(body)
-    end
-
-    def toggle_debug
-      @debug = !@debug
     end
 
     def render_debug(body)

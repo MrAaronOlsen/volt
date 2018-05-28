@@ -1,24 +1,25 @@
 class Line
   attr_reader :body, :parts
 
-  def initialize(pos, length)
+  def initialize(pos, length, angle)
     @body = new_line(pos)
-    build(length)
+    build(length, angle)
   end
 
   def new_line(pos)
     Body.new do |b|
 			b.pos = pos
-			b.damp = 0.998
-			b.mass = 5
-			b.moment = 500
+			b.damp = 0.98
+			b.mass = 300
+			b.moment = 30
 		end
   end
 
-  def build(length)
+  def build(length, angle)
     @parts = [line(length)]
 
     @body.init
+    @body.rotate(angle)
     @body.recenter
   end
 

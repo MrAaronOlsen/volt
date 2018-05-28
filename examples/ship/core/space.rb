@@ -4,7 +4,7 @@ class Space
   def initialize
     @world = World.new
     @scene = Scene.new(@world)
-    @drawer = Canvas::Drawer.new(debug: true)
+    @drawer = Canvas::Drawer.new(debug: $debug)
     @bodies = []
 
     @bodies << Wall.new(V.new(50, 50), 0).body
@@ -21,7 +21,6 @@ class Space
     @bodies << @player.body
 
     @world.add_bodies(@bodies)
-
   end
 
   def update(dt)
@@ -35,7 +34,8 @@ class Space
 
   def button_down?(id)
     $debug = !$debug if Gosu.button_down?(Gosu::KbR)
-    @drawer.toggle_debug if id == Gosu::KbD
+    @drawer.toggle_debug if Gosu.button_down?(Gosu::KbD)
+    
     @pause = !@pause if id == Gosu::KbP
   end
 

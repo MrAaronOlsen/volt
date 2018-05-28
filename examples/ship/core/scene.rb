@@ -14,6 +14,7 @@ class Scene
   end
 
   def add_effect(effect)
+    @effects.shift if @effects.size > 10
     @effects << effect
   end
 end

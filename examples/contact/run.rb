@@ -1,12 +1,19 @@
 require './volt'
-require_relative 'space.rb'
-require_relative 'scene.rb'
-require_relative 'player.rb'
-require_relative 'wall.rb'
-require_relative 'line.rb'
-require_relative 'poly.rb'
-require_relative 'contact_drawer.rb'
+require './canvas/canvas.rb'
 
+require_relative 'core/space.rb'
+require_relative 'core/scene.rb'
+
+require_relative 'player/player.rb'
+
+require_relative 'shapes/wall.rb'
+require_relative 'shapes/line.rb'
+require_relative 'shapes/poly.rb'
+require_relative 'shapes/ball.rb'
+require_relative 'shapes/box.rb'
+require_relative 'shapes/blob.rb'
+
+$debug = false
 
 class Window < Gosu::Window
 
@@ -17,7 +24,7 @@ class Window < Gosu::Window
     super($window_width, $window_height, false)
     self.caption = "Ship Demo"
 
-    @space = ContactExamples::Space.new
+    @space = Space.new
 		@time_step = 1.0/60.0
  	end
 

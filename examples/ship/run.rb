@@ -1,13 +1,13 @@
-require './volt.rb'
+require './volt'
+require './canvas/canvas.rb'
 
-require_relative 'space.rb'
-require_relative 'scene.rb'
-require_relative 'ball.rb'
-require_relative 'blob.rb'
-require_relative 'wall.rb'
-require_relative 'box.rb'
-require_relative 'poly.rb'
-require_relative 'line.rb'
+require_relative 'core/space.rb'
+require_relative 'core/scene.rb'
+
+require_relative 'shapes/wall.rb'
+require_relative 'player/ship.rb'
+
+$debug = false
 
 class Window < Gosu::Window
 
@@ -19,11 +19,10 @@ class Window < Gosu::Window
     self.caption = "Ship Demo"
 
     @space = Space.new
-		@time_step = 1.0/60.0
  	end
 
 	def update
-    @space.update(@time_step)
+    @space.update(1.0/60.0)
   end
 
 	def draw

@@ -1,4 +1,4 @@
-class Poly
+class Player
   attr_reader :body, :parts, :scene
 
   def initialize(pos, angle, scene)
@@ -10,8 +10,8 @@ class Poly
   def new_box(pos)
     Body.new do |b|
 			b.pos = pos
-			b.mass = 3
-			b.moment = 300
+			b.mass = 300
+			b.moment = 3000
 		end
   end
 
@@ -22,11 +22,11 @@ class Poly
     @body.recenter
     @body.rotate(angle)
 
-    add_contact_effect
+    add_callbacks
   end
 
   def go
-    @body.add_impulse(V.from_angle(@body.angle) * 100)
+    @body.add_impulse(V.from_angle(@body.angle) * 500)
   end
 
   def stop
@@ -34,11 +34,11 @@ class Poly
   end
 
   def right
-    @body.add_rotation(4)
+    @body.add_rotation(5)
   end
 
   def left
-    @body.add_rotation(-4)
+    @body.add_rotation(-5)
   end
 
   def freeze
@@ -46,20 +46,9 @@ class Poly
     @body.set_a_vel(0)
   end
 
-  def add_contact_effect
-    @body.add_callback_block(:post) do |body, contact|
-
-      sprite = Canvas::Sprite.new do |sprite|
-        sprite.type = :circle
-        sprite.center = contact.contact_loc
-        sprite.radius = 10
-        sprite.use_transform = false
-        sprite.fill = true
-        sprite.color = Canvas::Colors.yellow
-        sprite.z = 1
-      end
-
-      @scene.add_effect(Canvas::Fade.new(sprite, 10))
+  def add_callbacks
+    @body.add_callback_block(:pre) do |body, contact|
+      Canvas::Contact.sketch(contact, @scene)
     end
   end
 
