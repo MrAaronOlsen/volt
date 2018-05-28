@@ -34,7 +34,7 @@ class Space
   def button_down?(id)
     $debug = !$debug if Gosu.button_down?(Gosu::KbR)
     @drawer.toggle_debug if Gosu.button_down?(Gosu::KbD)
-    
+
     @pause = !@pause if id == Gosu::KbP
   end
 
