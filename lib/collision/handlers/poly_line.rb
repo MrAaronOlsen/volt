@@ -22,11 +22,11 @@ module Volt
 
         # If we have a line contact then find the rest of the contact data and return it.
         if line_contact.exists?
-          edge = Geo.find_face_intersecting_with_line(poly_verts, line_edge.from, line_edge.to)
+          edge = Geo.find_edge_intersecting_with_line(poly_verts, line_edge.from, line_edge.to)
 
-          if @contact_face
+          if edge
             @contact_loc = edge.contact_loc
-            @contact_normal = edge.contact_normal
+            @contact_normal = edge.normal
             @penetration = line_contact.distance_to(@contact_loc)
 
             return true

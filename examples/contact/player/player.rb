@@ -26,19 +26,19 @@ class Player
   end
 
   def go
-    @body.add_impulse(V.from_angle(@body.angle) * 500)
+    @body.add_impulse(V.from_angle(@body.angle) * 1000)
   end
 
   def stop
-    @body.add_force(V.from_angle(@body.angle) * -200) if @body.vel.mag > 0
+    @body.add_force(V.from_angle(@body.angle) * -2000) if @body.vel.mag > 0
   end
 
   def right
-    @body.add_rotation(5)
+    @body.add_rotation(3)
   end
 
   def left
-    @body.add_rotation(-5)
+    @body.add_rotation(-3)
   end
 
   def freeze

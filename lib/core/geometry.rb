@@ -82,26 +82,6 @@ module Volt
         !intersections.modulo(2).zero?
       end
 
-      # Returns the Edge of a poly that intersects a given line. Nil if no intersection exists
-      def find_face_intersecting_with_line(poly_verts, line_start, line_end)
-        count = poly_verts.count
-        edge = nil
-
-        poly_verts.each_with_index do |face_start, i|
-          face_end = poly_verts[(i+1) % count]
-
-          contact_loc = line_line_intersection(face_start, face_end, line_start, line_end)
-
-          if contact_loc
-            edge = Edge.new(face_start, face_end)
-            edge.contact_loc = contact_loc
-            break
-          end
-        end
-
-        edge
-      end
-
       # Returns the vector of a line line intersection. Nil if no intersection exists
       def line_line_intersection(l1s, l1e, l2s, l2e)
         seg1 = l1e - l1s
@@ -118,6 +98,25 @@ module Volt
 
             V.new(x, y)
         end
+      end
+
+      # Returns the Edge of a poly that intersects a given line. Nil if no intersection exists
+      def find_edge_intersecting_with_line(poly_verts, line_start, line_end)
+        count = poly_verts.count
+
+        poly_verts.each_with_index do |face_start, i|
+          face_end = poly_verts[(i+1) % count]
+
+          contact_loc = line_line_intersection(face_start, face_end, line_start, line_end)
+
+          if contact_loc
+            edge = Edge.new(face_start, face_end)
+            edge.contact_loc = contact_loc
+            return edge
+          end
+        end
+
+        nil
       end
     end
   end
