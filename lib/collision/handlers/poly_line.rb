@@ -47,8 +47,8 @@ module Volt
         # Flip the normal if the poly centroid is on the other side
         @contact_normal.mult(-1) if Geo.determinant(line_edge.to, line_edge.from, poly_centroid) == -1
 
-        # To find the contact location we'll need to check each Edge of the poly with the line
-        edge = Geo.find_face_intersecting_with_line(poly_verts, line_edge.from, line_edge.to)
+        # To find the contact location we'll need to check each edge of the poly with the line
+        edge = Geo.find_edge_intersecting_with_line(poly_verts, line_edge.from, line_edge.to)
 
         return false if !edge
         @contact_loc = edge.contact_loc

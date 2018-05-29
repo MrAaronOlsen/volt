@@ -1,6 +1,6 @@
 module Volt
-
   class Geometry
+
     class << self
       # Find the geometric center of a convex polygon
       def get_centroid(verts)
@@ -58,12 +58,12 @@ module Volt
       end
 
       # Find the closest distance from a point to a line
-      def distance_of_point_to_line(point, ls, le)
-        segment = ls - le
-        thread = ls - point
+      def distance_of_point_to_line(point, line_start, line_end)
+        segment = line_start - line_end
+        d = line_start - point
 
-        projection = thread.projection_onto(segment)
-        point.distance_to(ls - projection)
+        projection = d.projection_onto(segment)
+        point.distance_to(line_start - projection)
       end
 
       # Returns true if point is inside of poly.
