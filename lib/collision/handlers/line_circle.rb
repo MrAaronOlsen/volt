@@ -14,34 +14,40 @@ module Volt
         radius = @circ.radius
 
         segment = line_start - line_end
-        thread = line_start - center
+        d = line_start - center
 
-        projection = thread.projection_onto(segment)
+        projection = d.projection_onto(segment)
+        ref_point = line_start - projection
 
-        @contact_loc = line_start - projection
-        @contact_normal = (@contact_loc - center).unit
-        @penetration = radius - @contact_loc.distance_to(center)
+        @penetration = radius - ref_point.distance_to(center)
 
         if @penetration > 0 && projection.dot(segment) > 0 && projection.mag < segment.mag
+          @contact_normal = (ref_point - center).unit
+          @contact_loc = ref_point + (@contact_normal * @penetration)
+
           return true
         else
           to_start = center.distance_to(line_start)
 
           if to_start < radius
-            @contact_loc = line_start
             @penetration = radius - to_start
             @contact_normal = (line_start - center).unit
+            @contact_loc = line_start + (@contact_normal * @penetration)
+
             return true
+          else
+            to_end = center.distance_to(line_end)
+
+            if to_end < radius
+              @penetration = radius - to_end
+              @contact_normal = (line_end - center).unit
+              @contact_loc = line_end + (@contact_normal * @penetration)
+
+              return true
+            end
           end
 
-          to_end = center.distance_to(line_end)
-
-          if to_end < radius
-            @contact_loc = line_end
-            @penetration = radius - to_end
-            @contact_normal = (line_end - center).unit
-            return true
-          end
+          return false
         end
       end
 

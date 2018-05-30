@@ -33,7 +33,11 @@ module Volt
             d = Geo.determinant(line1_start, line1_end, l2_point.point)
             @contact_normal = seg1.normal.unit * d
           end
+
+          return true
         end
+
+        return false
       end
 
       def get_contact

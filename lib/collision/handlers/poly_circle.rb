@@ -46,6 +46,8 @@ module Volt
             return true
           end
         end
+
+        return false
       end
 
       def get_contact

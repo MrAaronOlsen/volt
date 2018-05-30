@@ -52,6 +52,8 @@ module Volt
 
         return false if !edge
         @contact_loc = edge.contact_loc
+
+        return true
       end
 
       def get_contact
