@@ -82,7 +82,7 @@ module Volt
         !intersections.modulo(2).zero?
       end
 
-      # Returns the vector of a line line intersection. Nil if no intersection exists
+      # Returns the vector of a line line intersection. Nil if no intersection exists.
       def line_line_intersection(l1s, l1e, l2s, l2e)
         seg1 = l1e - l1s
         seg2 = l2e - l2s
@@ -92,7 +92,7 @@ module Volt
         s = (-seg1.y * (l1s.x - l2s.x) + seg1.x * (l1s.y - l2s.y)) / d;
         t = ( seg2.x * (l1s.y - l2s.y) - seg2.y * (l1s.x - l2s.x)) / d;
 
-        if s >= 0 && s <= 1 && t >= 0 && t <= 1
+        if s > 0 && s < 1 && t > 0 && t < 1
             x = l1s.x + (t * seg1.x)
             y = l1s.y + (t * seg1.y)
 

@@ -25,7 +25,7 @@ module Canvas
 
       def contact_normal_sprite(contact)
         normal_start = contact.contact_loc
-        normal_end = contact.contact_loc + ( contact.contact_normal * ( contact.penetration * 10 ) )
+        normal_end = contact.contact_loc - ( contact.contact_normal * ( contact.penetration * 10 ) )
 
         Canvas::Sprite.new do |sprite|
           sprite.type = :line

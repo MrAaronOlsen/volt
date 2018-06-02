@@ -15,29 +15,23 @@ module Volt
 
         @contact_loc = Geo.line_line_intersection(line1_start, line1_end, line2_start, line2_end)
 
-        if @contact_loc
-          seg1 = line1_start - line1_end
-          seg2 = line2_start - line2_end
+        return false unless @contact_loc
 
-          l1_point = Geo.closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
-          l2_point = Geo.closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
+        l1_point = Geo.closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
+        l2_point = Geo.closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
 
-          if l1_point.distance < l2_point.distance
-            @penetration = l1_point.distance
-
-            d = Geo.determinant(line2_start, line2_end, l1_point.point)
-            @contact_normal = seg2.normal.unit * d
-          else
-            @penetration = l2_point.distance
-
-            d = Geo.determinant(line1_start, line1_end, l2_point.point)
-            @contact_normal = seg1.normal.unit * d
-          end
-
-          return true
+        if l1_point.distance < l2_point.distance
+          @penetration = l1_point.distance
+          @contact_normal = (line2_start - line2_end).normal.unit
+        else
+          @penetration = l2_point.distance
+          @contact_normal = (line1_start - line1_end).normal.unit
         end
 
-        return false
+        d = Geo.get_centroid([line1_start, line1_end]) - Geo.get_centroid([line2_start, line2_end])
+        @contact_normal.flip if d.dot(@contact_normal) < 0
+
+        return true
       end
 
       def get_contact

@@ -2,12 +2,12 @@ class Player
   attr_reader :body, :parts, :scene
 
   def initialize(pos, angle, scene)
-    @body = new_box(pos)
+    @body = new_player(pos)
     @scene = scene
     build(angle)
   end
 
-  def new_box(pos)
+  def new_player(pos)
     Body.new do |b|
 			b.pos = pos
 			b.mass = 300
@@ -16,7 +16,7 @@ class Player
   end
 
   def build(angle)
-    @parts = [poly]
+    @parts = [player]
 
     @body.init
     @body.recenter
@@ -54,15 +54,25 @@ class Player
 
   # Parts
 
-  def poly
-    verts = [V.new(0, 0), V.new(100, 0), V.new(100, 100), V.new(50, 150), V.new(0, 100)]
+  # def player
+  #   verts = [V.new(0, 0), V.new(100, 0), V.new(100, 100), V.new(50, 150), V.new(0, 100)]
+  #
+  #   Shape::Poly.new do |rect|
+  #     rect.name = "Poly"
+  #     rect.body = @body
+  #     rect.mass = 10
+  #     rect.set_verts(verts)
+  #     rect.color = Canvas::Colors.light_grey
+  #   end
+  # end
 
-    Shape::Poly.new do |rect|
-      rect.name = "Poly"
-      rect.body = @body
-      rect.mass = 10
-      rect.set_verts(verts)
-      rect.color = Canvas::Colors.light_grey
+  def player
+    Shape::Line.new do |line|
+      line.body = @body
+      line.name = "line"
+      line.mass = 1
+      line.set_verts(V.new(0, 0), V.new(200, 0))
+      line.color = Canvas::Colors.light_grey
     end
   end
 end

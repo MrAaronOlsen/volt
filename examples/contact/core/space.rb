@@ -7,14 +7,15 @@ class Space
     @drawer = Canvas::Drawer.new(debug: $debug)
 
     @bodies = Wall.get_walls
-    @player = Player.new(V.new(500, 600), -90, @scene)
+    @player = Player.new(V.new(500, 600), 0, @scene)
     @bodies << @player.body
 
-    @bodies << Ball.new(V.new(900, 900)).body
-    @bodies << Blob.new(V.new(600, 300)).body
+    # @bodies << Ball.new(V.new(900, 900)).body
+    # @bodies << Blob.new(V.new(600, 300)).body
     @bodies << Line.new(V.new(200, 400), 200, 0).body
-    @bodies << Box.new(V.new(200, 900)).body
-    @bodies << Poly.new(V.new(700, 600), 0).body
+    @bodies << Line.new(V.new(400, 400), 200, 90).body
+    # @bodies << Box.new(V.new(200, 900)).body
+    # @bodies << Poly.new(V.new(700, 600), 0).body
 
     @world.add_bodies(@bodies)
     @pause = false
