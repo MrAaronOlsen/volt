@@ -9,11 +9,11 @@ module Volt
     end
 
     def pos1
-      @pos1 ||= Ref.get(@body1.trans, @body1.pos)
+      @body1.pos
     end
 
     def pos2
-      @pos2 ||= Ref.get(@body2.trans, @body2.pos)
+      @body2.pos
     end
   end
 end

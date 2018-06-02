@@ -19,5 +19,15 @@ module Volt
         @contact_loc = loc
       end
     end
+
+    Anchor = Struct.new(:pos) do
+      def trans
+        Mat.new_identity
+      end
+
+      def i_mass
+        0
+      end
+    end
   end
 end

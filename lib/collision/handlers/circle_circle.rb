@@ -20,7 +20,7 @@ module Volt
 
         return false if penetration <= 0.0
 
-        @manifold = Manifold.new(@circ1, @circ2) do |man|
+        @manifold = Manifold.new do |man|
           man.penetration = penetration
           man.contact_normal = d.unit
           man.contact_loc = (center1 * radius2 + center2 * radius1) / (radius1 + radius2)
@@ -30,7 +30,9 @@ module Volt
       end
 
       def get_contact
-        Contact.new(@manifold)
+        Contact.new(@manifold) do |contact|
+          contact.add_bodies(@circ1.body, @circ2.body)
+        end
       end
     end
   end

@@ -26,7 +26,7 @@ module Volt
           edge = Geo.find_edge_intersecting_with_line(poly_verts, line_edge.from, line_edge.to)
 
           if edge
-            @manifold = Manifold.new(@poly, @line) do |man|
+            @manifold = Manifold.new do |man|
               man.penetration = line_contact.distance_to(edge.contact_loc)
               man.contact_normal = edge.normal
               man.contact_loc = edge.contact_loc
@@ -56,7 +56,7 @@ module Volt
         return false if !edge
         contact_loc = edge.contact_loc
 
-        @manifold = Manifold.new(@poly, @line) do |man|
+        @manifold = Manifold.new do |man|
           man.penetration = penetration
           man.contact_normal = contact_normal
           man.contact_loc = contact_loc
@@ -66,7 +66,9 @@ module Volt
       end
 
       def get_contact
-        Contact.new(@manifold)
+        Contact.new(@manifold) do |contact|
+          contact.add_bodies(@poly.body, @line.body)
+        end
       end
     end
   end

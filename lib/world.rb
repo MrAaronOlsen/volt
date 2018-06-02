@@ -5,7 +5,7 @@ module Volt
 
     def initialize
       @bodies = []
-      @contacts = []
+      @contacts, @joints = [], []
       @Arbitor = Collision::Arbitor.new
     end
 
@@ -13,16 +13,13 @@ module Volt
       @dt = dt
       return if dt <= 0.0
 
-      @Arbitor.query(bodies)
+      @Arbitor.query(@bodies, @joints)
       @contacts = @Arbitor.resolve(dt)
+      @Arbitor.clear
 
       bodies.each do |body|
         body.update(dt)
       end
-    end
-
-    def debug(pause)
-      @contacts.each { |contact| contact.debug }
     end
 
     def add_body(body)
@@ -31,6 +28,14 @@ module Volt
 
     def add_bodies(bodies)
       bodies.each { |body| add_body(body) }
+    end
+
+    def add_joint(joint)
+      @joints << joint
+    end
+
+    def add_joints(joints)
+      joints.each { |joint| add_joint(joint) }
     end
   end
 end

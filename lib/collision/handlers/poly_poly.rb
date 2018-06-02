@@ -8,7 +8,7 @@ module Volt
       end
 
       def query
-        @manifold = Manifold.new(@poly2, @poly1)
+        @manifold = Manifold.new
 
         poly1_verts = Ref.get_all(@poly1.body.trans, @poly1.verts)
         poly2_verts = Ref.get_all(@poly2.body.trans, @poly2.verts)
@@ -24,7 +24,9 @@ module Volt
       end
 
       def get_contact
-        Contact.new(@manifold)
+        Contact.new(@manifold) do |contact|
+          contact.add_bodies(@poly2.body, @poly1.body)
+        end
       end
     end
   end

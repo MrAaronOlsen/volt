@@ -23,7 +23,7 @@ module Volt
         penetration = radius - ref_point.distance_to(center)
 
         if penetration > 0 && projection.dot(segment) > 0 && projection.mag < segment.mag
-          @manifold = Manifold.new(@line, @circ) do |man|
+          @manifold = Manifold.new do |man|
             man.penetration = penetration
             man.contact_normal = (ref_point - center).unit
             man.contact_loc = ref_point + man.mtv
@@ -34,7 +34,7 @@ module Volt
           to_start = center.distance_to(line_start)
 
           if to_start < radius
-            @manifold = Manifold.new(@line, @circ) do |man|
+            @manifold = Manifold.new do |man|
               man.penetration = radius - to_start
               man.contact_normal = (line_start - center).unit
               man.contact_loc = line_start + man.mtv
@@ -45,7 +45,7 @@ module Volt
             to_end = center.distance_to(line_end)
 
             if to_end < radius
-              @manifold = Manifold.new(@line, @circ) do |man|
+              @manifold = Manifold.new do |man|
                 man.penetration = radius - to_end
                 man.contact_normal = (line_end - center).unit
                 man.contact_loc = line_end + man.mtv
@@ -60,7 +60,9 @@ module Volt
       end
 
       def get_contact
-        Contact.new(@manifold)
+        Contact.new(@manifold) do |contact|
+          contact.add_bodies(@line.body, @circ.body)
+        end
       end
     end
   end

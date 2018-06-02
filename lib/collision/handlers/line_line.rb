@@ -25,13 +25,13 @@ module Volt
         l2_point = Geo.closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
 
         if l1_point.distance < l2_point.distance
-          @manifold = Manifold.new(@line1, @line2) do |man|
+          @manifold = Manifold.new do |man|
             man.penetration = l1_point.distance
             man.contact_normal = seg2.normal.unit
             man.contact_loc = contact_loc
           end
         else
-          @manifold = Manifold.new(@line1, @line2) do |man|
+          @manifold = Manifold.new do |man|
             man.penetration = l2_point.distance
             man.contact_normal = seg1.normal.unit
             man.contact_loc = contact_loc
@@ -45,7 +45,9 @@ module Volt
       end
 
       def get_contact
-        Contact.new(@manifold)
+        Contact.new(@manifold) do |contact|
+          contact.add_bodies(@line1.body, @line2.body)
+        end
       end
     end
   end
