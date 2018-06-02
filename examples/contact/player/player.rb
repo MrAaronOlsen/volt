@@ -54,25 +54,25 @@ class Player
 
   # Parts
 
-  # def player
-  #   verts = [V.new(0, 0), V.new(100, 0), V.new(100, 100), V.new(50, 150), V.new(0, 100)]
-  #
-  #   Shape::Poly.new do |rect|
-  #     rect.name = "Poly"
-  #     rect.body = @body
-  #     rect.mass = 10
-  #     rect.set_verts(verts)
-  #     rect.color = Canvas::Colors.light_grey
-  #   end
-  # end
-
   def player
-    Shape::Line.new do |line|
-      line.body = @body
-      line.name = "line"
-      line.mass = 1
-      line.set_verts(V.new(0, 0), V.new(200, 0))
-      line.color = Canvas::Colors.light_grey
+    verts = [V.new(0, 0), V.new(100, 0), V.new(100, 100), V.new(50, 150), V.new(0, 100)]
+
+    Shape::Poly.new do |rect|
+      rect.name = "Poly"
+      rect.body = @body
+      rect.mass = 10
+      rect.set_verts(verts)
+      rect.color = Canvas::Colors.light_grey
     end
   end
+
+  # def player
+  #   Shape::Line.new do |line|
+  #     line.body = @body
+  #     line.name = "line"
+  #     line.mass = 1
+  #     line.set_verts(V.new(0, 0), V.new(200, 0))
+  #     line.color = Canvas::Colors.light_grey
+  #   end
+  # end
 end

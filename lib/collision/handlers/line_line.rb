@@ -1,6 +1,7 @@
 module Volt
   module Collision
     class LineLine
+      attr_reader :manifold
 
       def initialize(line1, line2)
         @line1, @line2 = line1, line2
@@ -13,9 +14,9 @@ module Volt
         line2_start = Ref.get(@line2.body.trans, @line2.verts[0])
         line2_end = Ref.get(@line2.body.trans, @line2.verts[1])
 
-        @contact_loc = Geo.line_line_intersection(line1_start, line1_end, line2_start, line2_end)
+        contact_loc = Geo.line_line_intersection(line1_start, line1_end, line2_start, line2_end)
 
-        return false unless @contact_loc
+        return false unless contact_loc
 
         seg1 = line1_start - line1_end
         seg2 = line2_start - line2_end
@@ -23,28 +24,28 @@ module Volt
         l1_point = Geo.closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
         l2_point = Geo.closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
 
-        return false if l1_point.distance == l2_point.distance
-
         if l1_point.distance < l2_point.distance
-          @penetration = l1_point.distance
-          @contact_normal = seg2.normal.unit
+          @manifold = Manifold.new(@line1, @line2) do |man|
+            man.penetration = l1_point.distance
+            man.contact_normal = seg2.normal.unit
+            man.contact_loc = contact_loc
+          end
         else
-          @penetration = l2_point.distance
-          @contact_normal = seg1.normal.unit
+          @manifold = Manifold.new(@line1, @line2) do |man|
+            man.penetration = l2_point.distance
+            man.contact_normal = seg1.normal.unit
+            man.contact_loc = contact_loc
+          end
         end
 
         d = Geo.get_centroid([line1_start, line1_end]) - Geo.get_centroid([line2_start, line2_end])
-        @contact_normal.flip if d.dot(@contact_normal) < 0
+        @manifold.flip_normal if d.dot(@manifold.contact_normal) < 0
 
         return true
       end
 
       def get_contact
-        Contact.new(@line1, @line2) do |contact|
-          contact.penetration = @penetration
-          contact.contact_normal = @contact_normal
-          contact.contact_loc = @contact_loc
-        end
+        Contact.new(@manifold)
       end
     end
   end

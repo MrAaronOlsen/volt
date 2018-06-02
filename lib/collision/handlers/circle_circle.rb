@@ -1,6 +1,7 @@
 module Volt
   module Collision
     class CircleCircle
+      attr_reader :manifold
 
       def initialize(circ1, circ2)
         @circ1, @circ2 = circ1, circ2
@@ -15,22 +16,21 @@ module Volt
 
         d = center1 - center2
 
-        @penetration = (radius1 + radius2) - center1.distance_to(center2)
+        penetration = (radius1 + radius2) - center1.distance_to(center2)
 
-        return false if @penetration <= 0.0
+        return false if penetration <= 0.0
 
-        @contact_normal = d.unit
-        @contact_loc = (center1 * radius2 + center2 * radius1) / (radius1 + radius2 )
+        @manifold = Manifold.new(@circ1, @circ2) do |man|
+          man.penetration = penetration
+          man.contact_normal = d.unit
+          man.contact_loc = (center1 * radius2 + center2 * radius1) / (radius1 + radius2)
+        end
 
         return true
       end
 
       def get_contact
-        Contact.new(@circ1, @circ2) do |contact|
-          contact.penetration = @penetration
-          contact.contact_normal = @contact_normal
-          contact.contact_loc = @contact_loc
-        end
+        Contact.new(@manifold)
       end
     end
   end

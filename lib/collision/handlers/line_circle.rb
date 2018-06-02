@@ -1,6 +1,7 @@
 module Volt
   module Collision
     class LineCircle
+      attr_reader :manifold
 
       def initialize(line, circ)
         @line, @circ = line, circ
@@ -19,29 +20,36 @@ module Volt
         projection = d.projection_onto(segment)
         ref_point = line_start - projection
 
-        @penetration = radius - ref_point.distance_to(center)
+        penetration = radius - ref_point.distance_to(center)
 
-        if @penetration > 0 && projection.dot(segment) > 0 && projection.mag < segment.mag
-          @contact_normal = (ref_point - center).unit
-          @contact_loc = ref_point + (@contact_normal * @penetration)
+        if penetration > 0 && projection.dot(segment) > 0 && projection.mag < segment.mag
+          @manifold = Manifold.new(@line, @circ) do |man|
+            man.penetration = penetration
+            man.contact_normal = (ref_point - center).unit
+            man.contact_loc = ref_point + man.mtv
+          end
 
           return true
         else
           to_start = center.distance_to(line_start)
 
           if to_start < radius
-            @penetration = radius - to_start
-            @contact_normal = (line_start - center).unit
-            @contact_loc = line_start + (@contact_normal * @penetration)
+            @manifold = Manifold.new(@line, @circ) do |man|
+              man.penetration = radius - to_start
+              man.contact_normal = (line_start - center).unit
+              man.contact_loc = line_start + man.mtv
+            end
 
             return true
           else
             to_end = center.distance_to(line_end)
 
             if to_end < radius
-              @penetration = radius - to_end
-              @contact_normal = (line_end - center).unit
-              @contact_loc = line_end + (@contact_normal * @penetration)
+              @manifold = Manifold.new(@line, @circ) do |man|
+                man.penetration = radius - to_end
+                man.contact_normal = (line_end - center).unit
+                man.contact_loc = line_end + man.mtv
+              end
 
               return true
             end
@@ -52,11 +60,7 @@ module Volt
       end
 
       def get_contact
-        Contact.new(@line, @circ) do |contact|
-          contact.penetration = @penetration
-          contact.contact_normal = @contact_normal
-          contact.contact_loc = @contact_loc
-        end
+        Contact.new(@manifold)
       end
     end
   end
