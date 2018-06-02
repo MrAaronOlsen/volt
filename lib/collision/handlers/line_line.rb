@@ -17,15 +17,20 @@ module Volt
 
         return false unless @contact_loc
 
+        seg1 = line1_start - line1_end
+        seg2 = line2_start - line2_end
+
         l1_point = Geo.closest_point_to_line([line1_start, line1_end], line2_start, line2_end)
         l2_point = Geo.closest_point_to_line([line2_start, line2_end], line1_start, line1_end)
 
+        return false if l1_point.distance == l2_point.distance
+
         if l1_point.distance < l2_point.distance
           @penetration = l1_point.distance
-          @contact_normal = (line2_start - line2_end).normal.unit
+          @contact_normal = seg2.normal.unit
         else
           @penetration = l2_point.distance
-          @contact_normal = (line1_start - line1_end).normal.unit
+          @contact_normal = seg1.normal.unit
         end
 
         d = Geo.get_centroid([line1_start, line1_end]) - Geo.get_centroid([line2_start, line2_end])
