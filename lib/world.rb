@@ -18,6 +18,7 @@ module Volt
       @Arbitor.reset
 
       bodies.each do |body|
+        body.add_force(V.new(0, 1000))
         body.update(dt)
       end
     end

@@ -18,8 +18,8 @@ module Volt
     def update(dt)
       return if @mass <= 0
 
-      @vel = (@vel * @damp) + (@forces * @i_mass) * dt
-      @a_vel = (@a_vel * @damp) + (@torque * @i_moment) * dt
+      @vel = (@vel * @damp) + (@forces * @i_mass)
+      @a_vel = (@a_vel * @damp) + (@torque * @i_moment)
 
       @forces.zero!
       @torque = 0.0

@@ -66,7 +66,7 @@ module Volt
         point.distance_to(line_start - projection)
       end
 
-      # Returns true if point is inside of poly.
+      # Returns true if point is inside of poly, false if not.
       def point_is_inside_poly(poly_verts, point)
         count = poly_verts.count
         intersections = 0
@@ -82,7 +82,7 @@ module Volt
         !intersections.modulo(2).zero?
       end
 
-      # Returns the vector of a line line intersection. Nil if no intersection exists.
+      # Returns the position of a line line intersection. Nil if no intersection exists.
       def line_line_intersection(l1s, l1e, l2s, l2e)
         seg1 = l1e - l1s
         seg2 = l2e - l2s
