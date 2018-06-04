@@ -48,8 +48,17 @@ module Volt
       @vel += impulse * @i_mass
     end
 
+    def add_lin_impulse(impulse)
+      @vel += impulse * @i_mass
+    end
+
+    def add_rot_impulse(impulse, point)
+      r = point - Ref.get(@trans, cog)
+      @a_vel += r.cross(impulse) * @i_moment
+    end
+
     def add_impulse_at(impulse, point)
-      @vel += impulse
+      @vel += impulse * @i_mass
 
       r = point - Ref.get(@trans, cog)
       @a_vel += r.cross(impulse) * @i_moment
