@@ -1,5 +1,5 @@
 module Volt
-  module Collision
+  module Contact
     class Clip
 
       class << self
@@ -39,7 +39,7 @@ module Volt
           cp.delete(cp[0]) if depth1 < 0.0
           cp.delete(cp[1]) if depth2 < 0.0
 
-          manifold.contact_loc = cp
+          manifold.contact_locs = cp
         end
 
         def clip(v1, v2, n, o)

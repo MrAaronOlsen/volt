@@ -21,6 +21,11 @@ module Volt
         d <=> 0
       end
 
+      # Returns the average of two vectors
+      def average_vector(verts)
+        verts.reduce(V.new) { |sum, v| sum + v } / verts.size
+      end
+
       # Linear Interpolation
       def lerp(line_start, line_end, alpha)
         line_start * (1 - alpha) + line_end * alpha

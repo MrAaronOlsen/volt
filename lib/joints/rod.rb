@@ -24,9 +24,9 @@ module Volt
         true
       end
 
-      def get_contact
-        Collision::Contact.new(@manifold) do |contact|
-          contact.add_bodies(@body1, @body2)
+      def manifold
+        @manifold.tap do |man|
+          man.add_bodies(@body1, @body2)
         end
       end
     end

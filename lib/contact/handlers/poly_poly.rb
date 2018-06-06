@@ -1,5 +1,5 @@
 module Volt
-  module Collision
+  module Contact
     class PolyPoly
       attr_reader :manifold
 
@@ -19,13 +19,20 @@ module Volt
         SAT.find_contact_faces(poly1_verts, poly2_verts, @manifold)
         Clip.from_manifold(@manifold)
 
-        @manifold.calculate_location
+        contact_loc = Geo.average_vector(@manifold.contact_locs)
+
+        if @manifold.flipped
+          @manifold.contact_loc = contact_loc - @manifold.mtv
+        else
+          @manifold.contact_loc = contact_loc + @manifold.mtv
+        end
+
         true
       end
 
-      def get_contact
-        Contact.new(@manifold) do |contact|
-          contact.add_bodies(@poly2.body, @poly1.body)
+      def manifold
+        @manifold.tap do |man|
+          man.add_bodies(@poly2.body, @poly1.body)
         end
       end
     end

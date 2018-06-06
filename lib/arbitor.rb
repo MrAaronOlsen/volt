@@ -1,26 +1,26 @@
 module Volt
   class Arbitor
     include Structs
-    attr_reader :broad_contacts, :narrow_contacts, :joint_contacts
+    attr_reader :broad_contacts, :contact_manifolds, :joint_contacts
 
     def query(bodies, joints)
       @broad_contacts = []
-      @narrow_contacts = []
+      @contact_manifolds = []
       @joint_contacts = []
 
       collect_broad_contacts(bodies)
-      collect_narrow_contacts
+      collect_contact_manifolds
       collect_joint_contacts(joints)
     end
 
     def reset
       @broad_contacts = []
-      @narrow_contacts = []
+      @contact_manifolds = []
       @joint_contacts = []
     end
 
     def resolve(dt)
-      sorted_contacts = @narrow_contacts.sort_by { |contact| contact.penetration }
+      sorted_contacts = @contact_manifolds.sort_by { |manifold| manifold.penetration }
       sorted_contacts.each { |contact| contact.resolve(dt) }
 
       sorted_constraints = @joint_contacts.sort_by { |contact| contact.penetration }
@@ -35,7 +35,7 @@ module Volt
       end
     end
 
-    def collect_narrow_contacts
+    def collect_contact_manifolds
       @broad_contacts.each do |contact|
         contact.body1.shapes.each do |shape1|
           next if shape1.static
@@ -43,10 +43,10 @@ module Volt
           contact.body2.shapes.each do |shape2|
             next if shape2.static
 
-            handler = Collision::Dispatch.find_handler(shape1, shape2)
+            handler = Contact::Dispatch.find_handler(shape1, shape2)
 
             if handler.exists? && handler.query
-              @narrow_contacts << handler.get_contact
+              @contact_manifolds << handler.manifold
             end
           end
         end
