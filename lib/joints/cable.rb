@@ -11,8 +11,7 @@ module Volt
       def query
         return false if current_length < @length
 
-        @manifold = Collision::Manifold.new do |man|
-          man.is_joint = true
+        @manifold = Contact::Manifold.new do |man|
           man.body1_contact_loc = pos1
           man.body2_contact_loc = pos2
           man.contact_normal = (pos2 - pos1).unit

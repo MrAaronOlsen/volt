@@ -55,7 +55,7 @@ module Volt
 
     def collect_joint_contacts(joints)
       joints.each do |joint|
-        @joint_contacts << joint.get_contact if joint.query
+        @joint_contacts << joint.manifold if joint.query
       end
     end
   end
