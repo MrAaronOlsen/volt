@@ -23,7 +23,6 @@ module Volt
       @static_friction, @dynamic_friction = 1.0, 1.0
       @shapes, @cog = [], V.new
       @bounding = AABB.new(self)
-
     end
 
   # Attribute Getters / Setters
