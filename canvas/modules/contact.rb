@@ -12,10 +12,10 @@ module Canvas
         # scene.add_effect(Canvas::Fade.new(incident_edge_sprite(contact), 0))
       end
 
-      def contact_loc_sprite(contact)
+      def contact_loc_sprite(manifold)
         Canvas::Sprite.new do |sprite|
           sprite.type = :circle
-          sprite.center = contact.contact_loc
+          sprite.center = manifold.body1_contact_loc
           sprite.radius = 10
           sprite.fill = true
           sprite.color = Canvas::Colors.yellow
@@ -23,9 +23,9 @@ module Canvas
         end
       end
 
-      def contact_normal_sprite(contact)
-        normal_start = contact.contact_loc
-        normal_end = contact.contact_loc - ( contact.contact_normal * ( contact.penetration * 10 ) )
+      def contact_normal_sprite(manifold)
+        normal_start = manifold.body1_contact_loc
+        normal_end = manifold.body1_contact_loc - ( manifold.contact_normal * ( manifold.penetration * 10 ) )
 
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
@@ -35,10 +35,10 @@ module Canvas
         end
       end
 
-      def contact_face_sprite(contact)
+      def contact_face_sprite(manifold)
         Canvas::Sprite.new do |sprite|
           sprite.type = :line
-          sprite.verts = [contact.contact_face.from, contact.contact_face.to]
+          sprite.verts = [manifold.contact_face.from, manifold.contact_face.to]
           sprite.color = Canvas::Colors.green
           sprite.z = 1
         end

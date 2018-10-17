@@ -5,7 +5,7 @@ module Volt
     BroadContact = Struct.new(:body1, :body2)
 
     Edge = Struct.new(:from, :to) do
-      attr_accessor :axis, :normal, :contact_loc
+      attr_reader :axis, :normal, :contact_loc
 
       def axis
         @axis ||= to - from

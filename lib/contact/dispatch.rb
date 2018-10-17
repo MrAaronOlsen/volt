@@ -1,5 +1,5 @@
 module Volt
-  module Collision
+  module Contact
     class Dispatch
 
       class << self

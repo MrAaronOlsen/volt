@@ -10,8 +10,7 @@ module Volt
       def query
         return false if current_length.between?(@length - 0.001, @length + 0.001)
 
-        @manifold = Collision::Manifold.new do |man|
-          man.is_joint = true
+        @manifold = Contact::Manifold.new do |man|
           man.body1_contact_loc = pos1
           man.body2_contact_loc = pos2
           man.penetration = current_length - @length
@@ -24,9 +23,9 @@ module Volt
         true
       end
 
-      def get_contact
-        Collision::Contact.new(@manifold) do |contact|
-          contact.add_bodies(@body1, @body2)
+      def manifold
+        @manifold.tap do |man|
+          man.add_bodies(@body1, @body2)
         end
       end
     end

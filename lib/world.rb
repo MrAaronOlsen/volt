@@ -6,7 +6,7 @@ module Volt
     def initialize
       @bodies = []
       @contacts, @joints = [], []
-      @Arbitor = Collision::Arbitor.new
+      @Arbitor = Arbitor.new
     end
 
     def update(dt)
@@ -15,7 +15,7 @@ module Volt
 
       @Arbitor.query(@bodies, @joints)
       @contacts = @Arbitor.resolve(dt)
-      @Arbitor.clear
+      @Arbitor.reset
 
       bodies.each do |body|
         body.update(dt)

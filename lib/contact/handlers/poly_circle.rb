@@ -1,5 +1,5 @@
 module Volt
-  module Collision
+  module Contact
     class PolyCircle
       attr_reader :manifold
 
@@ -62,9 +62,9 @@ module Volt
         return false
       end
 
-      def get_contact
-        Contact.new(@manifold) do |contact|
-          contact.add_bodies(@poly.body, @circ.body)
+      def manifold
+        @manifold.tap do |man|
+          man.add_bodies(@poly.body, @circ.body)
         end
       end
     end

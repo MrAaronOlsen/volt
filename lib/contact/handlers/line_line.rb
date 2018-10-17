@@ -1,5 +1,5 @@
 module Volt
-  module Collision
+  module Contact
     class LineLine
       attr_reader :manifold
 
@@ -44,9 +44,9 @@ module Volt
         return true
       end
 
-      def get_contact
-        Contact.new(@manifold) do |contact|
-          contact.add_bodies(@line1.body, @line2.body)
+      def manifold
+        @manifold.tap do |man|
+          man.add_bodies(@line1.body, @line2.body)
         end
       end
     end

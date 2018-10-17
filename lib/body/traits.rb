@@ -19,11 +19,10 @@ module Volt
       @pos, @origin_angle, @trans = V.new, 0.0, Mat.new_identity
       @acc, @vel, @mass = V.new, V.new, 0.0
       @angle, @a_vel, @moment = 0.0, 0.0, 0.0
-      @damp, @restitution, @forces, @torque = 0.995, 1.0, V.new, 0.0
+      @damp, @restitution, @forces, @torque = 0.999, 1.0, V.new, 0.0
       @static_friction, @dynamic_friction = 1.0, 1.0
       @shapes, @cog = [], V.new
       @bounding = AABB.new(self)
-
     end
 
   # Attribute Getters / Setters

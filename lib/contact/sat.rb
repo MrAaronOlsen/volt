@@ -1,5 +1,5 @@
 module Volt
-  module Collision
+  module Contact
     class SAT
       attr_reader :verts, :axis
       attr_reader :min, :max
