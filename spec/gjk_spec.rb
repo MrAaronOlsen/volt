@@ -1,4 +1,4 @@
-RSpec.describe Collision::SAT do
+RSpec.describe Contact::SAT do
 
   describe '#the_thing' do
 
@@ -25,12 +25,12 @@ RSpec.describe Collision::SAT do
     # end
 
     def get_manifold(verts1, verts2)
-      manifold = Collision::Manifold.new
+      manifold = Contact::Manifold.new
 
-      Collision::SAT.check_for_poly_poly(verts1, verts2, manifold)
-      Collision::SAT.check_for_poly_poly(verts2, verts1, manifold)
-      Collision::SAT.find_contact_faces(verts1, verts2, manifold)
-      Collision::Clip.from_manifold(manifold)
+      Contact::SAT.check_for_poly_poly(verts1, verts2, manifold)
+      Contact::SAT.check_for_poly_poly(verts2, verts1, manifold)
+      Contact::SAT.find_contact_faces(verts1, verts2, manifold)
+      Contact::Clip.from_manifold(manifold)
 
       manifold
     end

@@ -1,6 +1,6 @@
 require_relative "test_shapes.rb"
 
-RSpec.describe Collision::LineCircle do
+RSpec.describe Contact::LineCircle do
 
   describe '#query' do
 
@@ -8,12 +8,12 @@ RSpec.describe Collision::LineCircle do
       line = TestShapes.line(V.new(4, 8), [V.new(0, -3), V.new(0, 3)], "Line")
       circle = TestShapes.circle(V.new(4, 4), 2, "Circle")
 
-      handler = Collision::LineCircle.new(line, circle)
+      handler = Contact::LineCircle.new(line, circle)
       collided = handler.query
 
       expect(collided).to be_truthy
 
-      contact = handler.get_contact
+      contact = handler.manifold
 
       pen = contact.penetration
       norm = contact.contact_normal
@@ -28,12 +28,12 @@ RSpec.describe Collision::LineCircle do
       line = TestShapes.line(V.new(5, 5), [V.new(-2, 2), V.new(2, -2)], "Line")
       circle = TestShapes.circle(V.new(4, 4), 2, "Circle")
 
-      handler = Collision::LineCircle.new(line, circle)
+      handler = Contact::LineCircle.new(line, circle)
       collided = handler.query
 
       expect(collided).to be_truthy
 
-      contact = handler.get_contact
+      contact = handler.manifold
 
       pen = contact.penetration
       norm = contact.contact_normal
@@ -52,7 +52,7 @@ RSpec.describe Collision::LineCircle do
       line = TestShapes.line(V.new(6, 4), [V.new(0, -2), V.new(0, 2)], "Line")
       circle = TestShapes.circle(V.new(4, 4), 2, "Circle")
 
-      handler = Collision::LineCircle.new(line, circle)
+      handler = Contact::LineCircle.new(line, circle)
       collided = handler.query
 
       expect(collided).to be_falsy
@@ -62,7 +62,7 @@ RSpec.describe Collision::LineCircle do
       line = TestShapes.line(V.new(8, 4), [V.new(-2, 0), V.new(2, -2)], "Line")
       circle = TestShapes.circle(V.new(4, 4), 2, "Circle")
 
-      handler = Collision::LineCircle.new(line, circle)
+      handler = Contact::LineCircle.new(line, circle)
       collided = handler.query
 
       expect(collided).to be_falsy

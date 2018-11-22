@@ -1,6 +1,6 @@
 require_relative "test_shapes.rb"
 
-RSpec.describe Collision::CircleCircle do
+RSpec.describe Contact::CircleCircle do
 
   describe '#query' do
 
@@ -8,10 +8,10 @@ RSpec.describe Collision::CircleCircle do
       circle_b = TestShapes.circle(V.new(5, 6), 3, "Circle A")
       circle_a = TestShapes.circle(V.new(9, 6), 2, "Circle B")
 
-      handler = Collision::CircleCircle.new(circle_a, circle_b)
+      handler = Contact::CircleCircle.new(circle_a, circle_b)
       expect(handler.query).to be_truthy
 
-      collision = handler.get_contact
+      collision = handler.manifold
 
       pen = collision.penetration
       norm = collision.contact_normal
@@ -26,10 +26,10 @@ RSpec.describe Collision::CircleCircle do
       circle_a = TestShapes.circle(V.new(5, 6), 3, "Circle A")
       circle_b = TestShapes.circle(V.new(9, 6), 2, "Circle B")
 
-      handler = Collision::CircleCircle.new(circle_a, circle_b)
+      handler = Contact::CircleCircle.new(circle_a, circle_b)
       expect(handler.query).to be_truthy
 
-      collision = handler.get_contact
+      collision = handler.manifold
 
       pen = collision.penetration
       norm = collision.contact_normal
@@ -44,7 +44,7 @@ RSpec.describe Collision::CircleCircle do
       circle_a = TestShapes.circle(V.new(5, 6), 3, "Circle A")
       circle_b = TestShapes.circle(V.new(10, 6), 2, "Circle B")
 
-      handler = Collision::CircleCircle.new(circle_a, circle_b)
+      handler = Contact::CircleCircle.new(circle_a, circle_b)
       expect(handler.query).to be_falsy
     end
   end

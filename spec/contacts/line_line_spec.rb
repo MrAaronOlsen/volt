@@ -1,6 +1,6 @@
 require_relative "test_shapes.rb"
 
-RSpec.describe Collision::LineCircle do
+RSpec.describe Contact::LineCircle do
 
   describe '#query' do
 
@@ -8,11 +8,11 @@ RSpec.describe Collision::LineCircle do
       line1 = TestShapes.line(V.new(2, 5), [V.new(0, -3), V.new(0, 3)], "Line1")
       line2 = TestShapes.line(V.new(4, 3), [V.new(-3, 0), V.new(3, 0)], "Line1")
 
-      handler = Collision::LineLine.new(line1, line2)
+      handler = Contact::LineLine.new(line1, line2)
       collided = handler.query
 
       expect(collided).to be_truthy
-      contact = handler.get_contact
+      contact = handler.manifold
 
       pen = contact.penetration
       norm = contact.contact_normal
@@ -27,11 +27,11 @@ RSpec.describe Collision::LineCircle do
       line1 = TestShapes.line(V.new(2, 5), [V.new(0, 3), V.new(0, -3)], "Line1")
       line2 = TestShapes.line(V.new(4, 3), [V.new(-3, 0), V.new(3, 0)], "Line1")
 
-      handler = Collision::LineLine.new(line1, line2)
+      handler = Contact::LineLine.new(line1, line2)
       collided = handler.query
 
       expect(collided).to be_truthy
-      contact = handler.get_contact
+      contact = handler.manifold
 
       pen = contact.penetration
       norm = contact.contact_normal
@@ -46,7 +46,7 @@ RSpec.describe Collision::LineCircle do
       line1 = TestShapes.line(V.new(2, 5), [V.new(0, 3), V.new(0, -3)], "Line1")
       line2 = TestShapes.line(V.new(5, 2), [V.new(-3, 0), V.new(3, 0)], "Line1")
 
-      handler = Collision::LineLine.new(line1, line2)
+      handler = Contact::LineLine.new(line1, line2)
       collided = handler.query
 
       expect(collided).to be_falsy
@@ -56,7 +56,7 @@ RSpec.describe Collision::LineCircle do
       line1 = TestShapes.line(V.new(2, 5), [V.new(0, 3), V.new(0, -3)], "Line1")
       line2 = TestShapes.line(V.new(5, 3), [V.new(-3, 0), V.new(3, 0)], "Line1")
 
-      handler = Collision::LineLine.new(line1, line2)
+      handler = Contact::LineLine.new(line1, line2)
       collided = handler.query
 
       expect(collided).to be_falsy
